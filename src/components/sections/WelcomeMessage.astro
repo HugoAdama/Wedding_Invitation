@@ -1,0 +1,35 @@
+---
+import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
+import ConstellationIcon from '../icons/ConstellationIcon.astro';
+---
+<section class="seccion seccion--profundo" id="mensaje">
+  <div class="interior">
+    <div class="mensaje__adorno">
+      <MoonPhasesOrnament class="w-44 h-auto mx-auto mb-5 text-[#D4AF37]" />
+    </div>
+
+    <div class="seccion-header revelar" style="margin-bottom: 0;">
+      <p class="kicker">Una noche para mirar el cielo</p>
+      <h2 class="titulo-seccion brillo-dorado">Nos casamos bajo las estrellas</h2>
+      <p class="descripcion-seccion">
+        Será al aire libre, en una hacienda de Arequipa, con la ciudad iluminada de fondo y el cielo estrellado como techo.
+        La magia de las constelaciones que nos acompañaron en cada paso ahora bendecirá nuestra unión. Queremos celebrarlo contigo.
+      </p>
+
+      <div class="mt-6 text-[#D4AF37] opacity-80">
+        <ConstellationIcon class="w-48 h-auto mx-auto mt-6" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mensaje__adorno {
+    text-align: center;
+    color: var(--dorado);
+  }
+
+  .mt-6 {
+    margin-top: 1.5rem;
+  }
+</style>

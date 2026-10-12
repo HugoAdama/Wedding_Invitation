@@ -1,0 +1,240 @@
+---
+import { giftOptions, giftQuote } from '../../data/gifts';
+import GiftIcon from '../icons/GiftIcon.astro';
+import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
+---
+<section class="seccion seccion--violeta" id="regalos">
+  <div class="interior">
+    <div class="seccion-header">
+      <div class="regalos__adorno">
+        <MoonPhasesOrnament class="w-40 h-auto mx-auto mb-4 text-[#F5EFE6]" />
+      </div>
+      <div class="regalos__badge">
+        <GiftIcon size={18} class="text-[#D4AF37]" />
+        <span>Detalles &amp; Presentes</span>
+      </div>
+      <p class="kicker" style="color: var(--crema);">Un detalle, si lo deseas</p>
+      <h2 class="titulo-seccion" style="color: #F8E7B4;">Mesa de regalos</h2>
+      <p class="regalos__cita">{giftQuote}</p>
+    </div>
+
+    <div class="regalos-grid">
+      {giftOptions.map((opcion, idx) => (
+        <article class={`regalo-card revelar ${idx % 2 === 1 ? 'revelar--retraso-1' : ''}`}>
+          <div class="regalo__header">
+            {opcion.badge && <span class="badge-tag">{opcion.badge}</span>}
+            <h3 class="regalo__titulo">{opcion.title}</h3>
+          </div>
+
+          <p class="regalo__desc">{opcion.description}</p>
+
+          {opcion.details && (
+            <div class="regalo__detalles">
+              {opcion.details.map(det => (
+                <div class="detalle-fila">
+                  {det.label && <span class="detalle-label">{det.label}:</span>}
+                  {det.isCode ? (
+                    <div class="codigo-copiable-wrap">
+                      <code class="detalle-code">{det.value}</code>
+                      <button
+                        type="button"
+                        class="btn-copiar"
+                        data-copiar={det.value}
+                        aria-label={`Copiar ${det.label || 'cuenta'}`}
+                        title="Copiar al portapapeles"
+                      >
+                        <span class="btn-copiar-txt">Copiar</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <span class="detalle-val">{det.value}</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .regalos__adorno {
+    text-align: center;
+  }
+
+  .regalos__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--crema);
+    background: rgba(245, 239, 230, 0.15);
+    border: 1px solid rgba(245, 239, 230, 0.3);
+    border-radius: var(--radio-full);
+    margin-bottom: 0.9rem;
+  }
+
+  .regalos__cita {
+    font-family: var(--titulo);
+    font-style: italic;
+    font-size: clamp(1.25rem, 3.5vw, 1.6rem);
+    line-height: 1.5;
+    color: var(--crema);
+    max-width: 44rem;
+    margin: 1.25rem auto 0;
+  }
+
+  .regalos-grid {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .regalos-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+    }
+  }
+
+  .regalo-card {
+    background: rgba(11, 29, 58, 0.65);
+    border: 1.5px solid var(--dorado);
+    border-radius: var(--radio-md);
+    padding: 2.25rem 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    transition: var(--transicion);
+  }
+
+  .regalo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.25);
+  }
+
+  .regalo__header {
+    margin-bottom: 1rem;
+  }
+
+  .regalo__titulo {
+    font-size: 1.7rem;
+    color: var(--dorado);
+    margin-top: 0.5rem;
+  }
+
+  .regalo__desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--crema);
+    opacity: 0.95;
+    margin-bottom: 1.25rem;
+  }
+
+  .regalo__detalles {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--linea-suave);
+    font-size: 0.92rem;
+  }
+
+  .detalle-fila {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .detalle-label {
+    color: var(--plata);
+    font-size: 0.88rem;
+  }
+
+  .detalle-val {
+    color: var(--crema);
+    font-weight: 500;
+  }
+
+  .codigo-copiable-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .detalle-code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.92rem;
+    color: var(--dorado);
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    user-select: all;
+  }
+
+  .btn-copiar {
+    padding: 0.25rem 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid var(--dorado);
+    border-radius: var(--radio-sm);
+    cursor: pointer;
+    transition: var(--transicion);
+  }
+
+  .btn-copiar:hover {
+    background: var(--dorado);
+    color: var(--noche);
+  }
+
+  .btn-copiar--copiado {
+    background: #2e7d32 !important;
+    border-color: #4caf50 !important;
+    color: #ffffff !important;
+  }
+</style>
+
+<script>
+  function setupCopiarBotones() {
+    document.querySelectorAll('.btn-copiar').forEach(boton => {
+      boton.addEventListener('click', async () => {
+        const texto = boton.getAttribute('data-copiar');
+        if (!texto) return;
+
+        try {
+          await navigator.clipboard.writeText(texto);
+          const txtSpan = boton.querySelector('.btn-copiar-txt');
+          if (txtSpan) txtSpan.textContent = '¡Copiado! ✓';
+          boton.classList.add('btn-copiar--copiado');
+
+          setTimeout(() => {
+            if (txtSpan) txtSpan.textContent = 'Copiar';
+            boton.classList.remove('btn-copiar--copiado');
+          }, 2200);
+        } catch {
+          // Fallback silencioso si no hay soporte de clipboard
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupCopiarBotones);
+  } else {
+    setupCopiarBotones();
+  }
+</script>

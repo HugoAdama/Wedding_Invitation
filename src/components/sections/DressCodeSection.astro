@@ -1,0 +1,296 @@
+---
+import { paletteColors, dressCodeDetails } from '../../data/dressCode';
+import PaletteIcon from '../icons/PaletteIcon.astro';
+import SparklesIcon from '../icons/SparklesIcon.astro';
+import { withBase } from '../../utils/paths';
+---
+<section class="seccion" id="vestimenta">
+  <div class="interior">
+    <div class="seccion-header">
+      <div class="vestir__badge">
+        <PaletteIcon size={20} class="text-[#D4AF37]" />
+        <span>Código de Etiqueta</span>
+      </div>
+      <p class="kicker">Para una noche de gala</p>
+      <h2 class="titulo-seccion">Vestimenta</h2>
+      <p class="descripcion-seccion">
+        {dressCodeDetails.category} · Te invitamos a sumar los tonos del cielo nocturno que nos cobijará.
+      </p>
+    </div>
+
+    <div class="vestir-grid">
+      <div class="vestir__info">
+        <h3 class="vestir__subtitulo">Inspiración Cromática</h3>
+        <p class="vestir__parrafo">
+          {dressCodeDetails.description}
+        </p>
+
+        <p class="vestir__alerta">
+          <strong>Aviso especial:</strong> {dressCodeDetails.restrictions}
+        </p>
+
+        <!-- Muestras de color en fila uniforme de 5 -->
+        <div class="muestras-paleta">
+          <span class="muestras__label">Colores sugeridos:</span>
+          <ul class="muestras-lista">
+            {paletteColors.map(color => (
+              <li class="muestra-item">
+                <span
+                  class="muestra-swatch"
+                  style={`background-color: ${color.hex};`}
+                  title={`${color.name}: ${color.description}`}
+                ></span>
+                <span class="muestra-nombre">{color.name}</span>
+                <span class="muestra-hex">{color.hex}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <ul class="vestir__tips">
+          {dressCodeDetails.recommendations.map(tip => (
+            <li>
+              <SparklesIcon size={16} class="tip-star" />
+              <span>{tip}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="vestir__fotos">
+        {dressCodeDetails.images.map((img, i) => (
+          <figure class={`vestir__foto-card ${i === 1 ? 'vestir__foto-card--offset' : ''}`}>
+            <img
+              src={withBase(img.src)}
+              alt={img.alt}
+              width="600"
+              height="800"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption class="vestir__foto-overlay">
+              <span class="vestir__foto-etiqueta">{img.label}</span>
+              <span class="vestir__foto-sub">{img.subtitle}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .vestir__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-full);
+    margin-bottom: 0.9rem;
+  }
+
+  .vestir-grid {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 860px) {
+    .vestir-grid {
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 4rem;
+    }
+  }
+
+  .vestir__subtitulo {
+    font-size: 1.8rem;
+    color: var(--dorado);
+    margin-bottom: 0.75rem;
+  }
+
+  .vestir__parrafo {
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: var(--crema);
+    margin-bottom: 1.25rem;
+  }
+
+  .vestir__alerta {
+    padding: 0.9rem 1.25rem;
+    background: rgba(74, 59, 107, 0.35);
+    border-left: 3px solid var(--dorado);
+    border-radius: 0 var(--radio-sm) var(--radio-sm) 0;
+    font-size: 0.95rem;
+    color: var(--crema);
+    margin-bottom: 1.75rem;
+  }
+
+  .muestras-paleta {
+    margin-bottom: 1.75rem;
+  }
+
+  .muestras__label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--plata);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.9rem;
+  }
+
+  /* Grid equilibrado de 5 columnas para evitar que un color quede huérfano */
+  .muestras-lista {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+    max-width: 32rem;
+  }
+
+  .muestra-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    text-align: center;
+  }
+
+  .muestra-swatch {
+    width: clamp(2.8rem, 5vw, 3.5rem);
+    height: clamp(2.8rem, 5vw, 3.5rem);
+    border-radius: 50%;
+    border: 2px solid var(--crema);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.45);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    cursor: pointer;
+  }
+
+  .muestra-swatch:hover {
+    transform: scale(1.12);
+    border-color: var(--dorado);
+    box-shadow: 0 0 18px rgba(212, 175, 55, 0.45);
+  }
+
+  .muestra-nombre {
+    font-size: 0.8rem;
+    color: var(--crema);
+    line-height: 1.25;
+  }
+
+  .muestra-hex {
+    font-size: 0.72rem;
+    color: var(--plata);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    opacity: 0.85;
+  }
+
+  @media (max-width: 480px) {
+    .muestras-lista {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.4rem;
+    }
+
+    .muestra-nombre {
+      font-size: 0.72rem;
+    }
+
+    .muestra-hex {
+      font-size: 0.65rem;
+    }
+  }
+
+  .vestir__tips {
+    display: grid;
+    gap: 0.75rem;
+    font-size: 0.92rem;
+    color: var(--plata);
+    line-height: 1.5;
+  }
+
+  .vestir__tips li {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .tip-star {
+    color: var(--dorado);
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+
+  /* Fotos inspiracionales de moda */
+  .vestir__fotos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .vestir__foto-card {
+    position: relative;
+    margin: 0;
+    border-radius: var(--radio-md);
+    overflow: hidden;
+    border: 1px solid var(--linea);
+    box-shadow: var(--sombra-suave);
+    background: var(--noche);
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .vestir__foto-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--dorado);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.2);
+  }
+
+  .vestir__foto-card--offset {
+    margin-top: 2rem;
+  }
+
+  .vestir__foto-card img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .vestir__foto-card:hover img {
+    transform: scale(1.04);
+  }
+
+  .vestir__foto-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.25rem 1rem 0.85rem;
+    background: linear-gradient(0deg, rgba(7, 16, 32, 0.95) 0%, rgba(7, 16, 32, 0.6) 65%, transparent 100%);
+    text-align: center;
+  }
+
+  .vestir__foto-etiqueta {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--dorado);
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+  }
+
+  .vestir__foto-sub {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--crema);
+    opacity: 0.85;
+    margin-top: 0.15rem;
+  }
+</style>

@@ -1,0 +1,176 @@
+---
+import { coupleTrivia } from '../../data/couple';
+import ChartTriviaIcon from '../icons/ChartTriviaIcon.astro';
+import BrideIcon from '../icons/BrideIcon.astro';
+import GroomIcon from '../icons/GroomIcon.astro';
+---
+<section class="seccion seccion--profundo" id="trivia">
+  <div class="interior">
+    <div class="seccion-header">
+      <div class="trivia__badge">
+        <ChartTriviaIcon size={20} class="text-[#D4AF37]" />
+        <span>Sintonía de Almas</span>
+      </div>
+      <p class="kicker">Contrastes y coincidencias</p>
+      <h2 class="titulo-seccion">Datos curiosos de la pareja</h2>
+      <p class="descripcion-seccion">
+        Diez detalles que revelan sus gustos, sus pasiones y cómo cada pequeña diferencia los complementa a la perfección.
+      </p>
+    </div>
+
+    <div class="tabla-contenedor revelar">
+      <table class="tabla-trivia">
+        <thead>
+          <tr>
+            <th class="th-aspecto">Aspecto</th>
+            <th class="th-novia">
+              <span class="th-novia__wrapper">
+                <BrideIcon size={18} class="icon-th" />
+                <span>Daniela</span>
+              </span>
+            </th>
+            <th class="th-novio">
+              <span class="th-novio__wrapper">
+                <GroomIcon size={18} class="icon-th" />
+                <span>Rodrigo</span>
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {coupleTrivia.map((item, index) => (
+            <tr class={index % 2 === 0 ? 'fila-par' : 'fila-impar'}>
+              <td class="td-aspecto">{item.attribute}</td>
+              <td class="td-daniela">{item.daniela}</td>
+              <td class="td-rodrigo">{item.rodrigo}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <p class="tabla-scroll-hint" aria-hidden="true">
+      <span>⟵ Desliza para explorar la tabla completa ⟶</span>
+    </p>
+  </div>
+</section>
+
+<style>
+  .trivia__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-full);
+    margin-bottom: 0.9rem;
+  }
+
+  .tabla-contenedor {
+    max-width: 52rem;
+    margin: 0 auto;
+    overflow-x: auto;
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-md);
+    background: rgba(11, 29, 58, 0.7);
+    box-shadow: var(--sombra-suave);
+    backdrop-filter: blur(8px);
+  }
+
+  .tabla-trivia {
+    width: 100%;
+    min-width: 480px;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+
+  .tabla-scroll-hint {
+    display: none;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--plata);
+    margin-top: 0.75rem;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 640px) {
+    .tabla-scroll-hint {
+      display: block;
+    }
+  }
+
+  .tabla-trivia th {
+    padding: 1.1rem 1.4rem;
+    font-family: var(--titulo);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--dorado);
+    border-bottom: 1.5px solid var(--linea);
+    background: rgba(27, 42, 74, 0.85);
+  }
+
+  .th-novia__wrapper,
+  .th-novio__wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .icon-th {
+    color: var(--dorado);
+  }
+
+  .tabla-trivia td {
+    padding: 0.9rem 1.4rem;
+    border-bottom: 1px solid var(--linea-suave);
+    line-height: 1.5;
+  }
+
+  .fila-par {
+    background: rgba(11, 29, 58, 0.3);
+  }
+
+  .fila-impar {
+    background: rgba(27, 42, 74, 0.25);
+  }
+
+  .td-aspecto {
+    font-weight: 500;
+    color: var(--plata);
+    width: 30%;
+  }
+
+  .td-daniela {
+    color: var(--crema);
+    width: 35%;
+  }
+
+  .td-rodrigo {
+    color: var(--crema);
+    width: 35%;
+  }
+
+  .tabla-trivia tr:last-child td {
+    border-bottom: none;
+  }
+
+  @media (max-width: 640px) {
+    .tabla-trivia th,
+    .tabla-trivia td {
+      padding: 0.75rem 1rem;
+      font-size: 0.88rem;
+    }
+
+    .tabla-trivia th {
+      font-size: 1.05rem;
+    }
+  }
+</style>

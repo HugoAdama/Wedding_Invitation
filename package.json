@@ -1,0 +1,22 @@
+{
+  "name": "boda-daniela-rodrigo",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Invitación de boda: Daniela & Rodrigo · Bajo las estrellas",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^7.3.8"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5"
+  }
+}

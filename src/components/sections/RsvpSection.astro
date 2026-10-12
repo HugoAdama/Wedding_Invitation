@@ -1,0 +1,300 @@
+---
+import { weddingData } from '../../data/wedding';
+import WhatsAppIcon from '../icons/WhatsAppIcon.astro';
+import CheckCircleIcon from '../icons/CheckIcon.astro';
+import ShootingStars from '../ui/ShootingStars.astro';
+import { withBase } from '../../utils/paths';
+---
+<section class="seccion cielo" id="confirmar">
+  <ShootingStars />
+
+  <div class="interior rsvp-layout">
+    <div class="rsvp__foto-col revelar">
+      <div class="rsvp__marco">
+        <img
+          src={withBase('/images/rsvp-couple.webp')}
+          alt="Daniela y Rodrigo juntos bajo las estrellas"
+          width="640"
+          height="800"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+
+    <div class="rsvp__form-col revelar revelar--retraso-1">
+      <div class="rsvp__header">
+        <span class="rsvp__fecha-limite">
+          <CheckCircleIcon size={16} />
+          <span>Plazo: hasta el {weddingData.rsvpDeadline}</span>
+        </span>
+        <p class="kicker">Tu presencia ilumina nuestra noche</p>
+        <h2 class="titulo-seccion brillo-dorado">¿Nos acompañas?</h2>
+        <p class="rsvp__intro">
+          Por favor, completa tus datos. Al presionar enviar se abrirá automáticamente una conversación en WhatsApp
+          con tu confirmación redactada para nuestro número oficial.
+        </p>
+      </div>
+
+      <form class="rsvp-form" id="rsvp-form" data-phone={weddingData.whatsappNumber}>
+        <div class="campo">
+          <label for="nombre">Nombre y apellido *</label>
+          <input
+            id="nombre"
+            name="nombre"
+            type="text"
+            autocomplete="name"
+            placeholder="Ej. Carmen Velarde"
+            required
+          />
+        </div>
+
+        <div class="campo">
+          <label for="asistencia">¿Podrás asistir? *</label>
+          <select id="asistencia" name="asistencia" required>
+            <option value="">Selecciona una opción</option>
+            <option value="si">¡Sí, allí estaré bajo las estrellas!</option>
+            <option value="no">Lo siento de corazón, no podré asistir</option>
+          </select>
+        </div>
+
+        <div class="campo-grupo" id="grupo-detalles">
+          <div class="campo">
+            <label for="personas">Número de pases / personas</label>
+            <input
+              id="personas"
+              name="personas"
+              type="number"
+              min="1"
+              max="10"
+              value="1"
+            />
+          </div>
+
+          <div class="campo">
+            <label for="menu">Preferencia de menú</label>
+            <select id="menu" name="menu">
+              <option value="Tradicional">Tradicional arequipeño</option>
+              <option value="Vegetariano">Vegetariano</option>
+              <option value="Vegano">Vegano</option>
+              <option value="Infantil">Menú infantil</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="restricciones">Alergias o restricciones alimentarias</label>
+          <textarea
+            id="restricciones"
+            name="restricciones"
+            rows="2"
+            placeholder="Opcional: celiaquía, alergia a mariscos, etc."
+          ></textarea>
+        </div>
+
+        <button class="boton boton--lleno boton-submit" type="submit">
+          <WhatsAppIcon size={20} />
+          <span>Enviar confirmación por WhatsApp</span>
+        </button>
+
+        <p class="rsvp-estado" id="estado" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .rsvp-layout {
+    display: grid;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 860px) {
+    .rsvp-layout {
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 5rem;
+    }
+  }
+
+  .rsvp__foto-col {
+    max-width: 24rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .rsvp__marco {
+    position: relative;
+    border-radius: 200px 200px 14px 14px;
+    overflow: hidden;
+    border: 1.5px solid var(--dorado);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.6);
+  }
+
+  .rsvp__marco img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  .rsvp__fecha-limite {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.12);
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-full);
+    margin-bottom: 0.75rem;
+  }
+
+  .rsvp__intro {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--crema);
+    opacity: 0.9;
+    margin-bottom: 2rem;
+  }
+
+  .rsvp-form {
+    display: grid;
+    gap: 1.25rem;
+    background: rgba(11, 29, 58, 0.75);
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-md);
+    box-shadow: var(--sombra-suave);
+    backdrop-filter: blur(10px);
+  }
+
+  .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    text-align: left;
+  }
+
+  .campo-grupo {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 600px) {
+    .campo-grupo {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .campo label {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--plata);
+    letter-spacing: 0.02em;
+  }
+
+  .campo input,
+  .campo select,
+  .campo textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font-family: var(--cuerpo);
+    font-size: 1rem;
+    min-height: 2.85rem;
+    color: var(--crema);
+    background: rgba(7, 16, 32, 0.8);
+    border: 1px solid var(--linea-suave);
+    border-radius: var(--radio-sm);
+    transition: var(--transicion);
+  }
+
+  .campo input:focus,
+  .campo select:focus,
+  .campo textarea:focus {
+    outline: none;
+    border-color: var(--dorado);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+  }
+
+  .campo textarea {
+    resize: vertical;
+  }
+
+  .campo input::placeholder,
+  .campo textarea::placeholder {
+    color: var(--plata);
+    opacity: 0.6;
+  }
+
+  .boton-submit {
+    justify-self: start;
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 1rem 1.75rem;
+    font-size: 1.05rem;
+  }
+
+  @media (min-width: 600px) {
+    .boton-submit {
+      width: auto;
+    }
+  }
+
+  .rsvp-estado {
+    min-height: 1.5rem;
+    margin: 0.25rem 0 0;
+    font-size: 0.95rem;
+    color: var(--dorado);
+    text-align: left;
+  }
+</style>
+
+<script>
+  function setupRSVP() {
+    const form = document.getElementById("rsvp-form") as HTMLFormElement | null;
+    const estado = document.getElementById("estado");
+    if (!form) return;
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const asiste = formData.get("asistencia") === "si";
+      const nombre = String(formData.get("nombre") || "").trim();
+      const personas = formData.get("personas");
+      const menu = formData.get("menu");
+      const restricciones = String(formData.get("restricciones") || "").trim();
+      const phone = form.getAttribute("data-phone") || "51999777666";
+
+      let texto = asiste
+        ? "¡Hola Daniela y Rodrigo! Confirmo mi asistencia con mucha alegría a su boda bajo las estrellas."
+        : "Hola Daniela y Rodrigo, lamento mucho no poder acompañarlos en su boda bajo las estrellas.";
+
+      texto += `\n\nNombre: ${nombre}`;
+
+      if (asiste) {
+        texto += `\nPases / Personas: ${personas}`;
+        texto += `\nMenú elegido: ${menu}`;
+        if (restricciones) {
+          texto += `\nRestricciones o alergias: ${restricciones}`;
+        }
+      }
+
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(texto)}`;
+      window.open(url, "_blank", "noopener,noreferrer");
+
+      if (estado) {
+        estado.textContent = "¡Listo! Se ha abierto WhatsApp con tu mensaje preparado para enviar.";
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupRSVP);
+  } else {
+    setupRSVP();
+  }
+</script>

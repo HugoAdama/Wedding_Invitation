@@ -1,0 +1,29 @@
+---
+interface Props {
+  kicker?: string;
+  title: string;
+  description?: string;
+  showMoonPhases?: boolean;
+}
+
+import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
+
+const { kicker, title, description, showMoonPhases = false } = Astro.props;
+---
+<div class="seccion-header revelar">
+  {showMoonPhases && (
+    <div class="mb-4 text-[#D4AF37]">
+      <MoonPhasesOrnament class="w-36 h-auto mx-auto mb-4" />
+    </div>
+  )}
+  {kicker && <p class="kicker">{kicker}</p>}
+  <h2 class="titulo-seccion brillo-dorado">{title}</h2>
+  {description && <p class="descripcion-seccion">{description}</p>}
+  <slot />
+</div>
+
+<style>
+  .mb-4 {
+    margin-bottom: 1rem;
+  }
+</style>

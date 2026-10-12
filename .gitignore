@@ -1,0 +1,19 @@
+# Dependencias
+node_modules/
+
+# Salida de compilación
+dist/
+.astro/
+
+# Logs del entorno
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Archivos de entorno y SO
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db

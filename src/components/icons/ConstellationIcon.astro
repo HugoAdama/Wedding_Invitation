@@ -1,0 +1,85 @@
+---
+interface Props {
+  class?: string;
+  size?: number | string;
+}
+
+const { class: className = "w-full max-w-xs h-auto", size = 240 } = Astro.props;
+---
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 240 44"
+  fill="currentColor"
+  class={`constelacion-svg ${className}`}
+  aria-hidden="true"
+>
+  <polyline
+    class="constelacion-linea"
+    points="12,30 48,14 86,26 122,8 160,22 198,10 228,28"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.2"
+    stroke-opacity="0.6"
+    stroke-linejoin="round"
+  />
+  <g fill="currentColor">
+    <circle cx="12" cy="30" r="2.5" class="nodo-estrella nodo-1" />
+    <circle cx="48" cy="14" r="3.2" class="nodo-estrella nodo-2" />
+    <circle cx="86" cy="26" r="2.5" class="nodo-estrella nodo-3" />
+    <circle cx="122" cy="8" r="4.2" class="nodo-estrella nodo-principal" />
+    <circle cx="160" cy="22" r="2.5" class="nodo-estrella nodo-4" />
+    <circle cx="198" cy="10" r="3.2" class="nodo-estrella nodo-5" />
+    <circle cx="228" cy="28" r="2.5" class="nodo-estrella nodo-6" />
+  </g>
+  <!-- Mini star accents -->
+  <polygon
+    class="estrella-destello"
+    points="122,2 123.5,6.5 128,8 123.5,9.5 122,14 120.5,9.5 116,8 120.5,6.5"
+    fill="currentColor"
+    opacity="0.8"
+  />
+</svg>
+
+<style>
+  .constelacion-linea {
+    stroke-dasharray: 6 3;
+    animation: fluir-constelacion 30s linear infinite;
+  }
+
+  @keyframes fluir-constelacion {
+    to {
+      stroke-dashoffset: -300;
+    }
+  }
+
+  .nodo-estrella {
+    transition: r 0.3s ease;
+  }
+
+  .nodo-principal {
+    animation: pulso-estrella-guia 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulso-estrella-guia {
+    0% { r: 3.5; opacity: 0.8; }
+    100% { r: 5; opacity: 1; filter: drop-shadow(0 0 4px #D4AF37); }
+  }
+
+  .estrella-destello {
+    transform-origin: 122px 8px;
+    animation: rotar-destello 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes rotar-destello {
+    0% { transform: scale(0.8) rotate(-15deg); opacity: 0.6; }
+    100% { transform: scale(1.2) rotate(15deg); opacity: 1; filter: drop-shadow(0 0 5px #FFFFFF); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .constelacion-linea,
+    .nodo-principal,
+    .estrella-destello {
+      animation: none !important;
+    }
+  }
+</style>

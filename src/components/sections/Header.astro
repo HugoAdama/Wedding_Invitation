@@ -1,0 +1,427 @@
+---
+import StarIcon from '../icons/StarIcon.astro';
+import MenuIcon from '../icons/MenuIcon.astro';
+import CloseIcon from '../icons/CloseIcon.astro';
+import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
+
+const navLinks = [
+  { href: '#novios', label: 'Novios' },
+  { href: '#trivia', label: 'Curiosidades' },
+  { href: '#historia', label: 'Historia' },
+  { href: '#ceremonia', label: 'Ceremonia' },
+  { href: '#la-noche', label: 'La noche' },
+  { href: '#galeria', label: 'Galería' },
+  { href: '#vestimenta', label: 'Vestimenta' },
+  { href: '#hospedaje', label: 'Hospedaje' },
+  { href: '#regalos', label: 'Regalos' },
+  { href: '#faq', label: 'Preguntas' }
+];
+---
+<header class="cab" id="cabecera-principal">
+  <div class="cab__fila">
+    <a class="cab__logo" href="#inicio" aria-label="Inicio: Daniela y Rodrigo">
+      <span class="logo__letra">D</span>
+      <span class="logo__amp">&amp;</span>
+      <span class="logo__letra">R</span>
+    </a>
+
+    <!-- Menú para escritorio (links con nombres concisos y sin quiebres de línea) -->
+    <nav class="cab__menu" aria-label="Secciones principales">
+      {navLinks.map(link => (
+        <a href={link.href} class="cab__enlace">{link.label}</a>
+      ))}
+    </nav>
+
+    <div class="cab__acciones">
+      <a class="boton boton--chico boton--lleno cab__btn-confirmar" href="#confirmar">
+        <StarIcon size={14} class="star-icon" />
+        <span>Confirmar</span>
+      </a>
+
+      <!-- Botón de menú hamburguesa móvil/tablet -->
+      <button
+        class="cab__toggle"
+        id="menu-toggle"
+        aria-label="Abrir menú de navegación"
+        aria-expanded="false"
+        aria-controls="menu-movil"
+      >
+        <span class="icono-abrir"><MenuIcon size={24} /></span>
+        <span class="icono-cerrar" hidden><CloseIcon size={24} /></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Panel desplegable móvil con estética de cielo estrellado -->
+  <div class="menu-movil" id="menu-movil" hidden>
+    <div class="menu-movil__backdrop" id="menu-backdrop"></div>
+    <div class="menu-movil__contenido">
+      <div class="menu-movil__header">
+        <MoonPhasesOrnament class="w-36 h-auto mx-auto mb-4 text-[#D4AF37]" />
+        <p class="menu-movil__pareja">Daniela &amp; Rodrigo</p>
+        <p class="menu-movil__fecha">12 de junio de 2027 · Arequipa</p>
+      </div>
+
+      <nav class="menu-movil__nav">
+        {navLinks.map(link => (
+          <a href={link.href} class="menu-movil__enlace">{link.label}</a>
+        ))}
+      </nav>
+
+      <div class="menu-movil__footer">
+        <a class="boton boton--lleno w-full" href="#confirmar" id="menu-confirmar-btn">
+          <StarIcon size={16} />
+          <span>Confirmar Asistencia</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .cab {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(11, 29, 58, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--linea-suave);
+    transition: var(--transicion);
+  }
+
+  .cab__fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 80rem;
+    height: 4.25rem;
+    margin-inline: auto;
+    padding-inline: var(--lado);
+    gap: 1rem;
+  }
+
+  .cab__logo {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    font-family: var(--script);
+    font-size: 2.2rem;
+    color: var(--dorado);
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.35);
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+    line-height: 1;
+  }
+
+  .logo__letra {
+    display: inline-block;
+  }
+
+  .logo__amp {
+    font-size: 1.45rem;
+    opacity: 0.85;
+    color: var(--dorado);
+  }
+
+  /* Menú de escritorio */
+  .cab__menu {
+    display: none;
+  }
+
+  @media (min-width: 1100px) {
+    .cab__menu {
+      display: flex;
+      align-items: center;
+      gap: clamp(0.75rem, 1.3vw, 1.4rem);
+      flex: 1;
+      justify-content: center;
+    }
+
+    .cab__enlace {
+      font-size: clamp(0.82rem, 0.9vw, 0.9rem);
+      color: var(--crema);
+      letter-spacing: 0.02em;
+      position: relative;
+      padding-block: 0.35rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: color 0.2s ease;
+    }
+
+    .cab__enlace:hover {
+      color: var(--dorado);
+    }
+
+    .cab__enlace::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--dorado);
+      box-shadow: 0 0 6px rgba(212, 175, 55, 0.6);
+      transition: width 0.25s ease;
+    }
+
+    .cab__enlace:hover::after,
+    .cab__enlace--activo::after {
+      width: 100%;
+    }
+
+    .cab__enlace--activo {
+      color: var(--dorado);
+      font-weight: 500;
+    }
+  }
+
+  .cab__acciones {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .cab__btn-confirmar {
+    display: none;
+  }
+
+  @media (min-width: 540px) {
+    .cab__btn-confirmar {
+      display: inline-flex;
+      white-space: nowrap;
+    }
+  }
+
+  /* Botón hamburguesa móvil */
+  .cab__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    background: rgba(27, 42, 74, 0.6);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-sm);
+    color: var(--dorado);
+    cursor: pointer;
+    transition: var(--transicion);
+  }
+
+  .cab__toggle:hover {
+    background: rgba(212, 175, 55, 0.15);
+    border-color: var(--dorado);
+  }
+
+  @media (min-width: 1100px) {
+    .cab__toggle {
+      display: none;
+    }
+  }
+
+  /* Drawer móvil */
+  .menu-movil {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+  }
+
+  .menu-movil__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(7, 16, 32, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .menu-movil__contenido {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(85vw, 24rem);
+    background: linear-gradient(180deg, #0e1e3b 0%, #081224 100%);
+    border-left: 1px solid var(--linea);
+    padding: 2.5rem 1.75rem 2rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
+    animation: deslizar-menu 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes deslizar-menu {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .menu-movil__header {
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--linea-suave);
+    padding-bottom: 1.5rem;
+  }
+
+  .menu-movil__pareja {
+    font-family: var(--script);
+    font-size: 2.2rem;
+    color: var(--dorado);
+    margin: 0;
+    line-height: 1;
+  }
+
+  .menu-movil__fecha {
+    font-size: 0.85rem;
+    color: var(--plata);
+    margin: 0.35rem 0 0;
+  }
+
+  .menu-movil__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+  }
+
+  .menu-movil__enlace {
+    padding: 0.65rem 1rem;
+    font-size: 1.05rem;
+    color: var(--crema);
+    border-radius: var(--radio-sm);
+    transition: var(--transicion);
+  }
+
+  .menu-movil__enlace:hover {
+    background: rgba(212, 175, 55, 0.12);
+    color: var(--dorado);
+    padding-left: 1.35rem;
+  }
+
+  .menu-movil__enlace--activo {
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--dorado);
+    border-left: 3px solid var(--dorado);
+    font-weight: 600;
+  }
+
+  .menu-movil__footer {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--linea-suave);
+  }
+
+  .w-full {
+    width: 100%;
+  }
+</style>
+
+<script>
+  function setupMenuMovil() {
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu-movil');
+    const backdrop = document.getElementById('menu-backdrop');
+    if (!toggle || !menu) return;
+
+    const iconAbrir = toggle.querySelector('.icono-abrir') as HTMLElement | null;
+    const iconCerrar = toggle.querySelector('.icono-cerrar') as HTMLElement | null;
+
+    function abrirMenu() {
+      menu?.removeAttribute('hidden');
+      toggle?.setAttribute('aria-expanded', 'true');
+      if (iconAbrir) iconAbrir.hidden = true;
+      if (iconCerrar) iconCerrar.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function cerrarMenu() {
+      menu?.setAttribute('hidden', '');
+      toggle?.setAttribute('aria-expanded', 'false');
+      if (iconAbrir) iconAbrir.hidden = false;
+      if (iconCerrar) iconCerrar.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    toggle.addEventListener('click', () => {
+      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) {
+        cerrarMenu();
+      } else {
+        abrirMenu();
+      }
+    });
+
+    backdrop?.addEventListener('click', cerrarMenu);
+
+    // Cerrar al hacer clic en cualquier enlace
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', cerrarMenu);
+    });
+
+    // Cerrar con Escape
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        cerrarMenu();
+      }
+    });
+  }
+
+  function setupScrollSpy() {
+    const navLinksDesktop = document.querySelectorAll('.cab__menu .cab__enlace');
+    const navLinksMobile = document.querySelectorAll('.menu-movil__nav .menu-movil__enlace');
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            if (!id) return;
+
+            navLinksDesktop.forEach((link) => {
+              const href = link.getAttribute('href');
+              if (href === `#${id}`) {
+                link.classList.add('cab__enlace--activo');
+              } else {
+                link.classList.remove('cab__enlace--activo');
+              }
+            });
+
+            navLinksMobile.forEach((link) => {
+              const href = link.getAttribute('href');
+              if (href === `#${id}`) {
+                link.classList.add('menu-movil__enlace--activo');
+              } else {
+                link.classList.remove('menu-movil__enlace--activo');
+              }
+            });
+          }
+        });
+      },
+      {
+        threshold: 0.25,
+        rootMargin: '-80px 0px -40% 0px'
+      }
+    );
+
+    sections.forEach((sec) => observer.observe(sec));
+  }
+
+  function initHeader() {
+    setupMenuMovil();
+    setupScrollSpy();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeader);
+  } else {
+    initHeader();
+  }
+</script>

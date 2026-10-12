@@ -1,0 +1,28 @@
+---
+interface Props {
+  class?: string;
+  size?: number | string;
+}
+
+const { class: className = "w-6 h-6", size = 24 } = Astro.props;
+---
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class={className}
+  aria-hidden="true"
+>
+  <circle cx="8" cy="8" r="2.8" />
+  <circle cx="16" cy="8" r="2.8" />
+  <!-- Heart above -->
+  <path d="M12 4.2c-.6-1-1.8-1.2-2.5-.5-.6.6-.5 1.7.3 2.3l2.2 2 2.2-2c.8-.6.9-1.7.3-2.3-.7-.7-1.9-.5-2.5.5z" fill="currentColor" opacity="0.4" />
+  <path d="M4 20v-2a3.5 3.5 0 0 1 3.5-3.5h1A3.5 3.5 0 0 1 12 18v2" />
+  <path d="M12 20v-2a3.5 3.5 0 0 1 3.5-3.5h1A3.5 3.5 0 0 1 20 18v2" />
+</svg>

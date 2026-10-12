@@ -1,0 +1,219 @@
+@import "./tokens.css";
+@import "./stars.css";
+
+/* Reset y caja */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.8rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--cuerpo);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--crema);
+  background-color: var(--noche);
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(27, 42, 74, 0.7) 0%, transparent 60%),
+    linear-gradient(180deg, var(--noche) 0%, #071020 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--titulo);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+ul, ol, dl {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transicion);
+}
+
+:focus-visible {
+  outline: 2px solid var(--dorado);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Enlace accesible para saltar contenido */
+.saltar-contenido {
+  position: absolute;
+  left: 1rem;
+  top: -5rem;
+  z-index: 1000;
+  padding: 0.75rem 1.25rem;
+  color: var(--noche);
+  background: var(--dorado);
+  font-weight: 600;
+  border-radius: var(--radio-sm);
+  transition: top 0.2s ease;
+}
+
+.saltar-contenido:focus {
+  top: 1rem;
+}
+
+/* Contenedores y secciones */
+.seccion {
+  padding: clamp(4.5rem, 9vw, 7.5rem) var(--lado);
+  position: relative;
+}
+
+.seccion--profundo {
+  background-color: var(--profundo);
+  background-image: radial-gradient(circle at 50% 0%, rgba(74, 59, 107, 0.15) 0%, transparent 70%);
+}
+
+.seccion--alterna {
+  background-color: var(--noche);
+}
+
+.seccion--violeta {
+  background: linear-gradient(180deg, var(--violeta-profundo) 0%, var(--violeta) 50%, #201435 100%);
+}
+
+/* Optimización de rendimiento para renderizado fuera de pantalla */
+.seccion-optimizada {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 700px;
+}
+
+.interior {
+  max-width: 68rem;
+  margin-inline: auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Cabecera estándar de secciones */
+.seccion-header {
+  max-width: 38rem;
+  margin: 0 auto clamp(2.5rem, 6vw, 4rem);
+  text-align: center;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+  font-family: var(--titulo);
+  font-style: italic;
+  font-size: clamp(1.2rem, 3vw, 1.45rem);
+  color: var(--plata);
+}
+
+.titulo-seccion {
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  color: var(--dorado);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.8rem;
+}
+
+.descripcion-seccion {
+  color: var(--crema);
+  opacity: 0.9;
+  font-size: 1.05rem;
+  max-width: 36rem;
+  margin-inline: auto;
+}
+
+/* Botones con estilo celestial */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  font-family: var(--cuerpo);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: center;
+  color: var(--dorado);
+  background: transparent;
+  border: 1px solid var(--dorado);
+  border-radius: var(--radio-full);
+  cursor: pointer;
+  transition: var(--transicion);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.08);
+}
+
+.boton:hover {
+  color: var(--noche);
+  background: var(--dorado);
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+  transform: translateY(-2px);
+}
+
+.boton--lleno {
+  color: var(--noche);
+  background: var(--dorado);
+  border-color: var(--dorado);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.35);
+}
+
+.boton--lleno:hover {
+  background: var(--crema);
+  border-color: var(--crema);
+  color: var(--noche);
+  box-shadow: 0 0 30px rgba(245, 239, 230, 0.4);
+}
+
+.boton--chico {
+  padding: 0.55rem 1.15rem;
+  font-size: 0.85rem;
+}
+
+.badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--dorado);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-full);
+}

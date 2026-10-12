@@ -1,0 +1,326 @@
+---
+import { danielaProfile, rodrigoProfile } from '../../data/couple';
+import BrideIcon from '../icons/BrideIcon.astro';
+import GroomIcon from '../icons/GroomIcon.astro';
+import HeartIcon from '../icons/HeartIcon.astro';
+import StarIcon from '../icons/StarIcon.astro';
+import BookOpenIcon from '../icons/BookOpenIcon.astro';
+import QuoteIcon from '../icons/QuoteIcon.astro';
+import { withBase } from '../../utils/paths';
+---
+<section class="seccion" id="novios">
+  <div class="interior">
+    <div class="seccion-header">
+      <p class="kicker">Dos historias, un mismo firmamento</p>
+      <h2 class="titulo-seccion">Los novios</h2>
+      <p class="descripcion-seccion">
+        Una médica que aprendió a leer constelaciones desde el techo y un profesor de literatura que encuentra galaxias entre las páginas de los libros.
+      </p>
+    </div>
+
+    <div class="novios-grid">
+      <!-- Daniela -->
+      <article class="novio-card revelar">
+        <div class="novio__foto-wrapper">
+          <img
+            src={withBase(danielaProfile.photoUrl)}
+            alt={`Retrato de ${danielaProfile.fullName}`}
+            width="640"
+            height="800"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="novio__badge novio__badge--daniela">
+            <BrideIcon size={20} />
+            <span>{danielaProfile.role}</span>
+          </div>
+        </div>
+
+        <h3 class="novio__nombre">{danielaProfile.name}</h3>
+        <p class="novio__ocupacion">{danielaProfile.occupation} · {danielaProfile.education}</p>
+        
+        <div class="novio__cita">
+          <QuoteIcon size={18} class="novio__quote-icon" />
+          <p>«{danielaProfile.favoriteQuote}»</p>
+        </div>
+
+        <p class="novio__bio">{danielaProfile.personality}</p>
+
+        <!-- Conexión estelar -->
+        <div class="novio__estelar">
+          <h4 class="estelar__titulo">
+            <StarIcon size={16} />
+            <span>Conexión con el cielo estrellado</span>
+          </h4>
+          <ul class="estelar__lista">
+            {danielaProfile.starlitConnection.map(item => (
+              <li>
+                <strong>{item.title}:</strong> {item.description}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Datos rápidos -->
+        <dl class="novio__datos">
+          <div><dt>Comida preferida</dt><dd>{danielaProfile.quickFavorites.comida}</dd></div>
+          <div><dt>Libro favorito</dt><dd>{danielaProfile.quickFavorites.libro}</dd></div>
+          <div><dt>Lugar en Arequipa</dt><dd>{danielaProfile.quickFavorites.lugar}</dd></div>
+          <div><dt>Signo zodiacal</dt><dd>{danielaProfile.zodiac}</dd></div>
+        </dl>
+      </article>
+
+      <!-- Rodrigo -->
+      <article class="novio-card revelar revelar--retraso-1">
+        <div class="novio__foto-wrapper">
+          <img
+            src={withBase(rodrigoProfile.photoUrl)}
+            alt={`Retrato de ${rodrigoProfile.fullName}`}
+            width="640"
+            height="800"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="novio__badge novio__badge--rodrigo">
+            <GroomIcon size={20} />
+            <span>{rodrigoProfile.role}</span>
+          </div>
+        </div>
+
+        <h3 class="novio__nombre">{rodrigoProfile.name}</h3>
+        <p class="novio__ocupacion">{rodrigoProfile.occupation} · {rodrigoProfile.education}</p>
+
+        <div class="novio__cita">
+          <QuoteIcon size={18} class="novio__quote-icon" />
+          <p>«{rodrigoProfile.favoriteQuote}»</p>
+        </div>
+
+        <p class="novio__bio">{rodrigoProfile.personality}</p>
+
+        <!-- Conexión estelar -->
+        <div class="novio__estelar">
+          <h4 class="estelar__titulo">
+            <StarIcon size={16} />
+            <span>Conexión con el cielo estrellado</span>
+          </h4>
+          <ul class="estelar__lista">
+            {rodrigoProfile.starlitConnection.map(item => (
+              <li>
+                <strong>{item.title}:</strong> {item.description}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Datos rápidos -->
+        <dl class="novio__datos">
+          <div><dt>Comida preferida</dt><dd>{rodrigoProfile.quickFavorites.comida}</dd></div>
+          <div><dt>Libro favorito</dt><dd>{rodrigoProfile.quickFavorites.libro}</dd></div>
+          <div><dt>Lugar en Arequipa</dt><dd>{rodrigoProfile.quickFavorites.lugar}</dd></div>
+          <div><dt>Signo zodiacal</dt><dd>{rodrigoProfile.zodiac}</dd></div>
+        </dl>
+      </article>
+    </div>
+
+    <!-- Vínculo compartido -->
+    <div class="juntos-banner revelar">
+      <HeartIcon size={22} fill={true} class="juntos-banner__icon" />
+      <p>
+        Juntos tienen a <strong>Proust</strong>, su conejo consentido, y una melodía inolvidable:
+        <em>«La Vie en Rose»</em>, la cual ellos han bautizado con complicidad como <strong>«La vie en ciel»</strong>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .novios-grid {
+    display: grid;
+    gap: 3.5rem;
+  }
+
+  @media (min-width: 820px) {
+    .novios-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4.5rem;
+    }
+  }
+
+  .novio-card {
+    text-align: center;
+    background: rgba(27, 42, 74, 0.45);
+    border: 1px solid var(--linea-suave);
+    border-radius: var(--radio-lg);
+    padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
+    box-shadow: var(--sombra-suave);
+    transition: var(--transicion);
+  }
+
+  .novio-card:hover {
+    border-color: var(--linea);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
+  }
+
+  .novio__foto-wrapper {
+    position: relative;
+    max-width: 19rem;
+    margin: 0 auto 2rem;
+  }
+
+  .novio__foto-wrapper img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 200px 200px 14px 14px;
+    border: 1.5px solid var(--dorado);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .novio__badge {
+    position: absolute;
+    bottom: -0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--noche);
+    background: var(--dorado);
+    border-radius: var(--radio-full);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .novio__nombre {
+    margin-bottom: 0.3rem;
+    font-family: var(--script);
+    font-size: clamp(3rem, 7vw, 3.8rem);
+    color: var(--dorado);
+  }
+
+  .novio__ocupacion {
+    font-family: var(--titulo);
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--plata);
+    margin-bottom: 1.25rem;
+  }
+
+  .novio__cita {
+    position: relative;
+    max-width: 25rem;
+    margin: 0 auto 1.25rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(11, 29, 58, 0.5);
+    border-left: 2px solid var(--dorado);
+    border-radius: 0 var(--radio-sm) var(--radio-sm) 0;
+    font-family: var(--titulo);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--crema);
+  }
+
+  .novio__quote-icon {
+    display: inline-block;
+    color: var(--dorado);
+    opacity: 0.6;
+    margin-bottom: 0.2rem;
+  }
+
+  .novio__bio {
+    max-width: 26rem;
+    margin: 0 auto 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--crema);
+    opacity: 0.9;
+  }
+
+  .novio__estelar {
+    background: rgba(11, 29, 58, 0.6);
+    border: 1px solid var(--linea-suave);
+    border-radius: var(--radio-md);
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+
+  .estelar__titulo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--titulo);
+    font-size: 1.15rem;
+    color: var(--dorado);
+    margin-bottom: 0.75rem;
+  }
+
+  .estelar__lista {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--crema);
+    opacity: 0.92;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .novio__datos {
+    max-width: 24rem;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 0.92rem;
+  }
+
+  .novio__datos div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-top: 1px solid var(--linea-suave);
+  }
+
+  .novio__datos div:last-child {
+    border-bottom: 1px solid var(--linea-suave);
+  }
+
+  .novio__datos dt {
+    color: var(--plata);
+    font-size: 0.88rem;
+  }
+
+  .novio__datos dd {
+    margin: 0;
+    color: var(--crema);
+    font-weight: 500;
+    text-align: right;
+  }
+
+  .juntos-banner {
+    max-width: 44rem;
+    margin: 4.5rem auto 0;
+    padding: 1.75rem 2rem;
+    text-align: center;
+    background: radial-gradient(circle, rgba(74, 59, 107, 0.3) 0%, rgba(27, 42, 74, 0.6) 100%);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-md);
+    box-shadow: var(--sombra-suave);
+  }
+
+  .juntos-banner__icon {
+    color: var(--dorado);
+    margin: 0 auto 0.75rem;
+  }
+
+  .juntos-banner p {
+    margin: 0;
+    font-family: var(--titulo);
+    font-size: clamp(1.2rem, 3vw, 1.4rem);
+    color: var(--crema);
+    line-height: 1.5;
+  }
+</style>

@@ -1,0 +1,148 @@
+---
+import { recommendedHotels, hotelNotice } from '../../data/hotels';
+import BedIcon from '../icons/BedIcon.astro';
+import MapPinIcon from '../icons/MapPinIcon.astro';
+---
+<section class="seccion seccion--profundo seccion-optimizada" id="hospedaje">
+  <div class="interior">
+    <div class="seccion-header">
+      <div class="hospedaje__badge">
+        <BedIcon size={20} class="text-[#D4AF37]" />
+        <span>Estadía en Arequipa</span>
+      </div>
+      <p class="kicker">Si vienes de fuera</p>
+      <h2 class="titulo-seccion">Hospedaje sugerido</h2>
+      <p class="descripcion-seccion">
+        Opciones seleccionadas con cercanía a la hacienda y acceso al centro histórico.
+      </p>
+    </div>
+
+    <div class="hoteles-lista">
+      {recommendedHotels.map((hotel, idx) => (
+        <article class={`hotel-card revelar ${idx > 0 ? `revelar--retraso-${Math.min(idx, 3)}` : ''}`}>
+          <div class="hotel__info">
+            <h3 class="hotel__nombre">{hotel.name}</h3>
+            <p class="hotel__distancia">
+              <MapPinIcon size={16} class="hotel__pin-icon" />
+              <span>{hotel.distance}</span>
+            </p>
+            {hotel.notes && <p class="hotel__notas">{hotel.notes}</p>}
+          </div>
+          <div class="hotel__precio-bloque">
+            <span class="hotel__monto">{hotel.pricePerNight}</span>
+            <span class="hotel__periodo">por noche aprox.</span>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <p class="hospedaje__aviso revelar">{hotelNotice}</p>
+  </div>
+</section>
+
+<style>
+  .hospedaje__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-full);
+    margin-bottom: 0.9rem;
+  }
+
+  .hoteles-lista {
+    max-width: 48rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 1.5rem;
+    border-top: 1px solid var(--linea);
+    padding-top: 1.5rem;
+  }
+
+  .hotel-card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.25rem 2rem;
+    padding: 1.5rem 1.75rem;
+    background: rgba(11, 29, 58, 0.6);
+    border: 1px solid var(--linea-suave);
+    border-radius: var(--radio-md);
+    box-shadow: var(--sombra-suave);
+    transition: var(--transicion);
+  }
+
+  .hotel-card:hover {
+    border-color: var(--dorado);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  }
+
+  .hotel__info {
+    flex: 1;
+    min-width: min(16rem, 100%);
+  }
+
+  .hotel__nombre {
+    font-size: 1.6rem;
+    color: var(--crema);
+    margin-bottom: 0.3rem;
+  }
+
+  .hotel__distancia {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.92rem;
+    color: var(--dorado);
+    margin-bottom: 0.4rem;
+  }
+
+  .hotel__pin-icon {
+    flex-shrink: 0;
+  }
+
+  .hotel__notas {
+    font-size: 0.88rem;
+    color: var(--plata);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .hotel__precio-bloque {
+    text-align: right;
+  }
+
+  .hotel__monto {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--dorado);
+  }
+
+  .hotel__periodo {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--plata);
+    margin-top: 0.25rem;
+  }
+
+  .hospedaje__aviso {
+    max-width: 44rem;
+    margin: 2rem auto 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--plata);
+    line-height: 1.6;
+  }
+</style>

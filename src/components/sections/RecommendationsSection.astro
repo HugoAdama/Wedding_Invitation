@@ -1,0 +1,89 @@
+---
+import { weddingRecommendations } from '../../data/recommendations';
+import MapPinIcon from '../icons/MapPinIcon.astro';
+import SparklesIcon from '../icons/SparklesIcon.astro';
+import ClockIcon from '../icons/ClockIcon.astro';
+---
+<section class="seccion seccion-optimizada" id="recomendaciones">
+  <div class="interior">
+    <div class="seccion-header">
+      <p class="kicker">Para que todo salga perfecto</p>
+      <h2 class="titulo-seccion">Recomendaciones</h2>
+      <p class="descripcion-seccion">
+        Detalles clave para que tu experiencia en nuestra boda sea inolvidable y placentera.
+      </p>
+    </div>
+
+    <div class="recomendaciones-grid">
+      {weddingRecommendations.map((rec, idx) => (
+        <article class={`rec-card revelar ${idx > 0 ? `revelar--retraso-${idx}` : ''}`}>
+          <div class="rec__icono-box">
+            {rec.iconName === 'map-pin' && <MapPinIcon size={24} />}
+            {rec.iconName === 'sparkles' && <SparklesIcon size={24} />}
+            {rec.iconName === 'clock' && <ClockIcon size={24} />}
+          </div>
+          <h3 class="rec__titulo">{rec.title}</h3>
+          <p class="rec__desc">{rec.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .recomendaciones-grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .recomendaciones-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+  }
+
+  .rec-card {
+    background: rgba(27, 42, 74, 0.45);
+    border: 1px solid var(--linea-suave);
+    border-radius: var(--radio-md);
+    padding: 2.25rem 1.75rem;
+    text-align: center;
+    box-shadow: var(--sombra-suave);
+    transition: var(--transicion);
+  }
+
+  .rec-card:hover {
+    border-color: var(--dorado);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .rec__icono-box {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 0 auto 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(11, 29, 58, 0.7);
+    border: 1px solid var(--linea);
+    color: var(--dorado);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+  }
+
+  .rec__titulo {
+    font-size: 1.6rem;
+    color: var(--dorado);
+    margin-bottom: 0.75rem;
+  }
+
+  .rec__desc {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--crema);
+    opacity: 0.9;
+    margin: 0;
+  }
+</style>

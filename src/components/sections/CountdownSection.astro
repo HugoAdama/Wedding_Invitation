@@ -1,0 +1,183 @@
+---
+import { weddingData } from '../../data/wedding';
+import ClockIcon from '../icons/ClockIcon.astro';
+import ShootingStars from '../ui/ShootingStars.astro';
+---
+<section class="seccion cielo" id="cuenta-seccion">
+  <ShootingStars />
+
+  <div class="interior">
+    <div class="seccion-header revelar">
+      <div class="cuenta__badge">
+        <ClockIcon size={18} class="text-[#D4AF37]" />
+        <span>Tiempo Hacia el Enlace</span>
+      </div>
+      <p class="kicker">Cada noche falta una menos</p>
+      <h2 class="titulo-seccion brillo-dorado">Nos vemos pronto</h2>
+      <p class="descripcion-seccion">
+        Contando cada segundo hasta encontrarnos bajo el cielo estrellado de Arequipa.
+      </p>
+    </div>
+
+    <div
+      class="cuenta-grid revelar"
+      id="cuenta"
+      role="timer"
+      aria-label="Cuenta regresiva para la boda de Daniela y Rodrigo"
+      data-fecha={weddingData.eventDate}
+    >
+      <div class="cuenta__item">
+        <span class="cuenta__num" id="dias">--</span>
+        <span class="cuenta__txt">días</span>
+      </div>
+      <div class="cuenta__item">
+        <span class="cuenta__num" id="horas">--</span>
+        <span class="cuenta__txt">horas</span>
+      </div>
+      <div class="cuenta__item">
+        <span class="cuenta__num" id="minutos">--</span>
+        <span class="cuenta__txt">minutos</span>
+      </div>
+      <div class="cuenta__item">
+        <span class="cuenta__num" id="segundos">--</span>
+        <span class="cuenta__txt">segundos</span>
+      </div>
+    </div>
+
+    <p class="cuenta__fin" id="cuenta-fin" hidden>
+      ¡Llegó el momento! Estamos celebrando bajo las estrellas.
+    </p>
+  </div>
+</section>
+
+<style>
+  .cuenta__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-full);
+    margin-bottom: 0.9rem;
+  }
+
+  .cuenta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(0.4rem, 2vw, 1.25rem);
+    max-width: 36rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .cuenta__item {
+    min-width: 0;
+    padding: clamp(0.9rem, 2.5vw, 1.75rem) clamp(0.25rem, 1vw, 0.85rem);
+    text-align: center;
+    background: rgba(11, 29, 58, 0.75);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-md);
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.1);
+    backdrop-filter: blur(8px);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .cuenta__item:hover {
+    transform: translateY(-4px);
+    border-color: var(--dorado);
+    box-shadow: 0 0 35px rgba(212, 175, 55, 0.35);
+  }
+
+  .cuenta__num {
+    display: block;
+    font-family: var(--titulo);
+    font-size: clamp(1.8rem, 6.5vw, 3.8rem);
+    line-height: 1;
+    font-weight: 500;
+    color: var(--dorado);
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.35);
+  }
+
+  .cuenta__txt {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: clamp(0.68rem, 2vw, 0.85rem);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--plata);
+    font-weight: 500;
+  }
+
+  .cuenta__fin {
+    margin: 2rem 0 0;
+    text-align: center;
+    font-family: var(--titulo);
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--dorado);
+  }
+</style>
+
+<script>
+  function iniciarCuentaRegresiva() {
+    const contenedor = document.getElementById("cuenta");
+    const fin = document.getElementById("cuenta-fin");
+    if (!contenedor) return;
+
+    const fechaDestinoStr = contenedor.getAttribute("data-fecha");
+    if (!fechaDestinoStr) return;
+
+    const fechaDestino = new Date(fechaDestinoStr).getTime();
+    const elDias = document.getElementById("dias");
+    const elHoras = document.getElementById("horas");
+    const elMin = document.getElementById("minutos");
+    const elSeg = document.getElementById("segundos");
+
+    const pad = (n: number) => String(n).padStart(2, "0");
+
+    function actualizar() {
+      const ahora = Date.now();
+      const diferencia = fechaDestino - ahora;
+
+      if (diferencia <= 0) {
+        if (contenedor) contenedor.hidden = true;
+        if (fin) fin.hidden = false;
+        return false;
+      }
+
+      const totalSegundos = Math.floor(diferencia / 1000);
+      const dias = Math.floor(totalSegundos / 86400);
+      const horas = Math.floor((totalSegundos % 86400) / 3600);
+      const minutos = Math.floor((totalSegundos % 3600) / 60);
+      const segundos = totalSegundos % 60;
+
+      if (elDias) elDias.textContent = String(dias);
+      if (elHoras) elHoras.textContent = pad(horas);
+      if (elMin) elMin.textContent = pad(minutos);
+      if (elSeg) elSeg.textContent = pad(segundos);
+
+      return true;
+    }
+
+    if (actualizar()) {
+      const temporizador = setInterval(() => {
+        if (!actualizar()) {
+          clearInterval(temporizador);
+        }
+      }, 1000);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", iniciarCuentaRegresiva);
+  } else {
+    iniciarCuentaRegresiva();
+  }
+</script>

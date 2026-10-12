@@ -1,0 +1,54 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = "w-44 h-auto mx-auto" } = Astro.props;
+---
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 200 24"
+  class={`fases-lunares-svg ${className}`}
+  fill="currentColor"
+  aria-hidden="true"
+>
+  <g fill="none" stroke="currentColor" stroke-width="1" class="fases-anillos">
+    <circle cx="12" cy="12" r="9" />
+    <circle cx="56" cy="12" r="9" />
+    <circle cx="100" cy="12" r="9" />
+    <circle cx="144" cy="12" r="9" />
+    <circle cx="188" cy="12" r="9" />
+  </g>
+  <g fill="currentColor">
+    <path d="M56 3 A9 9 0 0 1 56 21 A5 9 0 0 0 56 3Z" class="fase-iluminada" />
+    <path d="M100 3 A9 9 0 0 1 100 21Z" class="fase-iluminada" />
+    <path d="M144 3 A9 9 0 0 1 144 21 A5 9 0 0 1 144 3Z" class="fase-iluminada" />
+    <circle cx="188" cy="12" r="9" class="luna-llena-resplandor" />
+  </g>
+</svg>
+
+<style>
+  .fases-lunares-svg {
+    filter: drop-shadow(0 0 3px rgba(212, 175, 55, 0.25));
+    transition: filter 0.3s ease;
+  }
+
+  .fases-lunares-svg:hover {
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.6));
+  }
+
+  .luna-llena-resplandor {
+    animation: pulso-plenilunio 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulso-plenilunio {
+    0% { filter: drop-shadow(0 0 2px #D4AF37); opacity: 0.85; }
+    100% { filter: drop-shadow(0 0 8px #FFF4D0); opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .luna-llena-resplandor {
+      animation: none !important;
+    }
+  }
+</style>

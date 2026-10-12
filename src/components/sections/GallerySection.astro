@@ -1,0 +1,128 @@
+---
+import { weddingGallery } from '../../data/gallery';
+import SparklesIcon from '../icons/SparklesIcon.astro';
+import { withBase } from '../../utils/paths';
+---
+<section class="seccion seccion--profundo seccion-optimizada" id="galeria">
+  <div class="interior">
+    <div class="seccion-header">
+      <div class="galeria__badge">
+        <SparklesIcon size={18} class="text-[#D4AF37]" />
+        <span>Instantes Eternos</span>
+      </div>
+      <p class="kicker">Fragmentos de nuestro camino</p>
+      <h2 class="titulo-seccion">Galería</h2>
+      <p class="descripcion-seccion">
+        Momentos cómplices que sellaron nuestra complicidad a través de los años.
+      </p>
+    </div>
+
+    <div class="galeria-masonry">
+      {weddingGallery.map((foto, idx) => (
+        <figure class={`galeria-card revelar ${idx % 3 !== 0 ? `revelar--retraso-${idx % 3}` : ''}`}>
+          <div class="galeria__imagen-box">
+            <img
+              src={withBase(foto.image)}
+              alt={foto.title}
+              width="600"
+              height="800"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <figcaption class="galeria-caption">
+            <span class="galeria__titulo">{foto.title}</span>
+            <span class="galeria__sub">{foto.caption}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .galeria__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-full);
+    margin-bottom: 0.9rem;
+  }
+
+  .galeria-masonry {
+    columns: 1;
+    column-gap: 1.5rem;
+  }
+
+  @media (min-width: 600px) {
+    .galeria-masonry {
+      columns: 2;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .galeria-masonry {
+      columns: 3;
+    }
+  }
+
+  .galeria-card {
+    margin: 0 0 1.5rem;
+    break-inside: avoid;
+    background: rgba(11, 29, 58, 0.6);
+    border: 1px solid var(--linea-suave);
+    border-radius: var(--radio-md);
+    overflow: hidden;
+    box-shadow: var(--sombra-suave);
+    transition: var(--transicion);
+  }
+
+  .galeria-card:hover {
+    border-color: var(--dorado);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  }
+
+  .galeria__imagen-box {
+    overflow: hidden;
+  }
+
+  .galeria-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .galeria-card:hover img {
+    transform: scale(1.05);
+  }
+
+  .galeria-caption {
+    padding: 1rem 1.25rem;
+    text-align: left;
+  }
+
+  .galeria__titulo {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 1.35rem;
+    color: var(--dorado);
+    margin-bottom: 0.2rem;
+  }
+
+  .galeria__sub {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--plata);
+    line-height: 1.4;
+  }
+</style>

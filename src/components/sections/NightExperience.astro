@@ -1,0 +1,154 @@
+---
+import { celestialExperiences, themeDetails } from '../../data/experience';
+import GalaxyIcon from '../icons/GalaxyIcon.astro';
+import TelescopeIcon from '../icons/TelescopeIcon.astro';
+import MusicIcon from '../icons/MusicIcon.astro';
+import BookOpenIcon from '../icons/BookOpenIcon.astro';
+import StarIcon from '../icons/StarIcon.astro';
+import { withBase } from '../../utils/paths';
+---
+<section class="seccion" id="la-noche">
+  <div class="interior">
+    <div class="seccion-header">
+      <div class="noche__badge">
+        <GalaxyIcon size={20} class="text-[#D4AF37]" />
+        <span>Atmósfera &amp; Concepto</span>
+      </div>
+      <p class="kicker">El tema de la celebración</p>
+      <h2 class="titulo-seccion">Una noche para mirar arriba</h2>
+      <p class="descripcion-seccion">
+        {themeDetails.summary}
+      </p>
+    </div>
+
+    <div class="noche-grid">
+      <div class="noche__foto-col revelar">
+        <div class="noche__marco">
+          <img
+            src={withBase(themeDetails.image)}
+            alt="Telescopio apuntando al firmamento estrellado"
+            width="640"
+            height="800"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+
+      <div class="noche__items-col">
+        <ul class="experiencias-lista">
+          {celestialExperiences.map((item, idx) => (
+            <li class={`experiencia-item revelar ${idx > 0 ? `revelar--retraso-${Math.min(idx, 3)}` : ''}`}>
+              <div class="experiencia__icono-wrapper">
+                {item.icon === 'telescope' && <TelescopeIcon size={24} />}
+                {item.icon === 'music' && <MusicIcon size={24} />}
+                {item.icon === 'book' && <BookOpenIcon size={24} />}
+                {item.icon === 'map-star' && <StarIcon size={24} />}
+              </div>
+              <div class="experiencia__texto">
+                <h3 class="experiencia__titulo">{item.title}</h3>
+                <p class="experiencia__desc">{item.description}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .noche__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-full);
+    margin-bottom: 0.9rem;
+  }
+
+  .noche-grid {
+    display: grid;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 820px) {
+    .noche-grid {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 4.5rem;
+    }
+  }
+
+  .noche__foto-col {
+    max-width: 25rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .noche__marco {
+    position: relative;
+    border-radius: var(--radio-md);
+    overflow: hidden;
+    border: 1.5px solid var(--linea);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+  }
+
+  .noche__marco img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  .experiencias-lista {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .experiencia-item {
+    display: flex;
+    gap: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--linea-suave);
+    align-items: flex-start;
+  }
+
+  .experiencia__icono-wrapper {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 50%;
+    background: rgba(27, 42, 74, 0.7);
+    border: 1px solid var(--linea);
+    color: var(--dorado);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.12);
+  }
+
+  .experiencia__texto {
+    flex: 1;
+  }
+
+  .experiencia__titulo {
+    font-size: 1.5rem;
+    color: var(--dorado);
+    margin-bottom: 0.35rem;
+  }
+
+  .experiencia__desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--crema);
+    opacity: 0.9;
+    margin: 0;
+  }
+</style>

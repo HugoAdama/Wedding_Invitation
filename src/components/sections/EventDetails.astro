@@ -1,0 +1,305 @@
+---
+import { weddingVenues, daySchedule, venueLocation } from '../../data/schedule';
+import CalendarIcon from '../icons/CalendarIcon.astro';
+import ClockIcon from '../icons/ClockIcon.astro';
+import MapPinIcon from '../icons/MapPinIcon.astro';
+import WhatsAppIcon from '../icons/WhatsAppIcon.astro';
+import SparklesIcon from '../icons/SparklesIcon.astro';
+import { withBase } from '../../utils/paths';
+---
+<section class="seccion seccion--profundo" id="ceremonia">
+  <div class="interior">
+    <div class="seccion-header">
+      <div class="ceremonia__badge">
+        <CalendarIcon size={20} class="text-[#D4AF37]" />
+        <span>El Gran Día</span>
+      </div>
+      <p class="kicker">Guarda la fecha</p>
+      <h2 class="titulo-seccion">Ceremonia y celebración</h2>
+      <p class="descripcion-seccion">
+        Sábado 12 de junio de 2027 · Hacienda San José, Carretera Arequipa–Yura Km 8
+      </p>
+    </div>
+
+    <!-- Tarjetas de Ceremonia y Recepción -->
+    <div class="lugares-grid">
+      {weddingVenues.map((venue, idx) => (
+        <article class={`lugar-card revelar ${idx === 1 ? 'revelar--retraso-1' : ''}`}>
+          <div class="lugar__foto">
+            <img
+              src={withBase(venue.image)}
+              alt={venue.title}
+              width="800"
+              height="500"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="lugar__cuerpo">
+            <div class="lugar__hora-tag">
+              <ClockIcon size={18} />
+              <span>{venue.time}</span>
+            </div>
+            <h3 class="lugar__titulo">{venue.title}</h3>
+            <p class="lugar__nombre">{venue.name}</p>
+            <p class="lugar__dir">
+              <MapPinIcon size={16} class="lugar__pin-icon" />
+              <span>{venue.location}</span>
+            </p>
+            <p class="lugar__desc">{venue.description}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Programa hora por hora -->
+    <div class="programa-bloque revelar">
+      <h3 class="programa__titulo">
+        <SparklesIcon size={20} class="text-[#D4AF37]" />
+        <span>La noche, hora por hora</span>
+        <SparklesIcon size={20} class="text-[#D4AF37]" />
+      </h3>
+
+      <dl class="programa-lista">
+        {daySchedule.map(item => (
+          <div class="programa-item">
+            <dt class="programa-hora">{item.time}</dt>
+            <dd class="programa-info">
+              <h4 class="programa-evento">{item.title}</h4>
+              <p class="programa-desc">{item.description}</p>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <!-- Mapa interactivo -->
+    <div class="mapa-wrapper revelar">
+      <div class="mapa-frame">
+        <iframe
+          title="Ubicación de la Hacienda San José, Km 8 Carretera Arequipa-Yura"
+          src={venueLocation.mapEmbedUrl}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <div class="mapa-info">
+        <p>El mapa muestra la zona de la hacienda. Por motivos de privacidad y seguridad, las coordenadas exactas de ingreso se envían por WhatsApp.</p>
+        <a
+          class="boton boton--lleno"
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`https://wa.me/51999777666?text=${encodeURIComponent(venueLocation.whatsappLocationText)}`}
+        >
+          <WhatsAppIcon size={18} />
+          <span>Solicitar ubicación exacta por WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ceremonia__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-full);
+    margin-bottom: 0.9rem;
+  }
+
+  .lugares-grid {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: 4.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .lugares-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .lugar-card {
+    background: rgba(11, 29, 58, 0.7);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-md);
+    overflow: hidden;
+    box-shadow: var(--sombra-suave);
+    transition: var(--transicion);
+  }
+
+  .lugar-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border-color: rgba(212, 175, 55, 0.6);
+  }
+
+  .lugar__foto {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--noche);
+  }
+
+  .lugar__foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .lugar-card:hover .lugar__foto img {
+    transform: scale(1.04);
+  }
+
+  .lugar__cuerpo {
+    padding: 1.75rem;
+  }
+
+  .lugar__hora-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.6rem;
+    font-family: var(--titulo);
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--dorado);
+  }
+
+  .lugar__titulo {
+    font-size: 1.6rem;
+    color: var(--crema);
+    margin-bottom: 0.4rem;
+  }
+
+  .lugar__nombre {
+    font-weight: 600;
+    color: var(--crema);
+    margin-bottom: 0.25rem;
+  }
+
+  .lugar__dir {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.92rem;
+    color: var(--plata);
+    margin-bottom: 0.75rem;
+  }
+
+  .lugar__pin-icon {
+    color: var(--dorado);
+    flex-shrink: 0;
+  }
+
+  .lugar__desc {
+    font-size: 0.94rem;
+    line-height: 1.6;
+    color: var(--crema);
+    opacity: 0.88;
+    margin: 0;
+  }
+
+  /* Programa */
+  .programa-bloque {
+    max-width: 44rem;
+    margin: 0 auto 4.5rem;
+  }
+
+  .programa__titulo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    text-align: center;
+    font-size: clamp(1.8rem, 4vw, 2.3rem);
+    color: var(--crema);
+    margin-bottom: 2rem;
+  }
+
+  .programa-lista {
+    border-top: 1px solid var(--linea);
+  }
+
+  .programa-item {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 1.25rem;
+    padding: 1.15rem 0;
+    border-bottom: 1px solid var(--linea-suave);
+    align-items: baseline;
+  }
+
+  .programa-hora {
+    font-family: var(--titulo);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--dorado);
+  }
+
+  .programa-info {
+    margin: 0;
+  }
+
+  .programa-evento {
+    font-family: var(--cuerpo);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--crema);
+    margin-bottom: 0.25rem;
+  }
+
+  .programa-desc {
+    font-size: 0.9rem;
+    color: var(--plata);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 600px) {
+    .programa-item {
+      grid-template-columns: 1fr;
+      gap: 0.35rem;
+    }
+  }
+
+  /* Mapa */
+  .mapa-wrapper {
+    max-width: 54rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .mapa-frame {
+    aspect-ratio: 16 / 8;
+    min-height: 16rem;
+    overflow: hidden;
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-md);
+    box-shadow: var(--sombra-suave);
+    margin-bottom: 1.5rem;
+    background: var(--noche);
+  }
+
+  .mapa-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .mapa-info p {
+    color: var(--plata);
+    font-size: 0.95rem;
+    max-width: 34rem;
+    margin: 0 auto 1.5rem;
+  }
+</style>

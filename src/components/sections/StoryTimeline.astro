@@ -1,0 +1,175 @@
+---
+import { storyMilestones } from '../../data/story';
+import BookOpenIcon from '../icons/BookOpenIcon.astro';
+import StarIcon from '../icons/StarIcon.astro';
+import { withBase } from '../../utils/paths';
+---
+<section class="seccion seccion--alterna" id="historia">
+  <div class="interior">
+    <div class="seccion-header">
+      <div class="historia__badge">
+        <BookOpenIcon size={20} class="text-[#D4AF37]" />
+        <span>Nuestra Travesía</span>
+      </div>
+      <p class="kicker">De la biblioteca a las estrellas</p>
+      <h2 class="titulo-seccion">Nuestra historia</h2>
+      <p class="descripcion-seccion">
+        Cada capítulo que nos trajo hasta esta noche bajo el cielo de Arequipa.
+      </p>
+    </div>
+
+    <div class="historia-timeline">
+      {storyMilestones.map((momento, idx) => (
+        <article class={`momento revelar ${idx % 2 === 1 ? 'momento--invertido' : ''}`}>
+          <div class="momento__foto-container">
+            <div class="momento__marco">
+              <img
+                src={withBase(momento.image)}
+                alt={momento.alt}
+                width="720"
+                height="900"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+
+          <div class="momento__contenido">
+            <div class="momento__anio-wrapper">
+              <span class="momento__anio">{momento.year}</span>
+              <StarIcon size={18} class="momento__star" />
+            </div>
+            
+            <h3 class="momento__titulo">{momento.title}</h3>
+            {momento.subtitle && <p class="momento__subtitulo">{momento.subtitle}</p>}
+            <p class="momento__desc">{momento.description}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .historia__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-full);
+    margin-bottom: 0.9rem;
+  }
+
+  .historia-timeline {
+    display: grid;
+    gap: clamp(3.5rem, 8vw, 6rem);
+  }
+
+  .momento {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  @media (min-width: 820px) {
+    .momento {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+
+    .momento--invertido .momento__foto-container {
+      order: 2;
+    }
+  }
+
+  .momento__foto-container {
+    position: relative;
+    max-width: 26rem;
+    margin-inline: auto;
+    width: 100%;
+  }
+
+  .momento__marco {
+    position: relative;
+    border-radius: var(--radio-md);
+    overflow: hidden;
+    border: 1px solid var(--linea);
+    box-shadow: var(--sombra-suave);
+    background: var(--profundo);
+  }
+
+  .momento__marco::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: calc(var(--radio-md) - 4px);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .momento__marco img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .momento:hover .momento__marco img {
+    transform: scale(1.03);
+  }
+
+  .momento__contenido {
+    max-width: 32rem;
+  }
+
+  .momento__anio-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .momento__anio {
+    font-family: var(--titulo);
+    font-size: clamp(3.2rem, 6vw, 4.2rem);
+    line-height: 1;
+    font-weight: 500;
+    color: var(--dorado);
+    text-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
+  }
+
+  .momento__star {
+    color: var(--dorado);
+    opacity: 0.8;
+  }
+
+  .momento__titulo {
+    font-size: clamp(1.9rem, 4vw, 2.4rem);
+    color: var(--crema);
+    margin-bottom: 0.3rem;
+  }
+
+  .momento__subtitulo {
+    font-family: var(--titulo);
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--plata);
+    margin-bottom: 1rem;
+  }
+
+  .momento__desc {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--crema);
+    opacity: 0.92;
+    margin: 0;
+  }
+</style>

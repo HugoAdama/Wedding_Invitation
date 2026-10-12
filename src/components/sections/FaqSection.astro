@@ -1,0 +1,110 @@
+---
+import { weddingFaqs } from '../../data/faq';
+import ChevronDownIcon from '../icons/ChevronDownIcon.astro';
+---
+<section class="seccion seccion--profundo seccion-optimizada" id="faq">
+  <div class="interior">
+    <div class="seccion-header">
+      <p class="kicker">Antes de que lo preguntes</p>
+      <h2 class="titulo-seccion">Preguntas frecuentes</h2>
+      <p class="descripcion-seccion">
+        Todo lo que necesitas saber para prepararte con tranquilidad y disfrutar de principio a fin.
+      </p>
+    </div>
+
+    <div class="faq-lista">
+      {weddingFaqs.map(item => (
+        <details class="faq-item">
+          <summary class="faq-pregunta">
+            <span>{item.question}</span>
+            <span class="faq-chevron">
+              <ChevronDownIcon size={18} />
+            </span>
+          </summary>
+          <div class="faq-respuesta">
+            <p>{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-lista {
+    max-width: 48rem;
+    margin: 0 auto;
+    border-top: 1px solid var(--linea);
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--linea-suave);
+    transition: background-color 0.2s ease;
+  }
+
+  .faq-item:hover {
+    background: rgba(212, 175, 55, 0.03);
+  }
+
+  .faq-pregunta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0.75rem;
+    min-height: 3.5rem;
+    font-family: var(--titulo);
+    font-size: clamp(1.2rem, 3vw, 1.55rem);
+    font-weight: 500;
+    color: var(--crema);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    border-radius: var(--radio-sm);
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .faq-pregunta:focus-visible {
+    outline: 2px solid var(--dorado);
+    outline-offset: -2px;
+  }
+
+  .faq-pregunta::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-chevron {
+    color: var(--dorado);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+
+  .faq-respuesta {
+    padding: 0 0.5rem 1.5rem;
+    color: var(--crema);
+    opacity: 0.92;
+    font-size: 0.98rem;
+    line-height: 1.7;
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .faq-respuesta p {
+    margin: 0;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 0.92;
+      transform: translateY(0);
+    }
+  }
+</style>
