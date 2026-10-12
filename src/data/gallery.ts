@@ -3,38 +3,38 @@ import type { GalleryItem } from '../types/wedding';
 export const weddingGallery: GalleryItem[] = [
   {
     id: 'g1',
-    title: 'Sesión al atardecer',
-    caption: 'La luz dorada de Arequipa iluminando nuestro abrazo y el inicio de esta nueva etapa',
+    title: 'El primer encuentro',
+    caption: 'El pasillo de la biblioteca de la UNSA donde cruzamos miradas entre Cortázar y Saint-Exupéry',
     image: '/images/galeria-1.webp'
   },
   {
     id: 'g2',
-    title: 'Miradas que lo dicen todo',
-    caption: 'La complicidad de ocho años convertida en promesa frente al altar',
+    title: 'Tardes de café y lectura',
+    caption: 'Incontables horas compartiendo confidencias, libros y café junto al ventanal',
     image: '/images/galeria-2.webp'
   },
   {
     id: 'g3',
-    title: 'El abrazo eterno',
-    caption: 'El instante en que el tiempo se detiene y solo existimos nosotros dos',
+    title: 'Rodrigo',
+    caption: 'Entre melodías en el piano, estanterías de libros y la noche arequipeña de fondo',
     image: '/images/galeria-3.webp'
   },
   {
     id: 'g4',
-    title: 'Hacia un mismo destino',
-    caption: 'Caminando de la mano con el traje y vestido de novios por los jardines de la hacienda',
+    title: 'Daniela',
+    caption: 'Dedicación y calidez en cada guardia, con el volcán Misti y el cielo como testigos',
     image: '/images/galeria-4.webp'
   },
   {
     id: 'g5',
-    title: 'Daniela, la novia',
-    caption: 'La emoción y la serenidad de una noche que soñamos bajo las estrellas',
+    title: 'Proust, nuestro consentido',
+    caption: 'Compañero inseparable de lecturas nocturnas y tardes en casa',
     image: '/images/galeria-5.webp'
   },
   {
     id: 'g6',
-    title: 'Bajo la caída del sol',
-    caption: 'Sellar este compromiso con la silueta de los volcanes y el crepúsculo de testigo',
+    title: 'Yanahuara bajo las estrellas',
+    caption: 'El mirador donde aprendimos a reconocer las constelaciones que hoy bendicen nuestra unión',
     image: '/images/galeria-6.webp'
   }
 ];
