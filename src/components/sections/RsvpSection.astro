@@ -3,213 +3,543 @@ import { weddingData } from '../../data/wedding';
 import WhatsAppIcon from '../icons/WhatsAppIcon.astro';
 import CheckCircleIcon from '../icons/CheckIcon.astro';
 import ShootingStars from '../ui/ShootingStars.astro';
+import SparklesIcon from '../icons/SparklesIcon.astro';
+import HeartIcon from '../icons/HeartIcon.astro';
+import CalendarIcon from '../icons/CalendarIcon.astro';
+import MapPinIcon from '../icons/MapPinIcon.astro';
+import ClockIcon from '../icons/ClockIcon.astro';
+import MusicIcon from '../icons/MusicIcon.astro';
 import { withBase } from '../../utils/paths';
 ---
 <section class="seccion cielo" id="confirmar">
   <ShootingStars />
 
-  <div class="interior rsvp-layout">
-    <div class="rsvp__foto-col revelar">
-      <div class="rsvp__marco">
-        <img
-          src={withBase('/images/rsvp-couple.webp')}
-          alt="Daniela y Rodrigo juntos bajo las estrellas"
-          width="640"
-          height="800"
-          loading="lazy"
-          decoding="async"
-        />
+  <div class="interior">
+    <!-- Encabezado general de sección centrado -->
+    <div class="seccion-header revelar">
+      <div class="rsvp__badge-plazo">
+        <CalendarIcon size={16} class="text-[#D4AF37]" />
+        <span>Plazo de confirmación: hasta el {weddingData.rsvpDeadline}</span>
       </div>
+      <p class="kicker">Tu presencia ilumina nuestra noche</p>
+      <h2 class="titulo-seccion brillo-dorado">¿Nos acompañas?</h2>
+      <p class="descripcion-seccion">
+        Queremos que seas parte de esta noche mágica bajo el firmamento arequipeño. Por favor completa tus datos para organizar cada detalle.
+      </p>
     </div>
 
-    <div class="rsvp__form-col revelar revelar--retraso-1">
-      <div class="rsvp__header">
-        <span class="rsvp__fecha-limite">
-          <CheckCircleIcon size={16} />
-          <span>Plazo: hasta el {weddingData.rsvpDeadline}</span>
-        </span>
-        <p class="kicker">Tu presencia ilumina nuestra noche</p>
-        <h2 class="titulo-seccion brillo-dorado">¿Nos acompañas?</h2>
-        <p class="rsvp__intro">
-          Por favor, completa tus datos. Al presionar enviar se abrirá automáticamente una conversación en WhatsApp
-          con tu confirmación redactada para nuestro número oficial.
-        </p>
+    <!-- Layout en 2 Columnas Balanceadas -->
+    <div class="rsvp-layout">
+      <!-- Columna Izquierda: Retrato de los novios + Resumen del evento -->
+      <div class="rsvp__info-col revelar">
+        <div class="rsvp__foto-card">
+          <div class="rsvp__marco">
+            <img
+              src={withBase('/images/rsvp-couple.webp')}
+              alt="Daniela y Rodrigo juntos bajo las estrellas en Arequipa"
+              width="640"
+              height="800"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="rsvp__marco-overlay">
+              <span class="rsvp__overlay-tag">
+                <SparklesIcon size={14} class="text-[#D4AF37]" />
+                <span>Daniela &amp; Rodrigo</span>
+              </span>
+              <p class="rsvp__overlay-cita">
+                «Cada persona que amamos es una constelación en nuestra vida.»
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta de resumen de coordenadas -->
+        <div class="rsvp__detalles-card">
+          <h3 class="rsvp__detalles-titulo">Coordenadas del Encuentro</h3>
+          <ul class="rsvp__detalles-lista">
+            <li>
+              <CalendarIcon size={18} class="detalles-icon" />
+              <div>
+                <strong>Fecha</strong>
+                <span>{weddingData.dateFormatted}</span>
+              </div>
+            </li>
+            <li>
+              <ClockIcon size={18} class="detalles-icon" />
+              <div>
+                <strong>Hora</strong>
+                <span>5:30 p. m. (Recepción y Ceremonia)</span>
+              </div>
+            </li>
+            <li>
+              <MapPinIcon size={18} class="detalles-icon" />
+              <div>
+                <strong>Lugar</strong>
+                <span>{weddingData.venueName} · Arequipa</span>
+              </div>
+            </li>
+          </ul>
+
+          <div class="rsvp__ayuda-box">
+            <p>¿Tienes dudas o requieres asistencia especial?</p>
+            <a
+              href={`https://wa.me/${weddingData.whatsappNumber}?text=${encodeURIComponent('¡Hola Dani y Rodrigo! Tengo una consulta sobre su boda bajo las estrellas.')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rsvp__ayuda-link"
+            >
+              <WhatsAppIcon size={16} />
+              <span>Escríbenos directamente</span>
+            </a>
+          </div>
+        </div>
       </div>
 
-      <form class="rsvp-form" id="rsvp-form" data-phone={weddingData.whatsappNumber}>
-        <div class="campo">
-          <label for="nombre">Nombre y apellido *</label>
-          <input
-            id="nombre"
-            name="nombre"
-            type="text"
-            autocomplete="name"
-            placeholder="Ej. Carmen Velarde"
-            required
-          />
-        </div>
-
-        <div class="campo">
-          <label for="asistencia">¿Podrás asistir? *</label>
-          <select id="asistencia" name="asistencia" required>
-            <option value="">Selecciona una opción</option>
-            <option value="si">¡Sí, allí estaré bajo las estrellas!</option>
-            <option value="no">Lo siento de corazón, no podré asistir</option>
-          </select>
-        </div>
-
-        <div class="campo-grupo" id="grupo-detalles">
-          <div class="campo">
-            <label for="personas">Número de pases / personas</label>
-            <input
-              id="personas"
-              name="personas"
-              type="number"
-              min="1"
-              max="10"
-              value="1"
-            />
+      <!-- Columna Derecha: Formulario Interactivo de RSVP -->
+      <div class="rsvp__form-col revelar revelar--retraso-1">
+        <div class="rsvp-form-card">
+          <div class="form-card__header">
+            <h3 class="form-card__titulo">Confirmación de Asistencia</h3>
+            <p class="form-card__sub">
+              Al enviar se abrirá WhatsApp con tu respuesta estructurada para confirmación inmediata.
+            </p>
           </div>
 
-          <div class="campo">
-            <label for="menu">Preferencia de menú</label>
-            <select id="menu" name="menu">
-              <option value="Tradicional">Tradicional arequipeño</option>
-              <option value="Vegetariano">Vegetariano</option>
-              <option value="Vegano">Vegano</option>
-              <option value="Infantil">Menú infantil</option>
-            </select>
-          </div>
+          <form class="rsvp-form" id="rsvp-form" data-phone={weddingData.whatsappNumber}>
+            <!-- Campo: Nombre y apellido -->
+            <div class="campo">
+              <label for="nombre">
+                <span>Nombre y apellido</span>
+                <span class="campo__requerido">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input
+                  id="nombre"
+                  name="nombre"
+                  type="text"
+                  autocomplete="name"
+                  placeholder="Ej. Carmen Velarde"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Selector de Asistencia interactivo (Tarjetas Toggle) -->
+            <div class="campo">
+              <label>
+                <span>¿Podrás acompañarnos?</span>
+                <span class="campo__requerido">*</span>
+              </label>
+              <div class="asistencia-toggle-grid">
+                <label class="asistencia-card asistencia-card--si activo" id="label-asiste-si">
+                  <input
+                    type="radio"
+                    name="asistencia"
+                    value="si"
+                    checked
+                    class="sr-only"
+                    id="radio-asiste-si"
+                  />
+                  <div class="asistencia-card__icono">
+                    <SparklesIcon size={20} class="text-[#D4AF37]" />
+                  </div>
+                  <div class="asistencia-card__texto">
+                    <span class="asistencia-card__titulo">¡Sí, asistiré!</span>
+                    <span class="asistencia-card__sub">Bajo las estrellas</span>
+                  </div>
+                  <div class="asistencia-card__check">
+                    <CheckCircleIcon size={18} />
+                  </div>
+                </label>
+
+                <label class="asistencia-card asistencia-card--no" id="label-asiste-no">
+                  <input
+                    type="radio"
+                    name="asistencia"
+                    value="no"
+                    class="sr-only"
+                    id="radio-asiste-no"
+                  />
+                  <div class="asistencia-card__icono">
+                    <HeartIcon size={20} class="text-[#A5B4FC]" />
+                  </div>
+                  <div class="asistencia-card__texto">
+                    <span class="asistencia-card__titulo">No podré asistir</span>
+                    <span class="asistencia-card__sub">Con el corazón</span>
+                  </div>
+                  <div class="asistencia-card__check">
+                    <CheckCircleIcon size={18} />
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Campos condicionales para SI asiste -->
+            <div id="bloque-asiste-si" class="bloque-condicional">
+              <div class="campo-grupo">
+                <!-- Contador de pases -->
+                <div class="campo">
+                  <label for="personas">Número de pases / personas</label>
+                  <div class="stepper-wrapper">
+                    <button
+                      type="button"
+                      id="btn-menos-pases"
+                      class="stepper-btn"
+                      aria-label="Disminuir pases"
+                    >-</button>
+                    <input
+                      id="personas"
+                      name="personas"
+                      type="number"
+                      min="1"
+                      max="10"
+                      value="1"
+                      readonly
+                      class="stepper-input"
+                    />
+                    <button
+                      type="button"
+                      id="btn-mas-pases"
+                      class="stepper-btn"
+                      aria-label="Aumentar pases"
+                    >+</button>
+                  </div>
+                </div>
+
+                <!-- Menú -->
+                <div class="campo">
+                  <label for="menu">Preferencia de menú</label>
+                  <select id="menu" name="menu" class="select-estilizado">
+                    <option value="Tradicional arequipeño">Tradicional arequipeño</option>
+                    <option value="Vegetariano">Menú vegetariano</option>
+                    <option value="Vegano">Menú vegano</option>
+                    <option value="Infantil">Menú infantil</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Alergias o restricciones -->
+              <div class="campo">
+                <label for="restricciones">Alergias o restricciones alimentarias</label>
+                <input
+                  id="restricciones"
+                  name="restricciones"
+                  type="text"
+                  placeholder="Opcional: celiaquía, alergia a mariscos, frutos secos..."
+                />
+              </div>
+
+              <!-- Canción para la fiesta -->
+              <div class="campo">
+                <label for="cancion" class="label-con-icono">
+                  <MusicIcon size={15} class="text-[#D4AF37]" />
+                  <span>Canción que te hará bailar toda la noche (opcional)</span>
+                </label>
+                <input
+                  id="cancion"
+                  name="cancion"
+                  type="text"
+                  placeholder="Ej. La Vie en Rose - Canción favorita"
+                />
+              </div>
+            </div>
+
+            <!-- Campos condicionales para NO asiste -->
+            <div id="bloque-asiste-no" class="bloque-condicional" hidden>
+              <div class="campo">
+                <label for="mensaje-ausencia">Mensaje para los novios (opcional)</label>
+                <textarea
+                  id="mensaje-ausencia"
+                  name="mensaje-ausencia"
+                  rows="3"
+                  placeholder="Déjanos unas palabras de cariño o tus mejores deseos para nuestro gran día..."
+                ></textarea>
+              </div>
+            </div>
+
+            <!-- Botón de Envío WhatsApp de Lujo -->
+            <div class="form-submit-wrapper">
+              <button class="boton-whatsapp-submit" type="submit" id="btn-submit-rsvp">
+                <WhatsAppIcon size={22} class="whatsapp-btn-icon" />
+                <span id="texto-btn-submit">Confirmar Asistencia por WhatsApp</span>
+              </button>
+              <p class="submit-garantia">
+                Se abrirá la aplicación de WhatsApp con tu respuesta redactada.
+              </p>
+            </div>
+
+            <p class="rsvp-estado" id="estado" role="status" aria-live="polite"></p>
+          </form>
         </div>
-
-        <div class="campo">
-          <label for="restricciones">Alergias o restricciones alimentarias</label>
-          <textarea
-            id="restricciones"
-            name="restricciones"
-            rows="2"
-            placeholder="Opcional: celiaquía, alergia a mariscos, etc."
-          ></textarea>
-        </div>
-
-        <button class="boton boton--lleno boton-submit" type="submit">
-          <WhatsAppIcon size={20} />
-          <span>Enviar confirmación por WhatsApp</span>
-        </button>
-
-        <p class="rsvp-estado" id="estado" role="status" aria-live="polite"></p>
-      </form>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .rsvp-layout {
-    display: grid;
-    gap: 3.5rem;
+  /* Encabezado */
+  .rsvp__badge-plazo {
+    display: inline-flex;
     align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1.15rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-full);
+    margin-bottom: 0.9rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
   }
 
-  @media (min-width: 860px) {
+  /* Grid en 2 Columnas */
+  .rsvp-layout {
+    display: grid;
+    gap: 3rem;
+    align-items: start;
+    margin-top: 1rem;
+  }
+
+  @media (min-width: 900px) {
     .rsvp-layout {
       grid-template-columns: 0.85fr 1.15fr;
-      gap: 5rem;
+      gap: 3.5rem;
     }
   }
 
-  .rsvp__foto-col {
-    max-width: 24rem;
+  /* Columna Izquierda */
+  .rsvp__info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    width: 100%;
+  }
+
+  .rsvp__foto-card {
+    position: relative;
+    max-width: 25rem;
     margin: 0 auto;
     width: 100%;
   }
 
   .rsvp__marco {
     position: relative;
-    border-radius: 200px 200px 14px 14px;
+    border-radius: 200px 200px 16px 16px;
     overflow: hidden;
     border: 1.5px solid var(--dorado);
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55), 0 0 25px rgba(212, 175, 55, 0.15);
+    background: var(--noche);
   }
 
   .rsvp__marco img {
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4 / 4.8;
     object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
   }
 
-  .rsvp__fecha-limite {
+  .rsvp__marco:hover img {
+    transform: scale(1.04);
+  }
+
+  .rsvp__marco-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem 1.25rem 1rem;
+    background: linear-gradient(0deg, rgba(7, 16, 32, 0.95) 0%, rgba(7, 16, 32, 0.6) 70%, transparent 100%);
+    text-align: center;
+  }
+
+  .rsvp__overlay-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dorado);
+    margin-bottom: 0.35rem;
+  }
+
+  .rsvp__overlay-cita {
+    font-family: var(--titulo);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--crema);
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  /* Tarjeta de Detalles Clave */
+  .rsvp__detalles-card {
+    background: rgba(27, 42, 74, 0.45);
+    border: 1px solid var(--linea-suave);
+    border-radius: var(--radio-md);
+    padding: 1.5rem 1.75rem;
+    box-shadow: var(--sombra-suave);
+    max-width: 25rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .rsvp__detalles-titulo {
+    font-family: var(--titulo);
+    font-size: 1.25rem;
+    color: var(--dorado);
+    margin: 0 0 1.25rem;
+  }
+
+  .rsvp__detalles-lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .rsvp__detalles-lista li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    font-size: 0.92rem;
+  }
+
+  .detalles-icon {
+    color: var(--dorado);
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+
+  .rsvp__detalles-lista strong {
+    display: block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--plata);
+    margin-bottom: 0.15rem;
+  }
+
+  .rsvp__detalles-lista span {
+    color: var(--crema);
+  }
+
+  .rsvp__ayuda-box {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--linea-suave);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+  }
+
+  .rsvp__ayuda-box p {
+    color: var(--plata);
+    margin: 0;
+  }
+
+  .rsvp__ayuda-link {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    font-size: 0.82rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--dorado);
-    background: rgba(212, 175, 55, 0.12);
-    padding: 0.35rem 0.85rem;
-    border: 1px solid var(--linea);
-    border-radius: var(--radio-full);
-    margin-bottom: 0.75rem;
+    color: #25D366;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
   }
 
-  .rsvp__intro {
-    font-size: 1rem;
-    line-height: 1.65;
+  .rsvp__ayuda-link:hover {
+    opacity: 0.85;
+    transform: translateX(2px);
+  }
+
+  /* Columna Derecha: Tarjeta del Formulario */
+  .rsvp-form-card {
+    background: radial-gradient(circle at top right, rgba(74, 59, 107, 0.25) 0%, rgba(11, 29, 58, 0.85) 100%);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-lg);
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .form-card__header {
+    margin-bottom: 1.75rem;
+  }
+
+  .form-card__titulo {
+    font-family: var(--titulo);
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    color: var(--dorado);
+    margin: 0 0 0.4rem;
+  }
+
+  .form-card__sub {
+    font-size: 0.92rem;
     color: var(--crema);
-    opacity: 0.9;
-    margin-bottom: 2rem;
+    opacity: 0.85;
+    line-height: 1.5;
+    margin: 0;
   }
 
   .rsvp-form {
     display: grid;
-    gap: 1.25rem;
-    background: rgba(11, 29, 58, 0.75);
-    padding: clamp(1.5rem, 4vw, 2.5rem);
-    border: 1px solid var(--linea);
-    border-radius: var(--radio-md);
-    box-shadow: var(--sombra-suave);
-    backdrop-filter: blur(10px);
+    gap: 1.4rem;
   }
 
   .campo {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.45rem;
     text-align: left;
-  }
-
-  .campo-grupo {
-    display: grid;
-    gap: 1.25rem;
-  }
-
-  @media (min-width: 600px) {
-    .campo-grupo {
-      grid-template-columns: 1fr 1fr;
-    }
   }
 
   .campo label {
     font-size: 0.88rem;
-    font-weight: 500;
-    color: var(--plata);
+    font-weight: 600;
+    color: var(--crema);
     letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .campo__requerido {
+    color: var(--dorado);
+    font-weight: bold;
+  }
+
+  .label-con-icono {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .input-wrapper {
+    position: relative;
   }
 
   .campo input,
   .campo select,
   .campo textarea {
     width: 100%;
-    padding: 0.8rem 1rem;
+    padding: 0.85rem 1.15rem;
     font-family: var(--cuerpo);
-    font-size: 1rem;
-    min-height: 2.85rem;
+    font-size: 0.98rem;
     color: var(--crema);
-    background: rgba(7, 16, 32, 0.8);
+    background: rgba(7, 16, 32, 0.85);
     border: 1px solid var(--linea-suave);
     border-radius: var(--radio-sm);
-    transition: var(--transicion);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
   }
 
   .campo input:focus,
@@ -217,11 +547,8 @@ import { withBase } from '../../utils/paths';
   .campo textarea:focus {
     outline: none;
     border-color: var(--dorado);
-    box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
-  }
-
-  .campo textarea {
-    resize: vertical;
+    background: rgba(7, 16, 32, 0.95);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
   }
 
   .campo input::placeholder,
@@ -230,26 +557,234 @@ import { withBase } from '../../utils/paths';
     opacity: 0.6;
   }
 
-  .boton-submit {
-    justify-self: start;
-    width: 100%;
-    margin-top: 0.5rem;
-    padding: 1rem 1.75rem;
-    font-size: 1.05rem;
+  /* Selector de Asistencia (Toggle Cards) */
+  .asistencia-toggle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
   }
 
-  @media (min-width: 600px) {
-    .boton-submit {
-      width: auto;
+  .asistencia-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 1rem 1.15rem;
+    background: rgba(7, 16, 32, 0.7);
+    border: 1.5px solid var(--linea-suave);
+    border-radius: var(--radio-md);
+    cursor: pointer;
+    transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .asistencia-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(212, 175, 55, 0.5);
+  }
+
+  .asistencia-card.activo {
+    background: rgba(27, 42, 74, 0.85);
+    border-color: var(--dorado);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 16px rgba(212, 175, 55, 0.25);
+  }
+
+  .asistencia-card--no.activo {
+    border-color: #818CF8;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 16px rgba(129, 140, 248, 0.25);
+  }
+
+  .asistencia-card__icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    flex-shrink: 0;
+  }
+
+  .asistencia-card__texto {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    flex: 1;
+  }
+
+  .asistencia-card__titulo {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--crema);
+  }
+
+  .asistencia-card__sub {
+    font-size: 0.75rem;
+    color: var(--plata);
+    opacity: 0.85;
+  }
+
+  .asistencia-card__check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    color: var(--noche);
+    background: var(--dorado);
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .asistencia-card.activo .asistencia-card__check {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .asistencia-card--no.activo .asistencia-card__check {
+    background: #818CF8;
+  }
+
+  /* Bloque condicional */
+  .bloque-condicional {
+    display: grid;
+    gap: 1.25rem;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
     }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .campo-grupo {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 580px) {
+    .campo-grupo {
+      grid-template-columns: 1fr 1.25fr;
+    }
+  }
+
+  /* Stepper de personas */
+  .stepper-wrapper {
+    display: flex;
+    align-items: center;
+    background: rgba(7, 16, 32, 0.85);
+    border: 1px solid var(--linea-suave);
+    border-radius: var(--radio-sm);
+    overflow: hidden;
+  }
+
+  .stepper-btn {
+    width: 3rem;
+    height: 2.85rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: none;
+    color: var(--dorado);
+    font-size: 1.4rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .stepper-btn:hover {
+    background: rgba(212, 175, 55, 0.15);
+    color: #ffffff;
+  }
+
+  .stepper-input {
+    border: none !important;
+    background: transparent !important;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--crema);
+    padding: 0;
+    width: 100%;
+    box-shadow: none !important;
+  }
+
+  /* Submit WhatsApp de Alta Gama */
+  .form-submit-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  .boton-whatsapp-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 1.1rem 1.85rem;
+    font-family: var(--cuerpo);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #071020;
+    background: linear-gradient(135deg, #E6CA65 0%, #D4AF37 50%, #C49B28 100%);
+    border: 1px solid #FFE680;
+    border-radius: var(--radio-full);
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 25px rgba(212, 175, 55, 0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+  }
+
+  .boton-whatsapp-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 35px rgba(212, 175, 55, 0.55);
+    filter: brightness(1.05);
+  }
+
+  .boton-whatsapp-submit:active {
+    transform: translateY(0);
+  }
+
+  .whatsapp-btn-icon {
+    flex-shrink: 0;
+  }
+
+  .submit-garantia {
+    font-size: 0.78rem;
+    color: var(--plata);
+    opacity: 0.75;
+    text-align: center;
+    margin: 0;
   }
 
   .rsvp-estado {
     min-height: 1.5rem;
-    margin: 0.25rem 0 0;
-    font-size: 0.95rem;
+    margin: 0;
+    font-size: 0.92rem;
     color: var(--dorado);
-    text-align: left;
+    text-align: center;
+  }
+
+  /* Utilidad sr-only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 </style>
 
@@ -257,29 +792,97 @@ import { withBase } from '../../utils/paths';
   function setupRSVP() {
     const form = document.getElementById("rsvp-form") as HTMLFormElement | null;
     const estado = document.getElementById("estado");
+    const radioSi = document.getElementById("radio-asiste-si") as HTMLInputElement | null;
+    const radioNo = document.getElementById("radio-asiste-no") as HTMLInputElement | null;
+    const labelSi = document.getElementById("label-asiste-si");
+    const labelNo = document.getElementById("label-asiste-no");
+    const bloqueSi = document.getElementById("bloque-asiste-si");
+    const bloqueNo = document.getElementById("bloque-asiste-no");
+    const personasInput = document.getElementById("personas") as HTMLInputElement | null;
+    const btnMenos = document.getElementById("btn-menos-pases");
+    const btnMas = document.getElementById("btn-mas-pases");
+    const textoBtnSubmit = document.getElementById("texto-btn-submit");
+
     if (!form) return;
 
+    // Control de Toggle Asistencia (Sí / No)
+    function actualizarAsistencia(asiste: boolean) {
+      if (asiste) {
+        if (radioSi) radioSi.checked = true;
+        labelSi?.classList.add("activo");
+        labelNo?.classList.remove("activo");
+        if (bloqueSi) bloqueSi.hidden = false;
+        if (bloqueNo) bloqueNo.hidden = true;
+        if (textoBtnSubmit) {
+          textoBtnSubmit.textContent = "Confirmar Asistencia por WhatsApp";
+        }
+      } else {
+        if (radioNo) radioNo.checked = true;
+        labelNo?.classList.add("activo");
+        labelSi?.classList.remove("activo");
+        if (bloqueSi) bloqueSi.hidden = true;
+        if (bloqueNo) bloqueNo.hidden = false;
+        if (textoBtnSubmit) {
+          textoBtnSubmit.textContent = "Enviar mensaje a los novios por WhatsApp";
+        }
+      }
+    }
+
+    labelSi?.addEventListener("click", () => actualizarAsistencia(true));
+    labelNo?.addEventListener("click", () => actualizarAsistencia(false));
+
+    // Stepper de Pases (+ y -)
+    btnMenos?.addEventListener("click", () => {
+      if (!personasInput) return;
+      const actual = parseInt(personasInput.value, 10) || 1;
+      if (actual > 1) {
+        personasInput.value = (actual - 1).toString();
+      }
+    });
+
+    btnMas?.addEventListener("click", () => {
+      if (!personasInput) return;
+      const actual = parseInt(personasInput.value, 10) || 1;
+      if (actual < 10) {
+        personasInput.value = (actual + 1).toString();
+      }
+    });
+
+    // Envío del Formulario hacia WhatsApp
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       const formData = new FormData(form);
       const asiste = formData.get("asistencia") === "si";
       const nombre = String(formData.get("nombre") || "").trim();
-      const personas = formData.get("personas");
-      const menu = formData.get("menu");
-      const restricciones = String(formData.get("restricciones") || "").trim();
       const phone = form.getAttribute("data-phone") || "51999777666";
 
-      let texto = asiste
-        ? "¡Hola Daniela y Rodrigo! Confirmo mi asistencia con mucha alegría a su boda bajo las estrellas."
-        : "Hola Daniela y Rodrigo, lamento mucho no poder acompañarlos en su boda bajo las estrellas.";
-
-      texto += `\n\nNombre: ${nombre}`;
+      let texto = "";
 
       if (asiste) {
-        texto += `\nPases / Personas: ${personas}`;
-        texto += `\nMenú elegido: ${menu}`;
+        const personas = formData.get("personas") || "1";
+        const menu = formData.get("menu");
+        const restricciones = String(formData.get("restricciones") || "").trim();
+        const cancion = String(formData.get("cancion") || "").trim();
+
+        texto = `¡Hola Daniela y Rodrigo! ✨ Confirmo mi asistencia con mucha alegría a su boda bajo las estrellas.`;
+        texto += `\n\n👤 *Nombre:* ${nombre}`;
+        texto += `\n🎟️ *Pases / Personas:* ${personas}`;
+        texto += `\n🍽️ *Menú elegido:* ${menu}`;
+
         if (restricciones) {
-          texto += `\nRestricciones o alergias: ${restricciones}`;
+          texto += `\n⚠️ *Restricciones/Alergias:* ${restricciones}`;
+        }
+        if (cancion) {
+          texto += `\n🎵 *Canción para la fiesta:* ${cancion}`;
+        }
+      } else {
+        const mensajeAusencia = String(formData.get("mensaje-ausencia") || "").trim();
+
+        texto = `Hola Daniela y Rodrigo ✨ Les escribo para felicitarlos de corazón por su boda. Lamentablemente no podré acompañarlos físicamente, pero estaré con ustedes en pensamiento y buenos deseos.`;
+        texto += `\n\n👤 *Nombre:* ${nombre}`;
+
+        if (mensajeAusencia) {
+          texto += `\n💌 *Mensaje:* ${mensajeAusencia}`;
         }
       }
 
@@ -287,7 +890,7 @@ import { withBase } from '../../utils/paths';
       window.open(url, "_blank", "noopener,noreferrer");
 
       if (estado) {
-        estado.textContent = "¡Listo! Se ha abierto WhatsApp con tu mensaje preparado para enviar.";
+        estado.textContent = "¡Listo! Se ha abierto WhatsApp con tu confirmación preparada.";
       }
     });
   }
