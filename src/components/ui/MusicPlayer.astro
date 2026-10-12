@@ -1,0 +1,317 @@
+---
+// Reproductor celestial flotante de música («La Vie en Rose / Melodía bajo las estrellas»)
+---
+<div class="reproductor-flotante" id="reproductor-musica" aria-label="Música de fondo">
+  <button
+    type="button"
+    class="btn-disco"
+    id="btn-musica-toggle"
+    aria-label="Reproducir música: La Vie en Rose"
+    aria-pressed="false"
+    title="Reproducir música: La Vie en Rose"
+  >
+    <div class="disco-vinilo" id="disco-vinilo">
+      <div class="disco-ranuras"></div>
+      <div class="disco-centro">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="disco-icono" id="icono-musica">
+          <path d="M9 18V5l12-2v13"></path>
+          <circle cx="6" cy="18" r="3"></circle>
+          <circle cx="18" cy="16" r="3"></circle>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Ondas de sonido animadas cuando está activo -->
+    <span class="ondas-sonido" id="ondas-sonido" aria-hidden="true">
+      <span class="onda"></span>
+      <span class="onda"></span>
+      <span class="onda"></span>
+    </span>
+  </button>
+
+  <div class="etiqueta-cancion" id="etiqueta-cancion">
+    <span class="cancion-titulo">«La Vie en Rose»</span>
+    <span class="cancion-sub">Melodía bajo las estrellas</span>
+  </div>
+</div>
+
+<style>
+  .reproductor-flotante {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 950;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .btn-disco {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #0B1021;
+    border: 2px solid #D4AF37;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(212, 175, 55, 0.35);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+
+  .btn-disco:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.6);
+    border-color: #F8E7B4;
+  }
+
+  .disco-vinilo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: radial-gradient(circle, #1a2238 20%, #070B19 80%);
+  }
+
+  .reproductor-activo .disco-vinilo {
+    animation: rotarDisco 6s linear infinite;
+  }
+
+  @keyframes rotarDisco {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .disco-centro {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #D4AF37, #AA820A);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+  }
+
+  .disco-icono {
+    color: #070B19;
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Ondas sonoras */
+  .ondas-sonido {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 16px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .reproductor-activo .ondas-sonido {
+    opacity: 1;
+  }
+
+  .onda {
+    width: 3px;
+    background: #D4AF37;
+    border-radius: 2px;
+    animation: saltarOnda 0.8s ease-in-out infinite alternate;
+  }
+
+  .onda:nth-child(1) { height: 6px; animation-delay: 0.1s; }
+  .onda:nth-child(2) { height: 14px; animation-delay: 0.3s; }
+  .onda:nth-child(3) { height: 9px; animation-delay: 0.2s; }
+
+  @keyframes saltarOnda {
+    0% { height: 4px; }
+    100% { height: 16px; }
+  }
+
+  /* Tooltip con información de la canción */
+  .etiqueta-cancion {
+    display: flex;
+    flex-direction: column;
+    background: rgba(11, 16, 33, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 0.4rem 0.85rem;
+    border-radius: 20px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  }
+
+  .reproductor-flotante:hover .etiqueta-cancion,
+  .reproductor-activo .etiqueta-cancion {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .cancion-titulo {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #F8E7B4;
+    font-family: var(--fuente-cuerpo);
+  }
+
+  .cancion-sub {
+    font-size: 0.65rem;
+    color: var(--plata-estelar);
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 640px) {
+    .reproductor-flotante {
+      bottom: 20px;
+      right: 16px;
+    }
+    .etiqueta-cancion {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Sintetizador acústico celestial de música de fondo (Web Audio API)
+  class MelodiaCelestial {
+    ctx: AudioContext | null = null;
+    timer: number | null = null;
+    activo: boolean = false;
+    step: number = 0;
+
+    // Frecuencias para notas arpegiadas y melodía suave inspirada en La Vie en Rose (en clave romántica nocturna)
+    notas = [
+      // Acorde C mayor / suave arpegio
+      261.63, 329.63, 392.00, 523.25, 659.25,
+      // Cmaj7 / estrellado
+      246.94, 329.63, 392.00, 493.88, 587.33,
+      // Dm7 / romántico
+      293.66, 349.23, 440.00, 523.25, 587.33,
+      // G7 / suspensión suave
+      196.00, 246.94, 293.66, 392.00, 493.88,
+      // Melodía La Vie en Rose compás central
+      329.63, 392.00, 440.00, 493.88, 523.25,
+      440.00, 392.00, 349.23, 329.63, 293.66,
+      261.63, 329.63, 392.00, 523.25, 587.33
+    ];
+
+    iniciar() {
+      if (!this.ctx) {
+        const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        this.ctx = new AudioCtx();
+      }
+      if (this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
+      this.activo = true;
+      this.tocarPaso();
+    }
+
+    tocarPaso() {
+      if (!this.activo || !this.ctx) return;
+      const nota = this.notas[this.step % this.notas.length];
+      this.sonarCampanaCelestial(nota);
+      this.step++;
+      
+      // Ritmo fluido tipo caja de música bajo las estrellas (entre 380ms y 500ms)
+      const delay = (this.step % 5 === 0) ? 600 : 380;
+      this.timer = window.setTimeout(() => this.tocarPaso(), delay);
+    }
+
+    sonarCampanaCelestial(freq: number) {
+      if (!this.ctx) return;
+      const t = this.ctx.currentTime;
+
+      // Oscilador principal (triangular para calidez acústica)
+      const osc1 = this.ctx.createOscillator();
+      osc1.type = 'triangle';
+      osc1.frequency.setValueAtTime(freq, t);
+
+      // Oscilador armónico sutil (senoidal para brillo estelar)
+      const osc2 = this.ctx.createOscillator();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(freq * 2, t);
+
+      const gainPrincipal = this.ctx.createGain();
+      const gainHarmonico = this.ctx.createGain();
+      const masterGain = this.ctx.createGain();
+
+      // Envolvente de sonido suave (ataque sutil, decaimiento resonante como campanita de cristal)
+      gainPrincipal.gain.setValueAtTime(0, t);
+      gainPrincipal.gain.linearRampToValueAtTime(0.06, t + 0.04);
+      gainPrincipal.gain.exponentialRampToValueAtTime(0.0001, t + 1.8);
+
+      gainHarmonico.gain.setValueAtTime(0, t);
+      gainHarmonico.gain.linearRampToValueAtTime(0.02, t + 0.03);
+      gainHarmonico.gain.exponentialRampToValueAtTime(0.0001, t + 1.2);
+
+      masterGain.gain.setValueAtTime(0.7, t);
+
+      osc1.connect(gainPrincipal);
+      osc2.connect(gainHarmonico);
+      gainPrincipal.connect(masterGain);
+      gainHarmonico.connect(masterGain);
+      masterGain.connect(this.ctx.destination);
+
+      osc1.start(t);
+      osc2.start(t);
+      osc1.stop(t + 1.9);
+      osc2.stop(t + 1.3);
+    }
+
+    detener() {
+      this.activo = false;
+      if (this.timer) {
+        clearTimeout(this.timer);
+        this.timer = null;
+      }
+    }
+
+    estaReproduciendo() {
+      return this.activo;
+    }
+  }
+
+  function initMusicPlayer() {
+    const contenedor = document.getElementById('reproductor-musica');
+    const btn = document.getElementById('btn-musica-toggle');
+    if (!contenedor || !btn) return;
+
+    const melodia = new MelodiaCelestial();
+
+    btn.addEventListener('click', () => {
+      if (melodia.estaReproduciendo()) {
+        melodia.detener();
+        contenedor.classList.remove('reproductor-activo');
+        btn.setAttribute('aria-pressed', 'false');
+        btn.setAttribute('title', 'Reproducir música: La Vie en Rose');
+      } else {
+        melodia.iniciar();
+        contenedor.classList.add('reproductor-activo');
+        btn.setAttribute('aria-pressed', 'true');
+        btn.setAttribute('title', 'Pausar música');
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMusicPlayer);
+  } else {
+    initMusicPlayer();
+  }
+</script>

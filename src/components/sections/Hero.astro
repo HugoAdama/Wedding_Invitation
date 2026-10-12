@@ -3,6 +3,7 @@ import { weddingData } from '../../data/wedding';
 import SparklesIcon from '../icons/SparklesIcon.astro';
 import HeartIcon from '../icons/HeartIcon.astro';
 import ShootingStars from '../ui/ShootingStars.astro';
+import CalendarButtons from '../ui/CalendarButtons.astro';
 import { withBase } from '../../utils/paths';
 ---
 <section class="hero cielo" id="inicio">
@@ -40,6 +41,29 @@ import { withBase } from '../../utils/paths';
     <p class="hero__fecha">{weddingData.dateFormatted}</p>
     <p class="hero__lugar">{weddingData.venueName} · {weddingData.city}</p>
 
+    <!-- Cuenta regresiva estelar en portada -->
+    <div class="hero__countdown" id="hero-countdown" role="timer" aria-label="Tiempo restante para la boda">
+      <div class="hero__count-box">
+        <span class="hero__count-num" id="hero-dias">--</span>
+        <span class="hero__count-txt">Días</span>
+      </div>
+      <span class="hero__count-sep" aria-hidden="true">:</span>
+      <div class="hero__count-box">
+        <span class="hero__count-num" id="hero-horas">--</span>
+        <span class="hero__count-txt">Horas</span>
+      </div>
+      <span class="hero__count-sep" aria-hidden="true">:</span>
+      <div class="hero__count-box">
+        <span class="hero__count-num" id="hero-minutos">--</span>
+        <span class="hero__count-txt">Minutos</span>
+      </div>
+      <span class="hero__count-sep" aria-hidden="true">:</span>
+      <div class="hero__count-box">
+        <span class="hero__count-num" id="hero-segundos">--</span>
+        <span class="hero__count-txt">Segundos</span>
+      </div>
+    </div>
+
     <div class="hero__botones">
       <a class="boton boton--lleno" href="#confirmar">
         <HeartIcon size={18} fill={true} class="anim-heart" />
@@ -49,6 +73,9 @@ import { withBase } from '../../utils/paths';
         <span>Ver invitación</span>
       </a>
     </div>
+
+    <!-- Acciones de agendamiento en calendario -->
+    <CalendarButtons variant="hero" />
   </div>
 </section>
 
@@ -197,6 +224,54 @@ import { withBase } from '../../utils/paths';
     gap: 1rem;
   }
 
+  /* Countdown estelar en el Hero */
+  .hero__countdown {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    background: rgba(11, 16, 33, 0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 9999px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), 0 0 15px rgba(212, 175, 55, 0.15);
+  }
+
+  .hero__count-box {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+
+  .hero__count-num {
+    font-family: var(--titulo);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #FFF2A8;
+    line-height: 1;
+    min-width: 1.6ch;
+    text-align: right;
+  }
+
+  .hero__count-txt {
+    font-size: 0.7rem;
+    color: var(--plata-estelar);
+    text-transform: lowercase;
+    letter-spacing: 0.04em;
+  }
+
+  .hero__count-sep {
+    font-size: 1.1rem;
+    color: #D4AF37;
+    opacity: 0.7;
+    font-weight: 300;
+    line-height: 1;
+    margin-top: -2px;
+  }
+
   @keyframes aparecer {
     from {
       opacity: 0;
@@ -208,3 +283,48 @@ import { withBase } from '../../utils/paths';
     }
   }
 </style>
+
+<script>
+  function initHeroCountdown() {
+    const elDias = document.getElementById('hero-dias');
+    const elHoras = document.getElementById('hero-horas');
+    const elMin = document.getElementById('hero-minutos');
+    const elSeg = document.getElementById('hero-segundos');
+    if (!elDias || !elHoras || !elMin || !elSeg) return;
+
+    // Sábado 12 de junio de 2027 a las 17:30 (Hora Perú UTC-5)
+    const fechaDestino = new Date('2027-06-12T17:30:00-05:00').getTime();
+    const pad = (n: number) => String(n).padStart(2, '0');
+
+    function actualizar() {
+      const ahora = Date.now();
+      const dif = fechaDestino - ahora;
+      if (dif <= 0) {
+        elDias.textContent = '00';
+        elHoras.textContent = '00';
+        elMin.textContent = '00';
+        elSeg.textContent = '00';
+        return;
+      }
+      const segs = Math.floor(dif / 1000);
+      const d = Math.floor(segs / 86400);
+      const h = Math.floor((segs % 86400) / 3600);
+      const m = Math.floor((segs % 3600) / 60);
+      const s = segs % 60;
+
+      elDias.textContent = String(d);
+      elHoras.textContent = pad(h);
+      elMin.textContent = pad(m);
+      elSeg.textContent = pad(s);
+    }
+
+    actualizar();
+    setInterval(actualizar, 1000);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroCountdown);
+  } else {
+    initHeroCountdown();
+  }
+</script>

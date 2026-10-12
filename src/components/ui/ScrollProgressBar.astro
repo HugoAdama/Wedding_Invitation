@@ -1,0 +1,62 @@
+---
+// Barra de progreso dorada de lectura en la parte superior
+---
+<div
+  id="scroll-progress-bar"
+  class="scroll-progreso"
+  role="progressbar"
+  aria-label="Progreso de lectura"
+  aria-valuenow="0"
+  aria-valuemin="0"
+  aria-valuemax="100"
+></div>
+
+<style>
+  .scroll-progreso {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, #D4AF37, #FFF2A8, #D4AF37);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.7);
+    z-index: 9999;
+    pointer-events: none;
+    transition: width 0.08s ease-out;
+  }
+</style>
+
+<script>
+  function initProgressBar() {
+    const bar = document.getElementById('scroll-progress-bar');
+    if (!bar) return;
+
+    let ticking = false;
+
+    function updateProgress() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (scrollHeight > 0) {
+        const percent = Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100));
+        bar.style.width = `${percent}%`;
+        bar.setAttribute('aria-valuenow', Math.round(percent).toString());
+      }
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateProgress);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    updateProgress();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProgressBar);
+  } else {
+    initProgressBar();
+  }
+</script>
