@@ -10,7 +10,12 @@ import { withBase } from '../../utils/paths';
   <ShootingStars />
 
   <div class="hero__contenedor">
-    <div class="hero__halo"></div>
+    <!-- Velo de Aurora Boreal cósmica de fondo -->
+    <div class="hero__aurora" aria-hidden="true">
+      <div class="aurora-velo aurora-velo--1"></div>
+      <div class="aurora-velo aurora-velo--2"></div>
+      <div class="aurora-velo aurora-velo--3"></div>
+    </div>
     
     <figure class="luna-portal pulso-lunar">
       <img
@@ -24,8 +29,8 @@ import { withBase } from '../../utils/paths';
       <div class="luna-brillo"></div>
     </figure>
 
-    <div class="hero__badge">
-      <SparklesIcon size={16} class="text-[#D4AF37] anim-sparkle" />
+    <div class="hero__badge hero__badge--aurora">
+      <SparklesIcon size={16} class="text-[#2DD4BF] anim-sparkle" />
       <span>Nuestra Boda</span>
       <SparklesIcon size={16} class="text-[#D4AF37] anim-sparkle" />
     </div>
@@ -33,9 +38,9 @@ import { withBase } from '../../utils/paths';
     <p class="hero__aviso">Bajo las estrellas</p>
 
     <h1 class="hero__nombres">
-      <span class="hero__nombre brillo-dorado">{weddingData.brideName}</span>
+      <span class="hero__nombre brillo-aurora">{weddingData.brideName}</span>
       <span class="hero__y">&amp;</span>
-      <span class="hero__nombre brillo-dorado">{weddingData.groomName}</span>
+      <span class="hero__nombre brillo-aurora">{weddingData.groomName}</span>
     </h1>
 
     <p class="hero__fecha">{weddingData.dateFormatted}</p>
@@ -166,8 +171,9 @@ import { withBase } from '../../utils/paths';
     font-family: var(--titulo);
     font-style: italic;
     font-size: clamp(1.4rem, 3.5vw, 1.8rem);
-    color: var(--plata);
-    letter-spacing: 0.02em;
+    color: #F5EFE6;
+    letter-spacing: 0.04em;
+    text-shadow: 0 0 16px rgba(45, 212, 191, 0.28);
   }
 
   .hero__nombres {
@@ -176,8 +182,6 @@ import { withBase } from '../../utils/paths';
     font-weight: 400;
     font-size: clamp(4.4rem, 16vw, 8.2rem);
     line-height: 1.05;
-    color: var(--crema);
-    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.6);
   }
 
   .hero__nombre {
@@ -188,7 +192,73 @@ import { withBase } from '../../utils/paths';
     display: block;
     font-size: 0.5em;
     line-height: 1;
-    color: var(--dorado);
+    background: linear-gradient(135deg, #D4AF37 0%, #FFF2A8 50%, #2DD4BF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.5));
+  }
+
+  /* Badge con halo aurora */
+  .hero__badge--aurora {
+    background: linear-gradient(135deg, rgba(45, 212, 191, 0.12), rgba(168, 85, 247, 0.1), rgba(212, 175, 55, 0.12));
+    border: 1px solid rgba(45, 212, 191, 0.4);
+    box-shadow: 0 0 20px rgba(45, 212, 191, 0.15), inset 0 0 10px rgba(212, 175, 55, 0.12);
+  }
+
+  /* Velo etéreo de Aurora Boreal cósmica */
+  .hero__aurora {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(115vw, 56rem);
+    height: 42rem;
+    pointer-events: none;
+    z-index: -1;
+    overflow: visible;
+  }
+
+  .aurora-velo {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    filter: blur(55px);
+    opacity: 0.42;
+    mix-blend-mode: screen;
+    will-change: transform, opacity;
+  }
+
+  .aurora-velo--1 {
+    background: radial-gradient(ellipse at 35% 45%, rgba(16, 185, 129, 0.38) 0%, rgba(6, 95, 70, 0.15) 45%, transparent 70%);
+    animation: pulsar-aurora-1 12s ease-in-out infinite alternate;
+  }
+
+  .aurora-velo--2 {
+    background: radial-gradient(ellipse at 65% 55%, rgba(124, 58, 237, 0.32) 0%, rgba(59, 130, 246, 0.18) 45%, transparent 70%);
+    animation: pulsar-aurora-2 15s ease-in-out infinite alternate;
+  }
+
+  .aurora-velo--3 {
+    background: radial-gradient(ellipse at 50% 60%, rgba(212, 175, 55, 0.3) 0%, rgba(45, 212, 191, 0.2) 40%, transparent 65%);
+    animation: pulsar-aurora-3 10s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulsar-aurora-1 {
+    0% { transform: scale(0.9) translate(-5%, -4%) rotate(-3deg); opacity: 0.32; }
+    50% { transform: scale(1.1) translate(4%, 3%) rotate(4deg); opacity: 0.5; }
+    100% { transform: scale(0.95) translate(-2%, 5%) rotate(-2deg); opacity: 0.38; }
+  }
+
+  @keyframes pulsar-aurora-2 {
+    0% { transform: scale(1.05) translate(4%, 2%) rotate(3deg); opacity: 0.28; }
+    50% { transform: scale(0.92) translate(-6%, -3%) rotate(-4deg); opacity: 0.45; }
+    100% { transform: scale(1.08) translate(3%, -2%) rotate(2deg); opacity: 0.32; }
+  }
+
+  @keyframes pulsar-aurora-3 {
+    0% { transform: scale(0.95) translate(0%, 5%); opacity: 0.22; }
+    50% { transform: scale(1.08) translate(0%, -4%); opacity: 0.42; }
+    100% { transform: scale(0.98) translate(0%, 3%); opacity: 0.28; }
   }
 
   @media (min-width: 768px) {

@@ -161,6 +161,44 @@
 }
 
 /* ==========================================================
+   Brillo Celestial de Aurora Boreal (Starlight & Aurora Glow)
+   ========================================================== */
+
+.brillo-aurora {
+  background: linear-gradient(
+    115deg,
+    #E6CA65 0%,
+    #FFF6D6 14%,
+    #34D399 28%,
+    #22D3EE 44%,
+    #818CF8 60%,
+    #C084FC 74%,
+    #FDE047 88%,
+    #E6CA65 100%
+  );
+  background-size: 280% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: brillo-aurora-resplandor 10s ease-in-out infinite alternate;
+  filter: drop-shadow(0 2px 14px rgba(52, 211, 153, 0.24)) drop-shadow(0 4px 28px rgba(212, 175, 55, 0.35));
+}
+
+@keyframes brillo-aurora-resplandor {
+  0% {
+    background-position: 0% 50%;
+    filter: drop-shadow(0 2px 14px rgba(52, 211, 153, 0.24)) drop-shadow(0 4px 28px rgba(212, 175, 55, 0.35));
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: drop-shadow(0 2px 20px rgba(192, 132, 252, 0.35)) drop-shadow(0 4px 32px rgba(34, 211, 238, 0.3));
+  }
+  100% {
+    background-position: 0% 50%;
+    filter: drop-shadow(0 2px 14px rgba(52, 211, 153, 0.24)) drop-shadow(0 4px 28px rgba(212, 175, 55, 0.35));
+  }
+}
+
+/* ==========================================================
    Pulso Lunar y Áureas Flotantes
    ========================================================== */
 
@@ -242,6 +280,8 @@
   .pulso-lunar,
   .nebulosa::before,
   .brillo-dorado,
+  .brillo-aurora,
+  .aurora-velo,
   .cielo::before,
   .cielo::after {
     animation: none !important;
