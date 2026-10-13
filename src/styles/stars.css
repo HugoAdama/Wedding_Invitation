@@ -124,6 +124,22 @@
   animation-duration: 13s;
 }
 
+.estrella-fugaz:nth-child(5) {
+  top: 15%;
+  left: 45%;
+  width: 150px;
+  animation-delay: 6.2s;
+  animation-duration: 10s;
+}
+
+.estrella-fugaz:nth-child(6) {
+  top: 38%;
+  left: 82%;
+  width: 180px;
+  animation-delay: 15.5s;
+  animation-duration: 12s;
+}
+
 @keyframes surcar-cielo {
   0% {
     opacity: 0;
@@ -302,6 +318,76 @@
 @keyframes brillar-estrella {
   0% { transform: scale(0.92); opacity: 0.7; }
   100% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.8)); }
+}
+
+/* ==========================================================
+   Micro-Animación de Flotación Celestial Suave
+   ========================================================== */
+
+.flotar-celestial {
+  animation: flotacion-organica 6s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.flotar-celestial--lento {
+  animation: flotacion-organica 9s ease-in-out 1s infinite alternate;
+  will-change: transform;
+}
+
+@keyframes flotacion-organica {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(0.4deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* ==========================================================
+   Banda Ambiental de Vía Láctea y Polvo Cósmico
+   ========================================================== */
+
+.fondo-via-lactea {
+  position: relative;
+}
+
+.fondo-via-lactea::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 65% 45% at 75% 20%, rgba(74, 59, 107, 0.22) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 35% at 20% 80%, rgba(212, 175, 55, 0.12) 0%, transparent 65%),
+    radial-gradient(circle at 50% 50%, rgba(27, 42, 74, 0.3) 0%, transparent 80%);
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+}
+
+/* ==========================================================
+   Borde con Resplandor Estelar Vivo en Tarjetas
+   ========================================================== */
+
+.borde-estelar-vivo {
+  position: relative;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.borde-estelar-vivo:hover {
+  border-color: rgba(212, 175, 55, 0.85) !important;
+  box-shadow:
+    0 16px 45px rgba(0, 0, 0, 0.55),
+    0 0 25px rgba(212, 175, 55, 0.25),
+    inset 0 0 15px rgba(212, 175, 55, 0.08) !important;
+  transform: translateY(-5px);
+}
+
+/* Iconos celestiales con latido de luz */
+.icono-pulso-estelar {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.icono-pulso-estelar:hover {
+  transform: scale(1.15) rotate(5deg);
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.7));
 }
 
 @media (prefers-reduced-motion: reduce) {

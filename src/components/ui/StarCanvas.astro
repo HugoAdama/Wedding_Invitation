@@ -1,5 +1,5 @@
 ---
-// Componente de lienzo interactivo de constelaciones y polvo de estrellas
+// Componente de lienzo interactivo de constelaciones, estrellas fugaces y polvo de estrellas
 ---
 <canvas id="cielo-canvas" class="cielo-canvas" aria-hidden="true"></canvas>
 
@@ -12,7 +12,7 @@
     height: 100vh;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.85;
+    opacity: 0.9;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -39,7 +39,9 @@
     const mouse = {
       x: -1000,
       y: -1000,
-      radius: 140
+      prevX: -1000,
+      prevY: -1000,
+      radius: 150
     };
 
     interface Estrella {
@@ -52,13 +54,44 @@
       alpha: number;
       color: string;
       fase: number;
+      tieneBrillo: boolean;
+    }
+
+    interface Meteoro {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      longitud: number;
+      grosor: number;
+      alpha: number;
+      vida: number;
+      vidaMax: number;
+    }
+
+    interface ParticulaPolvo {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radio: number;
+      alpha: number;
+      vida: number;
+      color: string;
     }
 
     let estrellas: Estrella[] = [];
+    let meteoros: Meteoro[] = [];
+    let polvoEstelar: ParticulaPolvo[] = [];
+    let ultimoMeteoroTiempo = performance.now();
+    let proximoIntervaloMeteoro = 3500 + Math.random() * 3000;
+
+    // Gradientes de nebulosa flotante
+    let nebulosaFase = 0;
 
     function redimensionar() {
       if (!canvas) return;
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       width = window.innerWidth;
       height = window.innerHeight;
       canvas.width = width * dpr;
@@ -72,57 +105,148 @@
 
     function crearEstrellas() {
       estrellas = [];
-      // Cantidad balanceada según tamaño de pantalla (optimizado para batería en móviles)
       const esMovil = width < 768;
-      const divisor = esMovil ? 22000 : 14000;
-      const maxEstrellas = esMovil ? 45 : 75;
+      const divisor = esMovil ? 20000 : 12000;
+      const maxEstrellas = esMovil ? 50 : 90;
       const cantidad = Math.min(Math.floor((width * height) / divisor), maxEstrellas);
 
       for (let i = 0; i < cantidad; i++) {
-        const isGold = i % 5 === 0;
-        const baseAlpha = 0.25 + Math.random() * 0.55;
+        const isGold = i % 4 === 0;
+        const isCyan = i % 9 === 0;
+        const tieneBrillo = isGold && Math.random() > 0.6;
+        const baseAlpha = 0.25 + Math.random() * 0.65;
+
+        let color = '#FFFFFF';
+        if (isGold) color = '#D4AF37';
+        else if (isCyan) color = '#7EB6FF';
+
         estrellas.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.22,
-          vy: (Math.random() - 0.5) * 0.22,
-          radio: Math.random() * 1.5 + (isGold ? 1.2 : 0.8),
+          vx: (Math.random() - 0.5) * 0.18,
+          vy: (Math.random() - 0.5) * 0.18,
+          radio: Math.random() * 1.6 + (isGold ? 1.2 : 0.7),
           baseAlpha,
           alpha: baseAlpha,
-          color: isGold ? '#D4AF37' : '#FFFFFF',
-          fase: Math.random() * Math.PI * 2
+          color,
+          fase: Math.random() * Math.PI * 2,
+          tieneBrillo
         });
       }
     }
 
-    function animar() {
+    function dispararMeteoro() {
+      const startX = Math.random() * (width * 0.8) + (width * 0.1);
+      const startY = Math.random() * (height * 0.4);
+      const velocidad = 7 + Math.random() * 5;
+      const angulo = Math.PI / 4 + (Math.random() - 0.5) * 0.3; // ~45 grados hacia abajo derecha
+
+      meteoros.push({
+        x: startX,
+        y: startY,
+        vx: Math.cos(angulo) * velocidad,
+        vy: Math.sin(angulo) * velocidad,
+        longitud: 140 + Math.random() * 80,
+        grosor: 1.5 + Math.random() * 1,
+        alpha: 1,
+        vida: 0,
+        vidaMax: 50 + Math.random() * 30
+      });
+    }
+
+    function agregarPolvoCursor(x: number, y: number) {
+      if (polvoEstelar.length > 40) return;
+      for (let i = 0; i < 2; i++) {
+        polvoEstelar.push({
+          x: x + (Math.random() - 0.5) * 15,
+          y: y + (Math.random() - 0.5) * 15,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5 - 0.2, // ligera flotación ascendente
+          radio: Math.random() * 1.5 + 0.6,
+          alpha: 0.85,
+          vida: 1,
+          color: Math.random() > 0.4 ? '#D4AF37' : '#FFE58F'
+        });
+      }
+    }
+
+    function dibujarNebulosa() {
+      if (!ctx) return;
+      nebulosaFase += 0.003;
+
+      // Resplandor cósmico 1 (Violeta profundo / Azul noche)
+      const x1 = width * 0.3 + Math.sin(nebulosaFase) * 40;
+      const y1 = height * 0.25 + Math.cos(nebulosaFase * 0.8) * 30;
+      const rad1 = Math.max(width, height) * 0.45;
+      const grad1 = ctx.createRadialGradient(x1, y1, 0, x1, y1, rad1);
+      grad1.addColorStop(0, 'rgba(74, 59, 107, 0.09)');
+      grad1.addColorStop(0.5, 'rgba(27, 42, 74, 0.04)');
+      grad1.addColorStop(1, 'transparent');
+      ctx.fillStyle = grad1;
+      ctx.fillRect(0, 0, width, height);
+
+      // Resplandor cósmico 2 (Áureo celestial sutil)
+      const x2 = width * 0.75 + Math.cos(nebulosaFase * 0.7) * 50;
+      const y2 = height * 0.7 + Math.sin(nebulosaFase * 0.9) * 40;
+      const rad2 = Math.max(width, height) * 0.38;
+      const grad2 = ctx.createRadialGradient(x2, y2, 0, x2, y2, rad2);
+      grad2.addColorStop(0, 'rgba(212, 175, 55, 0.05)');
+      grad2.addColorStop(0.6, 'rgba(11, 29, 58, 0.02)');
+      grad2.addColorStop(1, 'transparent');
+      ctx.fillStyle = grad2;
+      ctx.fillRect(0, 0, width, height);
+    }
+
+    function animar(timestamp: number) {
       if (!ctx || !activo) return;
       ctx.clearRect(0, 0, width, height);
 
-      // Dibujar y actualizar estrellas
+      // 1. Nebulosas ambientales
+      dibujarNebulosa();
+
+      // 2. Control de meteoros periódicos
+      if (timestamp - ultimoMeteoroTiempo > proximoIntervaloMeteoro) {
+        dispararMeteoro();
+        ultimoMeteoroTiempo = timestamp;
+        proximoIntervaloMeteoro = 3800 + Math.random() * 4200;
+      }
+
+      // 3. Dibujar y actualizar estrellas
       for (let i = 0; i < estrellas.length; i++) {
         const e = estrellas[i];
 
-        // Movimiento suave
         e.x += e.vx;
         e.y += e.vy;
 
-        // Rebote en bordes
         if (e.x < 0) e.x = width;
         if (e.x > width) e.x = 0;
         if (e.y < 0) e.y = height;
         if (e.y > height) e.y = 0;
 
-        // Parpadeo sutil
-        e.fase += 0.025;
-        e.alpha = e.baseAlpha + Math.sin(e.fase) * 0.2;
+        e.fase += 0.02;
+        e.alpha = e.baseAlpha + Math.sin(e.fase) * 0.22;
+        const alphaFinal = Math.max(0.08, Math.min(1, e.alpha));
 
         ctx.beginPath();
         ctx.arc(e.x, e.y, e.radio, 0, Math.PI * 2);
         ctx.fillStyle = e.color === '#D4AF37'
-          ? `rgba(212, 175, 55, ${Math.max(0.1, e.alpha)})`
-          : `rgba(255, 255, 255, ${Math.max(0.1, e.alpha)})`;
+          ? `rgba(212, 175, 55, ${alphaFinal})`
+          : e.color === '#7EB6FF'
+          ? `rgba(126, 182, 255, ${alphaFinal})`
+          : `rgba(255, 255, 255, ${alphaFinal})`;
         ctx.fill();
+
+        // Destello de 4 puntas para estrellas doradas grandes
+        if (e.tieneBrillo && alphaFinal > 0.6) {
+          ctx.strokeStyle = `rgba(212, 175, 55, ${alphaFinal * 0.4})`;
+          ctx.lineWidth = 0.6;
+          ctx.beginPath();
+          ctx.moveTo(e.x - e.radio * 2.8, e.y);
+          ctx.lineTo(e.x + e.radio * 2.8, e.y);
+          ctx.moveTo(e.x, e.y - e.radio * 2.8);
+          ctx.lineTo(e.x, e.y + e.radio * 2.8);
+          ctx.stroke();
+        }
 
         // Conexiones de constelación con el cursor
         const dxMouse = mouse.x - e.x;
@@ -130,24 +254,24 @@
         const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
 
         if (distMouse < mouse.radius) {
-          const lineaAlpha = (1 - distMouse / mouse.radius) * 0.35;
+          const lineaAlpha = (1 - distMouse / mouse.radius) * 0.38;
           ctx.beginPath();
           ctx.moveTo(e.x, e.y);
           ctx.lineTo(mouse.x, mouse.y);
           ctx.strokeStyle = `rgba(212, 175, 55, ${lineaAlpha})`;
-          ctx.lineWidth = 0.8;
+          ctx.lineWidth = 0.9;
           ctx.stroke();
         }
 
-        // Conexiones entre estrellas cercanas (efecto constelaciones)
+        // Conexiones entre estrellas cercanas
         for (let j = i + 1; j < estrellas.length; j++) {
           const e2 = estrellas[j];
           const dx = e.x - e2.x;
           const dy = e.y - e2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
-          if (dist < 90) {
-            const lineaAlpha = (1 - dist / 90) * 0.14;
+          if (dist < 95) {
+            const lineaAlpha = (1 - dist / 95) * 0.16;
             ctx.beginPath();
             ctx.moveTo(e.x, e.y);
             ctx.lineTo(e2.x, e2.y);
@@ -156,6 +280,67 @@
             ctx.stroke();
           }
         }
+      }
+
+      // 4. Dibujar y actualizar estrellas fugaces (meteoros)
+      for (let m = meteoros.length - 1; m >= 0; m--) {
+        const met = meteoros[m];
+        met.x += met.vx;
+        met.y += met.vy;
+        met.vida += 1;
+
+        const factorVida = met.vida / met.vidaMax;
+        const alpha = Math.sin(factorVida * Math.PI) * 0.95;
+
+        if (factorVida >= 1 || met.x > width + 100 || met.y > height + 100) {
+          meteoros.splice(m, 1);
+          continue;
+        }
+
+        const colaX = met.x - (met.vx / 10) * met.longitud;
+        const colaY = met.y - (met.vy / 10) * met.longitud;
+
+        const gradMeteoro = ctx.createLinearGradient(colaX, colaY, met.x, met.y);
+        gradMeteoro.addColorStop(0, 'rgba(212, 175, 55, 0)');
+        gradMeteoro.addColorStop(0.7, `rgba(212, 175, 55, ${alpha * 0.6})`);
+        gradMeteoro.addColorStop(1, `rgba(255, 255, 255, ${alpha})`);
+
+        ctx.beginPath();
+        ctx.moveTo(colaX, colaY);
+        ctx.lineTo(met.x, met.y);
+        ctx.strokeStyle = gradMeteoro;
+        ctx.lineWidth = met.grosor;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+
+        // Cabeza brillante del meteoro
+        ctx.beginPath();
+        ctx.arc(met.x, met.y, met.grosor * 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctx.shadowColor = '#D4AF37';
+        ctx.shadowBlur = 10;
+        ctx.fill();
+        ctx.shadowBlur = 0; // reset
+      }
+
+      // 5. Dibujar y actualizar polvo estelar del cursor
+      for (let p = polvoEstelar.length - 1; p >= 0; p--) {
+        const part = polvoEstelar[p];
+        part.x += part.vx;
+        part.y += part.vy;
+        part.vida -= 0.02;
+
+        if (part.vida <= 0) {
+          polvoEstelar.splice(p, 1);
+          continue;
+        }
+
+        ctx.beginPath();
+        ctx.arc(part.x, part.y, part.radio * part.vida, 0, Math.PI * 2);
+        ctx.fillStyle = part.color === '#D4AF37'
+          ? `rgba(212, 175, 55, ${part.vida * part.alpha})`
+          : `rgba(255, 229, 143, ${part.vida * part.alpha})`;
+        ctx.fill();
       }
 
       animationFrameId = requestAnimationFrame(animar);
@@ -170,26 +355,45 @@
     window.addEventListener('mousemove', (e) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
+
+      const dist = Math.hypot(e.clientX - mouse.prevX, e.clientY - mouse.prevY);
+      if (dist > 8) {
+        agregarPolvoCursor(e.clientX, e.clientY);
+        mouse.prevX = e.clientX;
+        mouse.prevY = e.clientY;
+      }
     });
+
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        mouse.x = touch.clientX;
+        mouse.y = touch.clientY;
+        agregarPolvoCursor(touch.clientX, touch.clientY);
+      }
+    }, { passive: true });
 
     window.addEventListener('mouseleave', () => {
       mouse.x = -1000;
       mouse.y = -1000;
+      mouse.prevX = -1000;
+      mouse.prevY = -1000;
     });
 
-    // Pausar animación cuando la pestaña está en segundo plano para ahorrar batería
+    // Pausar animación cuando la pestaña está en segundo plano para optimizar rendimiento y batería
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
         activo = false;
         cancelAnimationFrame(animationFrameId);
       } else {
         activo = true;
+        ultimoMeteoroTiempo = performance.now();
         animationFrameId = requestAnimationFrame(animar);
       }
     });
 
     redimensionar();
-    animar();
+    animationFrameId = requestAnimationFrame(animar);
   }
 
   if (document.readyState === 'loading') {
