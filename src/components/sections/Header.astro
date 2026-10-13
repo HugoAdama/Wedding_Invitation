@@ -2,21 +2,8 @@
 import StarIcon from '../icons/StarIcon.astro';
 import MenuIcon from '../icons/MenuIcon.astro';
 import CloseIcon from '../icons/CloseIcon.astro';
-import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
-
-const navLinks = [
-  { href: '#novios', label: 'Novios' },
-  { href: '#historia', label: 'Historia' },
-  { href: '#ceremonia', label: 'Ceremonia' },
-  { href: '#la-noche', label: 'La noche' },
-  { href: '#galeria', label: 'Galería' },
-  { href: '#vestimenta', label: 'Vestimenta' },
-  { href: '#hospedaje', label: 'Hospedaje' },
-  { href: '#guia-arequipa', label: 'Guía' },
-  { href: '#regalos', label: 'Regalos' },
-  { href: '#libro-firmas', label: 'Firmas' },
-  { href: '#faq', label: 'Preguntas' }
-];
+import MobileNavDrawer from '../ui/MobileNavDrawer.astro';
+import { mainNavLinks } from '../../data/navigation';
 ---
 <header class="cab" id="cabecera-principal">
   <div class="cab__fila">
@@ -28,7 +15,7 @@ const navLinks = [
 
     <!-- Menú para escritorio (links con nombres concisos y sin quiebres de línea) -->
     <nav class="cab__menu" aria-label="Secciones principales">
-      {navLinks.map(link => (
+      {mainNavLinks.map(link => (
         <a href={link.href} class="cab__enlace">{link.label}</a>
       ))}
     </nav>
@@ -53,30 +40,7 @@ const navLinks = [
     </div>
   </div>
 
-  <!-- Panel desplegable móvil con estética de cielo estrellado -->
-  <div class="menu-movil" id="menu-movil" hidden>
-    <div class="menu-movil__backdrop" id="menu-backdrop"></div>
-    <div class="menu-movil__contenido">
-      <div class="menu-movil__header">
-        <MoonPhasesOrnament class="w-36 h-auto mx-auto mb-4 text-[#D4AF37]" />
-        <p class="menu-movil__pareja">Daniela &amp; Rodrigo</p>
-        <p class="menu-movil__fecha">12 de junio de 2027 · Arequipa</p>
-      </div>
-
-      <nav class="menu-movil__nav">
-        {navLinks.map(link => (
-          <a href={link.href} class="menu-movil__enlace">{link.label}</a>
-        ))}
-      </nav>
-
-      <div class="menu-movil__footer">
-        <a class="boton boton--lleno w-full" href="#confirmar" id="menu-confirmar-btn">
-          <StarIcon size={16} />
-          <span>Confirmar Asistencia</span>
-        </a>
-      </div>
-    </div>
-  </div>
+  <MobileNavDrawer />
 </header>
 
 <style>
@@ -220,159 +184,9 @@ const navLinks = [
       display: none;
     }
   }
-
-  /* Drawer móvil */
-  .menu-movil {
-    position: fixed;
-    inset: 0;
-    z-index: 999;
-  }
-
-  .menu-movil__backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(7, 16, 32, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-
-  .menu-movil__contenido {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: min(85vw, 24rem);
-    background: linear-gradient(180deg, #0e1e3b 0%, #081224 100%);
-    border-left: 1px solid var(--linea);
-    padding: 2.5rem 1.75rem 2rem;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
-    animation: deslizar-menu 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  @keyframes deslizar-menu {
-    from {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  .menu-movil__header {
-    text-align: center;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid var(--linea-suave);
-    padding-bottom: 1.5rem;
-  }
-
-  .menu-movil__pareja {
-    font-family: var(--script);
-    font-size: 2.2rem;
-    color: var(--dorado);
-    margin: 0;
-    line-height: 1;
-  }
-
-  .menu-movil__fecha {
-    font-size: 0.85rem;
-    color: var(--plata);
-    margin: 0.35rem 0 0;
-  }
-
-  .menu-movil__nav {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    flex: 1;
-  }
-
-  .menu-movil__enlace {
-    padding: 0.65rem 1rem;
-    font-size: 1.05rem;
-    color: var(--crema);
-    border-radius: var(--radio-sm);
-    transition: var(--transicion);
-  }
-
-  .menu-movil__enlace:hover {
-    background: rgba(212, 175, 55, 0.12);
-    color: var(--dorado);
-    padding-left: 1.35rem;
-  }
-
-  .menu-movil__enlace--activo {
-    background: rgba(212, 175, 55, 0.15);
-    color: var(--dorado);
-    border-left: 3px solid var(--dorado);
-    font-weight: 600;
-  }
-
-  .menu-movil__footer {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--linea-suave);
-  }
-
-  .w-full {
-    width: 100%;
-  }
 </style>
 
 <script>
-  function setupMenuMovil() {
-    const toggle = document.getElementById('menu-toggle');
-    const menu = document.getElementById('menu-movil');
-    const backdrop = document.getElementById('menu-backdrop');
-    if (!toggle || !menu) return;
-
-    const iconAbrir = toggle.querySelector('.icono-abrir') as HTMLElement | null;
-    const iconCerrar = toggle.querySelector('.icono-cerrar') as HTMLElement | null;
-
-    function abrirMenu() {
-      menu?.removeAttribute('hidden');
-      toggle?.setAttribute('aria-expanded', 'true');
-      if (iconAbrir) iconAbrir.hidden = true;
-      if (iconCerrar) iconCerrar.hidden = false;
-      document.body.style.overflow = 'hidden';
-    }
-
-    function cerrarMenu() {
-      menu?.setAttribute('hidden', '');
-      toggle?.setAttribute('aria-expanded', 'false');
-      if (iconAbrir) iconAbrir.hidden = false;
-      if (iconCerrar) iconCerrar.hidden = true;
-      document.body.style.overflow = '';
-    }
-
-    toggle.addEventListener('click', () => {
-      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
-      if (isExpanded) {
-        cerrarMenu();
-      } else {
-        abrirMenu();
-      }
-    });
-
-    backdrop?.addEventListener('click', cerrarMenu);
-
-    // Cerrar al hacer clic en cualquier enlace
-    menu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', cerrarMenu);
-    });
-
-    // Cerrar con Escape
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
-        cerrarMenu();
-      }
-    });
-  }
-
   function setupScrollSpy() {
     const navLinksDesktop = document.querySelectorAll('.cab__menu .cab__enlace');
     const navLinksMobile = document.querySelectorAll('.menu-movil__nav .menu-movil__enlace');
@@ -415,14 +229,9 @@ const navLinks = [
     sections.forEach((sec) => observer.observe(sec));
   }
 
-  function initHeader() {
-    setupMenuMovil();
-    setupScrollSpy();
-  }
-
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initHeader);
+    document.addEventListener('DOMContentLoaded', setupScrollSpy);
   } else {
-    initHeader();
+    setupScrollSpy();
   }
 </script>

@@ -1,0 +1,136 @@
+---
+import MountainIcon from '../icons/MountainIcon.astro';
+import SunIcon from '../icons/SunIcon.astro';
+import MoonIcon from '../icons/MoonIcon.astro';
+import SparklesIcon from '../icons/SparklesIcon.astro';
+---
+
+<article class="clima-card">
+  <div class="clima-card__header">
+    <div class="clima-card__insignia">
+      <MountainIcon size={16} class="text-[#D4AF37]" />
+      <span class="clima-lugar">Arequipa · 2,325 m s. n. m.</span>
+    </div>
+    <h3 class="clima-card__titulo">Condiciones para el 12 de Junio</h3>
+  </div>
+
+  <div class="clima-metricas">
+    <div class="metrica-chip">
+      <span class="metrica-chip__icono">
+        <SunIcon size={22} class="text-[#FFE58F]" />
+      </span>
+      <div class="metrica-chip__datos">
+        <span class="metrica-chip__temp">22°C</span>
+        <span class="metrica-chip__etiqueta">Tarde soleada</span>
+      </div>
+    </div>
+
+    <div class="metrica-chip">
+      <span class="metrica-chip__icono">
+        <MoonIcon size={20} class="text-[#D4AF37]" />
+      </span>
+      <div class="metrica-chip__datos">
+        <span class="metrica-chip__temp">11°C</span>
+        <span class="metrica-chip__etiqueta">Noche fresca</span>
+      </div>
+    </div>
+
+    <div class="metrica-chip">
+      <span class="metrica-chip__icono">
+        <SparklesIcon size={20} class="text-[#5EEAD4]" />
+      </span>
+      <div class="metrica-chip__datos">
+        <span class="metrica-chip__temp">Cielo Limpio</span>
+        <span class="metrica-chip__etiqueta">Vista estelar</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="clima-card__nota">
+    Al ser clima seco de altura, recomendamos mantenerte hidratado y traer un saco o estola elegante para la medianoche.
+  </p>
+</article>
+
+<style>
+  .clima-card {
+    background: linear-gradient(135deg, rgba(27, 42, 74, 0.65) 0%, rgba(11, 29, 58, 0.75) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: var(--radio-lg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: var(--sombra-suave);
+  }
+
+  .clima-card__insignia {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dorado);
+    margin-bottom: 0.5rem;
+  }
+
+  .clima-card__titulo {
+    font-family: var(--titulo);
+    font-size: 1.8rem;
+    color: #FFF6D6;
+    margin: 0 0 1.25rem;
+  }
+
+  .clima-metricas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .metrica-chip {
+    background: rgba(7, 16, 32, 0.65);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: var(--radio-md);
+    padding: 0.85rem 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .metrica-chip__icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .metrica-chip__datos {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .metrica-chip__temp {
+    font-family: var(--titulo);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--dorado);
+    line-height: 1.1;
+  }
+
+  .metrica-chip__etiqueta {
+    font-size: 0.72rem;
+    color: var(--plata);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .clima-card__nota {
+    font-size: 0.88rem;
+    color: var(--crema);
+    opacity: 0.85;
+    margin: 0;
+    line-height: 1.5;
+    border-top: 1px dashed rgba(212, 175, 55, 0.2);
+    padding-top: 0.85rem;
+  }
+</style>

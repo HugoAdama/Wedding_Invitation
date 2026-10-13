@@ -1,0 +1,98 @@
+---
+import MusicIcon from '../icons/MusicIcon.astro';
+---
+
+<article class="spotify-card">
+  <div class="spotify-card__contenido">
+    <div class="spotify-card__icono-box">
+      <MusicIcon size={26} />
+    </div>
+    <span class="spotify-card__kicker">Banda sonora de nuestra historia</span>
+    <h3 class="spotify-card__titulo">Playlist Oficial de la Boda</h3>
+    <p class="spotify-card__desc">
+      Siente la magia antes del gran día con las canciones que marcaron nuestro camino y los temas que bailaremos bajo la luna.
+    </p>
+
+    <a
+      href="https://open.spotify.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="boton boton-dorado spotify-boton"
+      id="btn-spotify-playlist"
+    >
+      <svg class="spotify-svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.502 17.308a.749.749 0 0 1-1.028.249c-2.812-1.718-6.353-2.107-10.523-1.155a.75.75 0 0 1-.336-1.462c4.562-1.042 8.49-.607 11.64 1.34a.75.75 0 0 1 .247 1.028zm1.467-3.264a.936.936 0 0 1-1.288.309c-3.218-1.978-8.125-2.55-11.93-1.395a.937.937 0 1 1-.548-1.792c4.349-1.32 9.775-.683 13.457 1.58a.938.938 0 0 1 .309 1.298zm.126-3.398c-3.858-2.29-10.222-2.502-13.886-1.39a1.125 1.125 0 0 1-.65-2.153c4.214-1.28 11.238-1.031 15.688 1.611a1.125 1.125 0 1 1-1.152 1.932z"/>
+      </svg>
+      <span>Escuchar en Spotify</span>
+    </a>
+  </div>
+</article>
+
+<style>
+  .spotify-card {
+    background: radial-gradient(circle at 80% 20%, rgba(30, 215, 96, 0.08) 0%, rgba(11, 29, 58, 0.75) 70%);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: var(--radio-lg);
+    padding: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--sombra-suave);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .spotify-card__icono-box {
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 50%;
+    background: rgba(29, 185, 84, 0.15);
+    border: 1px solid rgba(29, 185, 84, 0.4);
+    color: #1ED760;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.85rem;
+    box-shadow: 0 0 20px rgba(29, 185, 84, 0.2);
+  }
+
+  .spotify-card__kicker {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--plata);
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+
+  .spotify-card__titulo {
+    font-family: var(--titulo);
+    font-size: 1.8rem;
+    color: var(--dorado);
+    margin: 0 0 0.6rem;
+  }
+
+  .spotify-card__desc {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--crema);
+    opacity: 0.9;
+    max-width: 20rem;
+    margin: 0 auto 1.35rem;
+  }
+
+  .spotify-boton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.6rem;
+    font-size: 0.92rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(212, 175, 55, 0.3);
+  }
+
+  .spotify-svg {
+    fill: currentColor;
+  }
+</style>

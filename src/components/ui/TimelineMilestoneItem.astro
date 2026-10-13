@@ -1,0 +1,300 @@
+---
+import StarIcon from '../icons/StarIcon.astro';
+import SparklesIcon from '../icons/SparklesIcon.astro';
+import { withBase } from '../../utils/paths';
+import type { StoryMilestone } from '../../types/wedding';
+
+interface Props {
+  momento: StoryMilestone;
+  idx: number;
+  esFinal: boolean;
+}
+
+const { momento, idx, esFinal } = Astro.props;
+const esInvertido = idx % 2 === 1;
+---
+
+<article class={`timeline-hito revelar ${esInvertido ? 'timeline-hito--invertido' : ''} ${esFinal ? 'timeline-hito--final' : ''}`}>
+  <!-- Nodo central con estrella sobre el eje -->
+  <div class="timeline-nodo" aria-hidden="true">
+    <div class="nodo-aura"></div>
+    <div class="nodo-estrella">
+      {esFinal ? (
+        <SparklesIcon size={18} class="text-[#D4AF37]" />
+      ) : (
+        <StarIcon size={14} class="text-[#D4AF37]" />
+      )}
+    </div>
+    <span class="nodo-anio-pill">{momento.year}</span>
+  </div>
+
+  <!-- Columna de Imagen -->
+  <div class="hito-col hito-col--foto">
+    <div class={`hito-marco ${esFinal ? 'hito-marco--dorado' : ''}`}>
+      <img
+        src={withBase(momento.image)}
+        alt={momento.alt}
+        width="720"
+        height="900"
+        loading="lazy"
+        decoding="async"
+      />
+      {esFinal && (
+        <div class="hito-marco__badge">
+          <SparklesIcon size={14} class="text-[#D4AF37]" />
+          <span>El Gran Día</span>
+        </div>
+      )}
+    </div>
+  </div>
+
+  <!-- Columna de Narrativa -->
+  <div class="hito-col hito-col--texto">
+    <div class={`hito-tarjeta ${esFinal ? 'hito-tarjeta--final' : ''}`}>
+      <div class="hito-encabezado">
+        <span class="hito-anio">{momento.year}</span>
+        <span class="hito-separador">·</span>
+        {momento.subtitle && (
+          <span class="hito-lugar">{momento.subtitle}</span>
+        )}
+      </div>
+
+      <h3 class="hito-titulo">{momento.title}</h3>
+      <p class="hito-descripcion">{momento.description}</p>
+    </div>
+  </div>
+</article>
+
+<style>
+  .timeline-hito {
+    position: relative;
+    display: grid;
+    gap: 1.75rem;
+    align-items: center;
+    padding-left: 3.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .timeline-hito {
+      grid-template-columns: 1fr 1fr;
+      gap: 4.5rem;
+      padding-left: 0;
+    }
+
+    .timeline-hito--invertido .hito-col--foto {
+      order: 2;
+    }
+
+    .timeline-hito--invertido .hito-col--texto {
+      order: 1;
+      text-align: right;
+    }
+
+    .timeline-hito--invertido .hito-encabezado {
+      justify-content: flex-end;
+    }
+  }
+
+  /* Nodo Central sobre el Eje */
+  .timeline-nodo {
+    position: absolute;
+    left: 1.5rem;
+    top: 1.5rem;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    z-index: 2;
+  }
+
+  @media (min-width: 900px) {
+    .timeline-nodo {
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .nodo-aura {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, transparent 70%);
+    animation: pulso-nodo 3s infinite alternate;
+  }
+
+  @keyframes pulso-nodo {
+    0% {
+      transform: translate(-50%, -50%) scale(0.9);
+      opacity: 0.6;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1.4);
+      opacity: 1;
+    }
+  }
+
+  .nodo-estrella {
+    position: relative;
+    width: 1.85rem;
+    height: 1.85rem;
+    border-radius: 50%;
+    background: #0B1D3A;
+    border: 2px solid var(--dorado);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  }
+
+  .nodo-anio-pill {
+    font-family: var(--titulo);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--dorado);
+    background: rgba(7, 16, 32, 0.9);
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--radio-full);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    white-space: nowrap;
+  }
+
+  /* Columna Foto */
+  .hito-col--foto {
+    width: 100%;
+    max-width: 25rem;
+    margin: 0 auto;
+  }
+
+  .hito-marco {
+    position: relative;
+    border-radius: var(--radio-md);
+    overflow: hidden;
+    border: 1px solid var(--linea);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+    background: var(--noche);
+    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .hito-marco::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: calc(var(--radio-md) - 4px);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .hito-marco img {
+    width: 100%;
+    aspect-ratio: 4 / 4.6;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .timeline-hito:hover .hito-marco img {
+    transform: scale(1.04);
+  }
+
+  .hito-marco--dorado {
+    border: 1.5px solid var(--dorado);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.25);
+  }
+
+  .hito-marco__badge {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--noche);
+    background: linear-gradient(135deg, #FFF4D0 0%, #D4AF37 100%);
+    border-radius: var(--radio-full);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Columna Texto / Tarjeta */
+  .hito-col--texto {
+    width: 100%;
+    max-width: 32rem;
+  }
+
+  .hito-tarjeta {
+    background: rgba(27, 42, 74, 0.45);
+    border: 1px solid var(--linea-suave);
+    border-radius: var(--radio-md);
+    padding: clamp(1.75rem, 3.5vw, 2.5rem);
+    box-shadow: var(--sombra-suave);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .timeline-hito:hover .hito-tarjeta {
+    border-color: var(--dorado);
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-hover);
+  }
+
+  .hito-tarjeta--final {
+    background: radial-gradient(circle at top right, rgba(74, 59, 107, 0.45) 0%, rgba(27, 42, 74, 0.65) 100%);
+    border-color: var(--linea);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.2);
+  }
+
+  .hito-encabezado {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .hito-anio {
+    font-family: var(--titulo);
+    font-size: 1.65rem;
+    font-weight: 600;
+    color: var(--dorado);
+  }
+
+  .hito-separador {
+    color: var(--plata);
+    opacity: 0.6;
+  }
+
+  .hito-lugar {
+    font-family: var(--titulo);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--plata);
+  }
+
+  .hito-titulo {
+    font-size: clamp(1.75rem, 3.2vw, 2.15rem);
+    color: #FFF6D6;
+    margin-bottom: 0.85rem;
+    line-height: 1.22;
+  }
+
+  .hito-descripcion {
+    font-size: 0.98rem;
+    line-height: 1.72;
+    color: var(--crema);
+    opacity: 0.94;
+    margin: 0;
+  }
+</style>
