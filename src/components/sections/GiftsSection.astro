@@ -1,6 +1,9 @@
 ---
 import { giftOptions, giftQuote } from '../../data/gifts';
 import GiftIcon from '../icons/GiftIcon.astro';
+import MailIcon from '../icons/MailIcon.astro';
+import BookOpenIcon from '../icons/BookOpenIcon.astro';
+import SparklesIcon from '../icons/SparklesIcon.astro';
 import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
 ---
 <section class="seccion seccion--violeta" id="regalos">
@@ -18,14 +21,21 @@ import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
       <p class="regalos__cita">{giftQuote}</p>
     </div>
 
+    <!-- Grid de 4 Opciones de Regalos Equilibradas -->
     <div class="regalos-grid">
       {giftOptions.map((opcion, idx) => (
         <article class={`regalo-card revelar ${idx % 2 === 1 ? 'revelar--retraso-1' : ''}`}>
-          <div class="regalo__header">
+          <div class="regalo__top">
+            <div class="regalo__icono-box">
+              {idx === 0 && <MailIcon size={20} class="text-[#D4AF37]" />}
+              {idx === 1 && <SparklesIcon size={20} class="text-[#D4AF37]" />}
+              {idx === 2 && <GiftIcon size={20} class="text-[#D4AF37]" />}
+              {idx === 3 && <BookOpenIcon size={20} class="text-[#D4AF37]" />}
+            </div>
             {opcion.badge && <span class="badge-tag">{opcion.badge}</span>}
-            <h3 class="regalo__titulo">{opcion.title}</h3>
           </div>
 
+          <h3 class="regalo__titulo">{opcion.title}</h3>
           <p class="regalo__desc">{opcion.description}</p>
 
           {opcion.details && (
@@ -51,6 +61,18 @@ import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
                   )}
                 </div>
               ))}
+            </div>
+          )}
+
+          {idx === 0 && (
+            <div class="regalo__pie-nota">
+              <span>✉️ Encontrarás el buzón nupcial junto al libro de firmas en la recepción.</span>
+            </div>
+          )}
+
+          {idx === 3 && (
+            <div class="regalo__pie-nota">
+              <span>📖 Un rincón especial de nuestra casa llevará las lecturas de quienes más amamos.</span>
             </div>
           )}
         </article>
@@ -83,11 +105,12 @@ import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
   .regalos__cita {
     font-family: var(--titulo);
     font-style: italic;
-    font-size: clamp(1.25rem, 3.5vw, 1.6rem);
-    line-height: 1.5;
+    font-size: clamp(1.2rem, 3vw, 1.45rem);
+    line-height: 1.6;
     color: var(--crema);
     max-width: 44rem;
     margin: 1.25rem auto 0;
+    opacity: 0.95;
   }
 
   .regalos-grid {
@@ -99,51 +122,84 @@ import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
   @media (min-width: 768px) {
     .regalos-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 2.5rem;
+      gap: 2.25rem;
     }
   }
 
   .regalo-card {
-    background: rgba(11, 29, 58, 0.65);
-    border: 1.5px solid var(--dorado);
+    background: rgba(11, 29, 58, 0.7);
+    border: 1px solid var(--linea);
     border-radius: var(--radio-md);
-    padding: 2.25rem 2rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    padding: 2rem 2.25rem;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
     display: flex;
     flex-direction: column;
-    transition: var(--transicion);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
   .regalo-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.25);
+    border-color: var(--dorado);
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.2);
   }
 
-  .regalo__header {
-    margin-bottom: 1rem;
+  .regalo__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .regalo__icono-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: rgba(7, 16, 32, 0.8);
+    border: 1px solid var(--linea-suave);
+    flex-shrink: 0;
+  }
+
+  .badge-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid var(--linea-suave);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radio-full);
   }
 
   .regalo__titulo {
-    font-size: 1.7rem;
+    font-family: var(--titulo);
+    font-size: 1.6rem;
     color: var(--dorado);
-    margin-top: 0.5rem;
+    margin: 0 0 0.6rem;
+    line-height: 1.2;
   }
 
   .regalo__desc {
     font-size: 0.95rem;
     line-height: 1.6;
     color: var(--crema);
-    opacity: 0.95;
-    margin-bottom: 1.25rem;
+    opacity: 0.92;
+    margin: 0 0 1.25rem;
   }
 
   .regalo__detalles {
     display: grid;
-    gap: 0.6rem;
+    gap: 0.75rem;
     margin-top: auto;
-    padding-top: 1rem;
+    padding-top: 1.25rem;
     border-top: 1px solid var(--linea-suave);
-    font-size: 0.92rem;
+    font-size: 0.9rem;
   }
 
   .detalle-fila {
@@ -156,7 +212,7 @@ import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
 
   .detalle-label {
     color: var(--plata);
-    font-size: 0.88rem;
+    font-size: 0.85rem;
   }
 
   .detalle-val {
@@ -167,23 +223,23 @@ import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
   .codigo-copiable-wrap {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.45rem;
     flex-wrap: wrap;
   }
 
   .detalle-code {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.92rem;
+    font-size: 0.88rem;
     color: var(--dorado);
-    background: rgba(0, 0, 0, 0.4);
-    padding: 0.25rem 0.6rem;
-    border-radius: 4px;
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    background: rgba(7, 16, 32, 0.85);
+    padding: 0.3rem 0.65rem;
+    border-radius: var(--radio-sm);
+    border: 1px solid rgba(212, 175, 55, 0.35);
     user-select: all;
   }
 
   .btn-copiar {
-    padding: 0.25rem 0.65rem;
+    padding: 0.3rem 0.7rem;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -193,18 +249,29 @@ import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
     border: 1px solid var(--dorado);
     border-radius: var(--radio-sm);
     cursor: pointer;
-    transition: var(--transicion);
+    transition: all 0.2s ease;
   }
 
   .btn-copiar:hover {
     background: var(--dorado);
     color: var(--noche);
+    transform: translateY(-1px);
   }
 
   .btn-copiar--copiado {
     background: #2e7d32 !important;
     border-color: #4caf50 !important;
     color: #ffffff !important;
+  }
+
+  .regalo__pie-nota {
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--linea-suave);
+    font-size: 0.85rem;
+    color: var(--plata);
+    font-style: italic;
+    line-height: 1.45;
   }
 </style>
 
@@ -226,7 +293,7 @@ import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
             boton.classList.remove('btn-copiar--copiado');
           }, 2200);
         } catch {
-          // Fallback silencioso si no hay soporte de clipboard
+          // Fallback silencioso
         }
       });
     });

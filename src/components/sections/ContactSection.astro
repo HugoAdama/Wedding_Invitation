@@ -5,48 +5,77 @@ import WhatsAppIcon from '../icons/WhatsAppIcon.astro';
 import MailIcon from '../icons/MailIcon.astro';
 ---
 <section class="seccion" id="contacto">
-  <div class="interior contacto-box">
-    <div class="contacto__adorno">
-      <ConstellationIcon class="w-48 h-auto mx-auto mb-5 text-[#D4AF37]" />
-    </div>
+  <div class="interior">
+    <div class="contacto-card revelar">
+      <div class="contacto__adorno">
+        <ConstellationIcon class="w-48 h-auto mx-auto mb-4 text-[#D4AF37]" />
+      </div>
 
-    <p class="kicker">Estamos para acompañarte</p>
-    <h2 class="titulo-seccion">¿Dudas o consultas? Escríbenos</h2>
-    <p class="contacto__desc">
-      Estaremos encantados de resolver cualquier inquietud sobre la ceremonia, el traslado o tu estancia en Arequipa.
-    </p>
+      <p class="kicker">Estamos para acompañarte</p>
+      <h2 class="titulo-seccion brillo-dorado">¿Dudas o consultas? Escríbenos</h2>
+      <p class="contacto__desc">
+        Estaremos encantados de resolver cualquier inquietud sobre la ceremonia, el traslado o tu estancia en Arequipa.
+      </p>
 
-    <div class="contacto__botones">
-      <a
-        class="boton boton--lleno"
-        target="_blank"
-        rel="noopener noreferrer"
-        href={`https://wa.me/${weddingData.whatsappNumber}?text=Hola%20Daniela%20y%20Rodrigo%2C%20tengo%20una%20consulta%20sobre%20la%20boda.`}
-      >
-        <WhatsAppIcon size={18} />
-        <span>Escribir por WhatsApp ({weddingData.whatsappDisplay})</span>
-      </a>
+      <div class="contacto__botones">
+        <a
+          class="boton-contacto boton-contacto--wa"
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`https://wa.me/${weddingData.whatsappNumber}?text=${encodeURIComponent('¡Hola Daniela y Rodrigo! Tengo una consulta sobre su boda.')}`}
+          aria-label="Escribir por WhatsApp oficial"
+        >
+          <WhatsAppIcon size={20} />
+          <span>Escribir por WhatsApp ({weddingData.whatsappDisplay})</span>
+        </a>
 
-      <a class="boton" href={`mailto:${weddingData.contactEmail}`}>
-        <MailIcon size={18} />
-        <span>{weddingData.contactEmail}</span>
-      </a>
+        <a
+          class="boton-contacto boton-contacto--mail"
+          href={`mailto:${weddingData.contactEmail}`}
+          aria-label="Enviar correo electrónico"
+        >
+          <MailIcon size={20} />
+          <span>{weddingData.contactEmail}</span>
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .contacto-box {
-    max-width: 40rem;
+  .contacto-card {
+    max-width: 48rem;
     margin: 0 auto;
+    padding: clamp(2.5rem, 5vw, 3.5rem) clamp(1.75rem, 4vw, 3rem);
     text-align: center;
+    background: radial-gradient(circle at top, rgba(74, 59, 107, 0.3) 0%, rgba(11, 29, 58, 0.75) 100%);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-lg);
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.45);
+    position: relative;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .contacto-card::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    border-radius: calc(var(--radio-lg) - 6px);
+    pointer-events: none;
+  }
+
+  .contacto__adorno {
+    opacity: 0.8;
   }
 
   .contacto__desc {
     font-size: 1.05rem;
     color: var(--crema);
-    opacity: 0.9;
-    margin-bottom: 2rem;
+    opacity: 0.92;
+    margin: 0.5rem auto 2.25rem;
+    max-width: 36rem;
     line-height: 1.6;
   }
 
@@ -54,6 +83,43 @@ import MailIcon from '../icons/MailIcon.astro';
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1.25rem;
+    gap: 1rem;
+  }
+
+  .boton-contacto {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.65rem;
+    border-radius: var(--radio-full);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  }
+
+  .boton-contacto--wa {
+    color: #071020;
+    background: linear-gradient(135deg, #FFF4D0 0%, #D4AF37 50%, #C49B28 100%);
+    border: 1px solid #FFE680;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+  }
+
+  .boton-contacto--wa:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+  }
+
+  .boton-contacto--mail {
+    color: var(--crema);
+    background: rgba(7, 16, 32, 0.7);
+    border: 1px solid var(--linea);
+  }
+
+  .boton-contacto--mail:hover {
+    transform: translateY(-2px);
+    border-color: var(--dorado);
+    color: var(--dorado);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
   }
 </style>

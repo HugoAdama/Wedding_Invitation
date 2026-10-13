@@ -1,10 +1,15 @@
 ---
 import { weddingFaqs } from '../../data/faq';
 import ChevronDownIcon from '../icons/ChevronDownIcon.astro';
+import StarIcon from '../icons/StarIcon.astro';
 ---
 <section class="seccion seccion--profundo seccion-optimizada" id="faq">
   <div class="interior">
     <div class="seccion-header">
+      <div class="faq__badge">
+        <StarIcon size={16} class="text-[#D4AF37]" />
+        <span>Claridad &amp; Detalles</span>
+      </div>
       <p class="kicker">Antes de que lo preguntes</p>
       <h2 class="titulo-seccion">Preguntas frecuentes</h2>
       <p class="descripcion-seccion">
@@ -12,11 +17,15 @@ import ChevronDownIcon from '../icons/ChevronDownIcon.astro';
       </p>
     </div>
 
+    <!-- Lista de Acordeones de Lujo -->
     <div class="faq-lista">
-      {weddingFaqs.map(item => (
-        <details class="faq-item">
+      {weddingFaqs.map((item, idx) => (
+        <details class="faq-item revelar" style={`animation-delay: ${idx * 60}ms;`}>
           <summary class="faq-pregunta">
-            <span>{item.question}</span>
+            <div class="faq-pregunta__left">
+              <span class="faq-punto-estrella" aria-hidden="true">★</span>
+              <span class="faq-pregunta__texto">{item.question}</span>
+            </div>
             <span class="faq-chevron">
               <ChevronDownIcon size={18} />
             </span>
@@ -31,45 +40,93 @@ import ChevronDownIcon from '../icons/ChevronDownIcon.astro';
 </section>
 
 <style>
+  .faq__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-full);
+    margin-bottom: 0.9rem;
+  }
+
   .faq-lista {
     max-width: 48rem;
-    margin: 0 auto;
-    border-top: 1px solid var(--linea);
+    margin: 2rem auto 0;
+    display: grid;
+    gap: 0.85rem;
   }
 
   .faq-item {
-    border-bottom: 1px solid var(--linea-suave);
-    transition: background-color 0.2s ease;
+    background: rgba(11, 29, 58, 0.45);
+    border: 1px solid var(--linea-suave);
+    border-radius: var(--radio-md);
+    overflow: hidden;
+    transition: all 0.25s ease;
   }
 
   .faq-item:hover {
-    background: rgba(212, 175, 55, 0.03);
+    background: rgba(27, 42, 74, 0.55);
+    border-color: rgba(212, 175, 55, 0.4);
+  }
+
+  .faq-item[open] {
+    background: rgba(27, 42, 74, 0.7);
+    border-color: var(--dorado);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35), 0 0 15px rgba(212, 175, 55, 0.15);
   }
 
   .faq-pregunta {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.25rem 0.75rem;
-    min-height: 3.5rem;
+    padding: 1.25rem 1.4rem;
     font-family: var(--titulo);
-    font-size: clamp(1.2rem, 3vw, 1.55rem);
+    font-size: clamp(1.15rem, 2.5vw, 1.4rem);
     font-weight: 500;
     color: var(--crema);
     cursor: pointer;
     list-style: none;
     user-select: none;
-    border-radius: var(--radio-sm);
-    transition: color 0.2s ease, background-color 0.2s ease;
+    transition: color 0.2s ease;
   }
 
-  .faq-pregunta:focus-visible {
-    outline: 2px solid var(--dorado);
-    outline-offset: -2px;
+  .faq-item[open] .faq-pregunta {
+    color: var(--dorado);
   }
 
   .faq-pregunta::-webkit-details-marker {
     display: none;
+  }
+
+  .faq-pregunta__left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    padding-right: 1rem;
+  }
+
+  .faq-punto-estrella {
+    font-size: 0.75rem;
+    color: var(--dorado);
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+
+  .faq-item[open] .faq-punto-estrella {
+    opacity: 1;
+    text-shadow: 0 0 8px var(--dorado);
+  }
+
+  .faq-pregunta__texto {
+    line-height: 1.35;
   }
 
   .faq-chevron {
@@ -77,6 +134,7 @@ import ChevronDownIcon from '../icons/ChevronDownIcon.astro';
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -85,12 +143,12 @@ import ChevronDownIcon from '../icons/ChevronDownIcon.astro';
   }
 
   .faq-respuesta {
-    padding: 0 0.5rem 1.5rem;
+    padding: 0 1.4rem 1.35rem 2.75rem;
     color: var(--crema);
     opacity: 0.92;
-    font-size: 0.98rem;
-    line-height: 1.7;
-    animation: fadeIn 0.3s ease-out;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    animation: fadeIn 0.25s ease-out;
   }
 
   .faq-respuesta p {
@@ -100,7 +158,7 @@ import ChevronDownIcon from '../icons/ChevronDownIcon.astro';
   @keyframes fadeIn {
     from {
       opacity: 0;
-      transform: translateY(-6px);
+      transform: translateY(-4px);
     }
     to {
       opacity: 0.92;
