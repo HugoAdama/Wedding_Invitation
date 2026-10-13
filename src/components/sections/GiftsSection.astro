@@ -66,13 +66,15 @@ import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
 
           {idx === 0 && (
             <div class="regalo__pie-nota">
-              <span>✉️ Encontrarás el buzón nupcial junto al libro de firmas en la recepción.</span>
+              <MailIcon size={16} class="text-[#D4AF37]" />
+              <span>Encontrarás el buzón nupcial junto al libro de firmas en la recepción.</span>
             </div>
           )}
 
           {idx === 3 && (
             <div class="regalo__pie-nota">
-              <span>📖 Un rincón especial de nuestra casa llevará las lecturas de quienes más amamos.</span>
+              <BookOpenIcon size={16} class="text-[#D4AF37]" />
+              <span>Un rincón especial de nuestra casa llevará las lecturas de quienes más amamos.</span>
             </div>
           )}
         </article>
@@ -272,6 +274,9 @@ import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
     color: var(--plata);
     font-style: italic;
     line-height: 1.45;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 </style>
 

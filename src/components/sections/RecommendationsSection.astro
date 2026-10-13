@@ -4,6 +4,9 @@ import MapPinIcon from '../icons/MapPinIcon.astro';
 import SparklesIcon from '../icons/SparklesIcon.astro';
 import ClockIcon from '../icons/ClockIcon.astro';
 import MusicIcon from '../icons/MusicIcon.astro';
+import MountainIcon from '../icons/MountainIcon.astro';
+import SunIcon from '../icons/SunIcon.astro';
+import MoonIcon from '../icons/MoonIcon.astro';
 ---
 <section class="seccion seccion-optimizada" id="recomendaciones">
   <div class="interior">
@@ -36,7 +39,7 @@ import MusicIcon from '../icons/MusicIcon.astro';
       <article class="clima-card">
         <div class="clima-card__header">
           <div class="clima-card__insignia">
-            <span class="clima-icon">🌋</span>
+            <MountainIcon size={16} class="text-[#D4AF37]" />
             <span class="clima-lugar">Arequipa · 2,325 m s. n. m.</span>
           </div>
           <h3 class="clima-card__titulo">Condiciones para el 12 de Junio</h3>
@@ -44,7 +47,9 @@ import MusicIcon from '../icons/MusicIcon.astro';
 
         <div class="clima-metricas">
           <div class="metrica-chip">
-            <span class="metrica-chip__icono">☀️</span>
+            <span class="metrica-chip__icono">
+              <SunIcon size={22} class="text-[#FFE58F]" />
+            </span>
             <div class="metrica-chip__datos">
               <span class="metrica-chip__temp">22°C</span>
               <span class="metrica-chip__etiqueta">Tarde soleada</span>
@@ -52,7 +57,9 @@ import MusicIcon from '../icons/MusicIcon.astro';
           </div>
 
           <div class="metrica-chip">
-            <span class="metrica-chip__icono">🌙</span>
+            <span class="metrica-chip__icono">
+              <MoonIcon size={20} class="text-[#D4AF37]" />
+            </span>
             <div class="metrica-chip__datos">
               <span class="metrica-chip__temp">11°C</span>
               <span class="metrica-chip__etiqueta">Noche fresca</span>
@@ -60,7 +67,9 @@ import MusicIcon from '../icons/MusicIcon.astro';
           </div>
 
           <div class="metrica-chip">
-            <span class="metrica-chip__icono">✨</span>
+            <span class="metrica-chip__icono">
+              <SparklesIcon size={20} class="text-[#5EEAD4]" />
+            </span>
             <div class="metrica-chip__datos">
               <span class="metrica-chip__temp">Cielo Limpio</span>
               <span class="metrica-chip__etiqueta">Vista estelar</span>

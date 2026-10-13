@@ -896,25 +896,25 @@ import { withBase } from '../../utils/paths';
         const restricciones = String(formData.get("restricciones") || "").trim();
         const cancion = String(formData.get("cancion") || "").trim();
 
-        texto = `¡Hola Daniela y Rodrigo! ✨ Confirmo mi asistencia con mucha alegría a su boda bajo las estrellas.`;
-        texto += `\n\n👤 *Nombre:* ${nombre}`;
-        texto += `\n🎟️ *Pases / Personas:* ${personas}`;
-        texto += `\n🍽️ *Menú elegido:* ${menu}`;
+        texto = `¡Hola Daniela y Rodrigo! Confirmo mi asistencia con mucha alegría a su boda bajo las estrellas.`;
+        texto += `\n\n*Nombre:* ${nombre}`;
+        texto += `\n*Pases / Personas:* ${personas}`;
+        texto += `\n*Menú elegido:* ${menu}`;
 
         if (restricciones) {
-          texto += `\n⚠️ *Restricciones/Alergias:* ${restricciones}`;
+          texto += `\n*Restricciones/Alergias:* ${restricciones}`;
         }
         if (cancion) {
-          texto += `\n🎵 *Canción para la fiesta:* ${cancion}`;
+          texto += `\n*Canción para la fiesta:* ${cancion}`;
         }
       } else {
         const mensajeAusencia = String(formData.get("mensaje-ausencia") || "").trim();
 
-        texto = `Hola Daniela y Rodrigo ✨ Les escribo para felicitarlos de corazón por su boda. Lamentablemente no podré acompañarlos físicamente, pero estaré con ustedes en pensamiento y buenos deseos.`;
-        texto += `\n\n👤 *Nombre:* ${nombre}`;
+        texto = `Hola Daniela y Rodrigo. Les escribo para felicitarlos de corazón por su boda. Lamentablemente no podré acompañarlos físicamente, pero estaré con ustedes en pensamiento y buenos deseos.`;
+        texto += `\n\n*Nombre:* ${nombre}`;
 
         if (mensajeAusencia) {
-          texto += `\n💌 *Mensaje:* ${mensajeAusencia}`;
+          texto += `\n*Mensaje:* ${mensajeAusencia}`;
         }
       }
 

@@ -63,7 +63,7 @@ import StarIcon from '../icons/StarIcon.astro';
           </button>
           
           <div id="guestbook-feedback" class="firmas-feedback" hidden>
-            ¡Gracias por tus hermosas palabras! Tu mensaje ya brilla en el muro. ✨
+            ¡Gracias por tus hermosas palabras! Tu mensaje ya brilla en el muro.
           </div>
         </form>
       </div>
@@ -452,7 +452,7 @@ import StarIcon from '../icons/StarIcon.astro';
           <p class="deseo-texto">«${escapeHtml(d.texto)}»</p>
           <div class="deseo-card__pie">
             <button type="button" class="btn-reaccion" data-like-id="${d.id}" aria-label="Dar cariño a este mensaje">
-              <span class="reaccion-icon">🤍</span>
+              <svg class="reaccion-icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
               <span class="reaccion-count">${d.likes}</span>
             </button>
           </div>
@@ -471,9 +471,12 @@ import StarIcon from '../icons/StarIcon.astro';
             target.likes += 1;
             guardarDeseos(deseos);
             const countEl = btn.querySelector('.reaccion-count');
-            const iconEl = btn.querySelector('.reaccion-icon');
+            const svgEl = btn.querySelector('.reaccion-icon-svg');
             if (countEl) countEl.textContent = target.likes.toString();
-            if (iconEl) iconEl.textContent = '💖';
+            if (svgEl) {
+              svgEl.setAttribute('fill', '#D4AF37');
+              svgEl.setAttribute('stroke', '#D4AF37');
+            }
           }
         });
       });

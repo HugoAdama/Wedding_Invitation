@@ -1,6 +1,9 @@
 ---
 import SparklesIcon from '../icons/SparklesIcon.astro';
 import MapPinIcon from '../icons/MapPinIcon.astro';
+import UtensilsIcon from '../icons/UtensilsIcon.astro';
+import LandmarkIcon from '../icons/LandmarkIcon.astro';
+import MountainIcon from '../icons/MountainIcon.astro';
 ---
 
 <section class="seccion seccion--profundo seccion-optimizada" id="guia-arequipa">
@@ -22,7 +25,9 @@ import MapPinIcon from '../icons/MapPinIcon.astro';
       <!-- 1. Sabores de la Tierra -->
       <article class="guia-card revelar">
         <div class="guia-card__top">
-          <div class="guia-card__icono">🍲</div>
+          <div class="guia-card__icono">
+            <UtensilsIcon size={22} class="text-[#D4AF37]" />
+          </div>
           <span class="guia-card__tag">Tradición & Sabor</span>
         </div>
         <h3 class="guia-card__titulo">Gastronomía Arequipeña</h3>
@@ -48,7 +53,9 @@ import MapPinIcon from '../icons/MapPinIcon.astro';
       <!-- 2. Rincones con Historia y Magia -->
       <article class="guia-card revelar revelar--retraso-1">
         <div class="guia-card__top">
-          <div class="guia-card__icono">🏛️</div>
+          <div class="guia-card__icono">
+            <LandmarkIcon size={22} class="text-[#D4AF37]" />
+          </div>
           <span class="guia-card__tag">Paseos & Miradores</span>
         </div>
         <h3 class="guia-card__titulo">Rutas &amp; Arquitectura de Sillar</h3>
@@ -74,7 +81,9 @@ import MapPinIcon from '../icons/MapPinIcon.astro';
       <!-- 3. Clima, Altura & Bienestar -->
       <article class="guia-card revelar revelar--retraso-2">
         <div class="guia-card__top">
-          <div class="guia-card__icono">🏔️</div>
+          <div class="guia-card__icono">
+            <MountainIcon size={22} class="text-[#D4AF37]" />
+          </div>
           <span class="guia-card__tag">Altitud & Confort</span>
         </div>
         <h3 class="guia-card__titulo">Aclimatación &amp; Cuidados</h3>
