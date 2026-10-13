@@ -175,9 +175,9 @@
     letter-spacing: 0.03em;
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     .reproductor-flotante {
-      bottom: 20px;
+      bottom: calc(70px + env(safe-area-inset-bottom, 0px));
       right: 16px;
     }
     .etiqueta-cancion {

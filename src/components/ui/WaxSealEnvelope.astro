@@ -1,0 +1,442 @@
+---
+import SparklesIcon from '../icons/SparklesIcon.astro';
+---
+<div id="sobre-overlay" class="sobre-overlay" role="dialog" aria-modal="true" aria-label="Sobre de invitación nupcial">
+  <div class="sobre-backdrop"></div>
+
+  <div class="sobre-tarjeta" id="sobre-tarjeta">
+    <!-- Solapa decorativa superior -->
+    <div class="sobre-solapa">
+      <div class="sobre-solapa-borde"></div>
+    </div>
+
+    <!-- Cuerpo del sobre -->
+    <div class="sobre-cuerpo">
+      <div class="sobre-emblema-top">
+        <SparklesIcon size={18} class="text-[#D4AF37] anim-sparkle" />
+        <span class="sobre-kicker">Invitación Nupcial</span>
+        <SparklesIcon size={18} class="text-[#D4AF37] anim-sparkle" />
+      </div>
+
+      <h1 class="sobre-nombres">Daniela &amp; Rodrigo</h1>
+      <p class="sobre-sub">Boda bajo las estrellas · Arequipa 2027</p>
+
+      <!-- Dedicatoria personalizada si existe ?para= en la URL -->
+      <div class="sobre-invitado-box" id="sobre-invitado-box" hidden>
+        <span class="invitado-etiqueta">Especialmente para:</span>
+        <strong class="invitado-nombre" id="sobre-invitado-nombre"></strong>
+      </div>
+
+      <!-- Sello de Cera Interactivo -->
+      <div class="sello-contenedor">
+        <button
+          type="button"
+          id="btn-abrir-sobre"
+          class="sello-cera"
+          aria-label="Abrir invitación de boda rompiendo el sello de cera"
+        >
+          <div class="sello-cera__resplandor" aria-hidden="true"></div>
+          <div class="sello-cera__disco">
+            <div class="sello-cera__borde-exterior"></div>
+            <div class="sello-cera__monograma">
+              <span class="monograma__letra">D</span>
+              <span class="monograma__simbolo">&amp;</span>
+              <span class="monograma__letra">R</span>
+            </div>
+            <div class="sello-cera__estrellas">✧ ★ ✧</div>
+          </div>
+        </button>
+        <p class="sello-instruccion">Toca el sello para abrir</p>
+      </div>
+    </div>
+
+    <!-- Canvas para la explosión de polvo de estrellas al abrir -->
+    <canvas id="sobre-canvas-particulas" class="sobre-canvas"></canvas>
+  </div>
+</div>
+
+<style>
+  .sobre-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease;
+  }
+
+  .sobre-overlay.abierto {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .sobre-backdrop {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(11, 29, 58, 0.95) 0%, rgba(6, 13, 26, 0.98) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .sobre-tarjeta {
+    position: relative;
+    width: 100%;
+    max-width: 32rem;
+    background: radial-gradient(circle at 50% 20%, rgba(27, 42, 74, 0.95) 0%, rgba(7, 16, 32, 0.98) 100%);
+    border: 1.5px solid var(--dorado);
+    border-radius: var(--radio-lg);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(212, 175, 55, 0.25);
+    overflow: hidden;
+    text-align: center;
+    animation: flotar-sobre 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes flotar-sobre {
+    0% {
+      transform: translateY(0);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(212, 175, 55, 0.2);
+    }
+    100% {
+      transform: translateY(-8px);
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.8), 0 0 60px rgba(212, 175, 55, 0.35);
+    }
+  }
+
+  /* Solapa superior */
+  .sobre-solapa {
+    position: relative;
+    height: 3.5rem;
+    background: linear-gradient(180deg, rgba(74, 59, 107, 0.4) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  }
+
+  .sobre-solapa-borde {
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 2rem solid transparent;
+    border-right: 2rem solid transparent;
+    border-top: 1.25rem solid rgba(212, 175, 55, 0.3);
+  }
+
+  /* Cuerpo */
+  .sobre-cuerpo {
+    padding: 1.5rem 2rem 2.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .sobre-emblema-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .sobre-kicker {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--plata);
+  }
+
+  .sobre-nombres {
+    font-family: var(--script);
+    font-size: clamp(3rem, 8vw, 4.2rem);
+    color: var(--dorado);
+    line-height: 1.1;
+    margin: 0.2rem 0 0.4rem;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  }
+
+  .sobre-sub {
+    font-family: var(--titulo);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--crema);
+    opacity: 0.85;
+    margin: 0 0 1.25rem;
+  }
+
+  /* Dedicatoria personalizada */
+  .sobre-invitado-box {
+    background: rgba(11, 29, 58, 0.6);
+    border: 1px dashed rgba(212, 175, 55, 0.5);
+    border-radius: var(--radio-md);
+    padding: 0.75rem 1.25rem;
+    margin: 0 auto 1.5rem;
+    max-width: 22rem;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .invitado-etiqueta {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--plata);
+  }
+
+  .invitado-nombre {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 1.35rem;
+    color: #FFF4D0;
+    margin-top: 0.15rem;
+  }
+
+  /* Sello de Cera */
+  .sello-contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .sello-cera {
+    position: relative;
+    width: 5.5rem;
+    height: 5.5rem;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .sello-cera:hover {
+    transform: scale(1.08);
+  }
+
+  .sello-cera:active {
+    transform: scale(0.95);
+  }
+
+  .sello-cera__resplandor {
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.5) 0%, transparent 70%);
+    animation: pulso-sello 2.5s infinite alternate;
+  }
+
+  @keyframes pulso-sello {
+    0% { transform: scale(0.9); opacity: 0.5; }
+    100% { transform: scale(1.2); opacity: 0.9; }
+  }
+
+  .sello-cera__disco {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #F5DE7A 0%, #C89D2D 45%, #8C6712 100%);
+    box-shadow:
+      inset 0 2px 4px rgba(255, 255, 255, 0.6),
+      inset 0 -3px 6px rgba(0, 0, 0, 0.6),
+      0 6px 20px rgba(0, 0, 0, 0.6),
+      0 0 25px rgba(212, 175, 55, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #382504;
+    border: 2px solid #FFE485;
+  }
+
+  .sello-cera__borde-exterior {
+    position: absolute;
+    inset: 5px;
+    border: 1px dashed rgba(60, 40, 10, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .sello-cera__monograma {
+    display: flex;
+    align-items: baseline;
+    gap: 0.15rem;
+    font-family: var(--script);
+    font-size: 1.9rem;
+    font-weight: bold;
+    line-height: 1;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.4), -1px -1px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .monograma__simbolo {
+    font-size: 1rem;
+    opacity: 0.8;
+  }
+
+  .sello-cera__estrellas {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    opacity: 0.8;
+    margin-top: 0.15rem;
+  }
+
+  .sello-instruccion {
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dorado);
+    margin: 0;
+    animation: titilar-texto 2s infinite ease-in-out;
+  }
+
+  @keyframes titilar-texto {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; text-shadow: 0 0 10px rgba(212, 175, 55, 0.6); }
+  }
+
+  /* Canvas para partículas */
+  .sobre-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+  }
+</style>
+
+<script>
+  function setupWaxSealEnvelope() {
+    const overlay = document.getElementById('sobre-overlay');
+    const btnAbrir = document.getElementById('btn-abrir-sobre');
+    const canvas = document.getElementById('sobre-canvas-particulas') as HTMLCanvasElement | null;
+    const invitadoBox = document.getElementById('sobre-invitado-box');
+    const invitadoNombre = document.getElementById('sobre-invitado-nombre');
+
+    if (!overlay || !btnAbrir) return;
+
+    // Detectar personalización por URL (?para=...)
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const para = urlParams.get('para');
+      if (para && invitadoBox && invitadoNombre) {
+        invitadoNombre.textContent = para;
+        invitadoBox.hidden = false;
+      }
+    } catch {
+      // Ignorar
+    }
+
+    // Comprobar si ya fue abierto en esta sesión
+    if (sessionStorage.getItem('sobre_abierto') === 'true') {
+      overlay.classList.add('abierto');
+      return;
+    }
+
+    // Efecto de partículas estelares al abrir
+    function lanzarParticulas() {
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height * 0.72;
+      const numParticulas = 45;
+      const particulas: Array<{
+        x: number;
+        y: number;
+        vx: number;
+        vy: number;
+        size: number;
+        alpha: number;
+        color: string;
+      }> = [];
+
+      const colores = ['#D4AF37', '#FFF4D0', '#FFFFFF', '#E6CA65'];
+
+      for (let i = 0; i < numParticulas; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 2 + Math.random() * 6;
+        particulas.push({
+          x: centerX,
+          y: centerY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 2,
+          size: 1.5 + Math.random() * 3,
+          alpha: 1,
+          color: colores[Math.floor(Math.random() * colores.length)]
+        });
+      }
+
+      function animar() {
+        if (!ctx || !canvas) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let activas = 0;
+
+        particulas.forEach(p => {
+          if (p.alpha > 0) {
+            activas++;
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.15; // gravedad
+            p.alpha -= 0.025;
+
+            ctx.save();
+            ctx.globalAlpha = Math.max(0, p.alpha);
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          }
+        });
+
+        if (activas > 0) {
+          requestAnimationFrame(animar);
+        }
+      }
+
+      animar();
+    }
+
+    btnAbrir.addEventListener('click', () => {
+      lanzarParticulas();
+
+      // Iniciar la música de fondo desbloqueando el audio del navegador
+      const musicBtn = document.getElementById('btn-musica-toggle') || document.getElementById('music-toggle-btn');
+      if (musicBtn && musicBtn.getAttribute('aria-pressed') !== 'true') {
+        musicBtn.click();
+      }
+
+      // Marcar en sesión
+      sessionStorage.setItem('sobre_abierto', 'true');
+
+      // Animación de desvanecimiento
+      setTimeout(() => {
+        overlay.classList.add('abierto');
+      }, 400);
+    });
+
+    // Permitir reabrir el sobre mediante evento personalizado
+    window.addEventListener('reabrir-sobre', () => {
+      overlay.classList.remove('abierto');
+      sessionStorage.removeItem('sobre_abierto');
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupWaxSealEnvelope);
+  } else {
+    setupWaxSealEnvelope();
+  }
+</script>

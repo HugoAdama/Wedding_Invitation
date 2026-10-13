@@ -799,11 +799,30 @@ import { withBase } from '../../utils/paths';
     const bloqueSi = document.getElementById("bloque-asiste-si");
     const bloqueNo = document.getElementById("bloque-asiste-no");
     const personasInput = document.getElementById("personas") as HTMLInputElement | null;
+    const nombreInput = document.getElementById("nombre") as HTMLInputElement | null;
     const btnMenos = document.getElementById("btn-menos-pases");
     const btnMas = document.getElementById("btn-mas-pases");
     const textoBtnSubmit = document.getElementById("texto-btn-submit");
 
     if (!form) return;
+
+    // Prellenar datos desde URL si existen (?para= y ?pases=)
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const para = urlParams.get('para');
+      const pases = urlParams.get('pases');
+      if (para && nombreInput && !nombreInput.value) {
+        nombreInput.value = para;
+      }
+      if (pases && personasInput) {
+        const numPases = parseInt(pases, 10);
+        if (!isNaN(numPases) && numPases >= 1 && numPases <= 10) {
+          personasInput.value = numPases.toString();
+        }
+      }
+    } catch {
+      // Ignorar
+    }
 
     // Control de Toggle Asistencia (Sí / No)
     function actualizarAsistencia(asiste: boolean) {
@@ -886,8 +905,109 @@ import { withBase } from '../../utils/paths';
         }
       }
 
+      // Ráfaga festiva de estrellas y confeti celestial
+      function lanzarConfetiCelestial() {
+        const canvas = document.createElement('canvas');
+        canvas.style.position = 'fixed';
+        canvas.style.inset = '0';
+        canvas.style.width = '100vw';
+        canvas.style.height = '100vh';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.zIndex = '99999';
+        document.body.appendChild(canvas);
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles: Array<{
+          x: number;
+          y: number;
+          vx: number;
+          vy: number;
+          size: number;
+          color: string;
+          alpha: number;
+          spin: number;
+          spinSpeed: number;
+          isStar: boolean;
+        }> = [];
+
+        const colors = ['#D4AF37', '#FFF4D0', '#E6CA65', '#2DD4BF', '#FDF0CD'];
+        const count = 70;
+
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 4 + Math.random() * 8;
+          particles.push({
+            x: canvas.width / 2,
+            y: canvas.height * 0.55,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - 4,
+            size: 2.5 + Math.random() * 4,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            alpha: 1,
+            spin: Math.random() * Math.PI,
+            spinSpeed: (Math.random() - 0.5) * 0.25,
+            isStar: Math.random() > 0.35
+          });
+        }
+
+        function render() {
+          if (!ctx) return;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          let alive = 0;
+
+          particles.forEach(p => {
+            if (p.alpha > 0) {
+              alive++;
+              p.x += p.vx;
+              p.y += p.vy;
+              p.vy += 0.2;
+              p.spin += p.spinSpeed;
+              p.alpha -= 0.016;
+
+              ctx.save();
+              ctx.translate(p.x, p.y);
+              ctx.rotate(p.spin);
+              ctx.globalAlpha = Math.max(0, p.alpha);
+              ctx.fillStyle = p.color;
+
+              if (p.isStar) {
+                ctx.beginPath();
+                for (let j = 0; j < 5; j++) {
+                  ctx.lineTo(Math.cos((18 + j * 72) * Math.PI / 180) * p.size, -Math.sin((18 + j * 72) * Math.PI / 180) * p.size);
+                  ctx.lineTo(Math.cos((54 + j * 72) * Math.PI / 180) * (p.size * 0.5), -Math.sin((54 + j * 72) * Math.PI / 180) * (p.size * 0.5));
+                }
+                ctx.closePath();
+                ctx.fill();
+              } else {
+                ctx.fillRect(-p.size, -p.size, p.size * 2, p.size * 2);
+              }
+
+              ctx.restore();
+            }
+          });
+
+          if (alive > 0) {
+            requestAnimationFrame(render);
+          } else {
+            canvas.remove();
+          }
+        }
+
+        render();
+      }
+
+      if (asiste) {
+        lanzarConfetiCelestial();
+      }
+
       const url = `https://wa.me/${phone}?text=${encodeURIComponent(texto)}`;
-      window.open(url, "_blank", "noopener,noreferrer");
+      setTimeout(() => {
+        window.open(url, "_blank", "noopener,noreferrer");
+      }, asiste ? 450 : 100);
 
       if (estado) {
         estado.textContent = "¡Listo! Se ha abierto WhatsApp con tu confirmación preparada.";

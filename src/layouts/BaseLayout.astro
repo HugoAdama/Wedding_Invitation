@@ -5,6 +5,8 @@ import Footer from '../components/sections/Footer.astro';
 import StarCanvas from '../components/ui/StarCanvas.astro';
 import ScrollProgressBar from '../components/ui/ScrollProgressBar.astro';
 import MusicPlayer from '../components/ui/MusicPlayer.astro';
+import WaxSealEnvelope from '../components/ui/WaxSealEnvelope.astro';
+import MobileActionBar from '../components/ui/MobileActionBar.astro';
 import { weddingData } from '../data/wedding';
 import { withBase } from '../utils/paths';
 
@@ -58,6 +60,9 @@ const {
   <!-- Lienzo interactivo de polvo de estrellas y constelaciones -->
   <StarCanvas />
 
+  <!-- Sobre nupcial digital interactivo con sello de cera cósmico -->
+  <WaxSealEnvelope />
+
   <Header />
 
   <main id="main-content">
@@ -68,6 +73,9 @@ const {
 
   <!-- Reproductor celestial de música flotante («La Vie en Rose») -->
   <MusicPlayer />
+
+  <!-- Barra móvil fija de acceso rápido para invitados -->
+  <MobileActionBar />
 
   <script>
     // Observador de revelación poética de elementos en scroll
