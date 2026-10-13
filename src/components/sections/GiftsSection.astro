@@ -16,8 +16,8 @@ import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
         <GiftIcon size={18} class="text-[#D4AF37]" />
         <span>Detalles &amp; Presentes</span>
       </div>
-      <p class="kicker" style="color: var(--crema);">Un detalle, si lo deseas</p>
-      <h2 class="titulo-seccion" style="color: #F8E7B4;">Mesa de regalos</h2>
+      <p class="kicker">Un detalle, si lo deseas</p>
+      <h2 class="titulo-seccion brillo-dorado">Mesa de regalos</h2>
       <p class="regalos__cita">{giftQuote}</p>
     </div>
 
@@ -134,15 +134,15 @@ import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
   .regalo-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
     border-color: var(--dorado);
-    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.2);
+    box-shadow: var(--sombra-hover);
   }
 
   .regalo__top {
@@ -157,8 +157,8 @@ import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.75rem;
+    height: 2.75rem;
     border-radius: 50%;
     background: rgba(7, 16, 32, 0.8);
     border: 1px solid var(--linea-suave);
@@ -166,30 +166,30 @@ import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
   }
 
   .badge-tag {
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--dorado);
     background: rgba(212, 175, 55, 0.12);
     border: 1px solid var(--linea-suave);
-    padding: 0.25rem 0.75rem;
+    padding: 0.28rem 0.85rem;
     border-radius: var(--radio-full);
   }
 
   .regalo__titulo {
     font-family: var(--titulo);
-    font-size: 1.6rem;
-    color: var(--dorado);
+    font-size: clamp(1.65rem, 2.5vw, 1.95rem);
+    color: #FFF2A8;
     margin: 0 0 0.6rem;
     line-height: 1.2;
   }
 
   .regalo__desc {
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 0.98rem;
+    line-height: 1.68;
     color: var(--crema);
-    opacity: 0.92;
+    opacity: 0.94;
     margin: 0 0 1.25rem;
   }
 

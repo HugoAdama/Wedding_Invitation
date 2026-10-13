@@ -313,37 +313,38 @@ import { withBase } from '../../utils/paths';
   }
 
   .hito-tarjeta {
-    background: rgba(27, 42, 74, 0.35);
+    background: rgba(27, 42, 74, 0.45);
     border: 1px solid var(--linea-suave);
     border-radius: var(--radio-md);
-    padding: clamp(1.5rem, 3vw, 2.25rem);
+    padding: clamp(1.75rem, 3.5vw, 2.5rem);
     box-shadow: var(--sombra-suave);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: border-color 0.3s ease, transform 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .timeline-hito:hover .hito-tarjeta {
-    border-color: var(--linea);
-    transform: translateY(-2px);
+    border-color: var(--dorado);
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-hover);
   }
 
   .hito-tarjeta--final {
-    background: radial-gradient(circle at top right, rgba(74, 59, 107, 0.4) 0%, rgba(27, 42, 74, 0.55) 100%);
+    background: radial-gradient(circle at top right, rgba(74, 59, 107, 0.45) 0%, rgba(27, 42, 74, 0.65) 100%);
     border-color: var(--linea);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 175, 55, 0.15);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.2);
   }
 
   .hito-encabezado {
     display: flex;
     align-items: baseline;
     gap: 0.5rem;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.45rem;
   }
 
   .hito-anio {
     font-family: var(--titulo);
-    font-size: 1.5rem;
+    font-size: 1.65rem;
     font-weight: 600;
     color: var(--dorado);
   }
@@ -356,22 +357,22 @@ import { withBase } from '../../utils/paths';
   .hito-lugar {
     font-family: var(--titulo);
     font-style: italic;
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     color: var(--plata);
   }
 
   .hito-titulo {
-    font-size: clamp(1.6rem, 3vw, 2rem);
-    color: var(--crema);
-    margin-bottom: 0.75rem;
-    line-height: 1.25;
+    font-size: clamp(1.75rem, 3.2vw, 2.15rem);
+    color: #FFF6D6;
+    margin-bottom: 0.85rem;
+    line-height: 1.22;
   }
 
   .hito-descripcion {
-    font-size: 0.95rem;
-    line-height: 1.7;
+    font-size: 0.98rem;
+    line-height: 1.72;
     color: var(--crema);
-    opacity: 0.92;
+    opacity: 0.94;
     margin: 0;
   }
 </style>

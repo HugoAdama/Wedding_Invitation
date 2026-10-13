@@ -121,16 +121,16 @@ import MusicIcon from '../icons/MusicIcon.astro';
     background: rgba(27, 42, 74, 0.45);
     border: 1px solid var(--linea-suave);
     border-radius: var(--radio-md);
-    padding: 2.25rem 1.75rem;
+    padding: 2.25rem 1.85rem;
     text-align: center;
     box-shadow: var(--sombra-suave);
-    transition: var(--transicion);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .rec-card:hover {
     border-color: var(--dorado);
-    transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transform: translateY(-6px);
+    box-shadow: var(--sombra-hover);
   }
 
   .rec__icono-box {
@@ -148,16 +148,16 @@ import MusicIcon from '../icons/MusicIcon.astro';
   }
 
   .rec__titulo {
-    font-size: 1.6rem;
-    color: var(--dorado);
+    font-size: clamp(1.65rem, 2.5vw, 1.95rem);
+    color: #FFF2A8;
     margin-bottom: 0.75rem;
   }
 
   .rec__desc {
-    font-size: 0.95rem;
-    line-height: 1.65;
+    font-size: 0.98rem;
+    line-height: 1.68;
     color: var(--crema);
-    opacity: 0.9;
+    opacity: 0.94;
     margin: 0;
   }
 

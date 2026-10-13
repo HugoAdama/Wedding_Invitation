@@ -1,12 +1,14 @@
 :root {
   /* Paleta cromática celestial de la boda */
   --noche: #0B1D3A;        /* Fondo principal, cielo nocturno */
-  --profundo: #1B2A4A;     /* Fondos alternos, tarjetas */
+  --profundo: #162442;     /* Fondos alternos, tarjetas */
   --dorado: #D4AF37;       /* Acentos dorados, títulos, estrellas */
+  --dorado-brillante: #FFE58F;
+  --dorado-profundo: #9E7D1A;
   --dorado-glow: rgba(212, 175, 55, 0.45);
   --dorado-suave: rgba(212, 175, 55, 0.12);
-  --plata: #C0C0C0;        /* Detalles secundarios y sutilezas */
-  --crema: #F5EFE6;        /* Texto sobre fondo oscuro, luz de pergamino */
+  --plata: #C8D0DC;        /* Detalles secundarios y sutilezas legibles */
+  --crema: #F8F4EC;        /* Texto sobre fondo oscuro, luz de pergamino */
   --violeta: #4A3B6B;      /* Detalles nebulosos y atardecer */
   --violeta-profundo: #2D1E4A;
   --blanco: #FFFFFF;
@@ -19,6 +21,17 @@
   --script: "Great Vibes", "Brush Script MT", cursive;
   --astronomica: "Cinzel", "Cormorant Garamond", serif;
 
+  /* Jerarquías Tipográficas Estandarizadas */
+  --font-hero-names: clamp(4.6rem, 15vw, 8.2rem);
+  --font-h1: clamp(2.6rem, 6.5vw, 4.2rem);
+  --font-h2: clamp(2.1rem, 5vw, 3.1rem);
+  --font-h3: clamp(1.6rem, 3.5vw, 2.1rem);
+  --font-h4: clamp(1.25rem, 2.5vw, 1.55rem);
+  --font-lead: clamp(1.05rem, 2.2vw, 1.18rem);
+  --font-body: 1rem;
+  --font-small: 0.88rem;
+  --font-kicker: 0.82rem;
+
   /* Espaciado responsivo */
   --lado: clamp(1.25rem, 5vw, 3.5rem);
   --radio-sm: 8px;
@@ -27,10 +40,12 @@
   --radio-full: 9999px;
 
   /* Elevación y sombras */
-  --sombra-suave: 0 4px 20px rgba(0, 0, 0, 0.3);
-  --sombra-dorada: 0 0 45px rgba(212, 175, 55, 0.22);
-  --sombra-luna: 0 0 70px rgba(245, 239, 230, 0.25), 0 0 0 12px rgba(212, 175, 55, 0.08);
+  --sombra-suave: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --sombra-hover: 0 16px 40px -8px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.22);
+  --sombra-dorada: 0 0 45px rgba(212, 175, 55, 0.25);
+  --sombra-luna: 0 0 70px rgba(245, 239, 230, 0.28), 0 0 0 12px rgba(212, 175, 55, 0.1);
 
   /* Transiciones */
-  --transicion: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  --transicion: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transicion-rapida: all 0.18s ease;
 }

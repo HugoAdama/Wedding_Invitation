@@ -383,17 +383,24 @@ import { withBase } from '../../utils/paths';
     background: rgba(27, 42, 74, 0.45);
     border: 1px solid var(--linea-suave);
     border-radius: var(--radio-md);
-    padding: 1.5rem 1.75rem;
+    padding: 1.6rem 1.85rem;
     box-shadow: var(--sombra-suave);
     max-width: 25rem;
     margin: 0 auto;
     width: 100%;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .rsvp__detalles-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--dorado);
+    box-shadow: var(--sombra-hover);
   }
 
   .rsvp__detalles-titulo {
     font-family: var(--titulo);
-    font-size: 1.25rem;
-    color: var(--dorado);
+    font-size: clamp(1.45rem, 2.5vw, 1.75rem);
+    color: #FFF2A8;
     margin: 0 0 1.25rem;
   }
 
@@ -409,7 +416,7 @@ import { withBase } from '../../utils/paths';
     display: flex;
     align-items: flex-start;
     gap: 0.85rem;
-    font-size: 0.92rem;
+    font-size: 0.95rem;
   }
 
   .detalles-icon {
@@ -420,7 +427,7 @@ import { withBase } from '../../utils/paths';
 
   .rsvp__detalles-lista strong {
     display: block;
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--plata);
@@ -438,7 +445,7 @@ import { withBase } from '../../utils/paths';
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    font-size: 0.88rem;
+    font-size: 0.9rem;
   }
 
   .rsvp__ayuda-box p {
@@ -470,6 +477,12 @@ import { withBase } from '../../utils/paths';
     box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .rsvp-form-card:hover {
+    border-color: rgba(212, 175, 55, 0.65);
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.2);
   }
 
   .form-card__header {
@@ -478,16 +491,16 @@ import { withBase } from '../../utils/paths';
 
   .form-card__titulo {
     font-family: var(--titulo);
-    font-size: clamp(1.6rem, 3vw, 2.1rem);
-    color: var(--dorado);
+    font-size: clamp(1.8rem, 3.2vw, 2.3rem);
+    color: #FFF2A8;
     margin: 0 0 0.4rem;
   }
 
   .form-card__sub {
-    font-size: 0.92rem;
+    font-size: 0.96rem;
     color: var(--crema);
-    opacity: 0.85;
-    line-height: 1.5;
+    opacity: 0.9;
+    line-height: 1.55;
     margin: 0;
   }
 

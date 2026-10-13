@@ -183,12 +183,13 @@ import { withBase } from '../../utils/paths';
     border-radius: var(--radio-md);
     overflow: hidden;
     box-shadow: var(--sombra-suave);
-    transition: var(--transicion);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .lugar-card:hover {
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    border-color: rgba(212, 175, 55, 0.6);
+    box-shadow: var(--sombra-hover);
+    border-color: var(--dorado);
+    transform: translateY(-6px);
   }
 
   .lugar__foto {
@@ -201,15 +202,15 @@ import { withBase } from '../../utils/paths';
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .lugar-card:hover .lugar__foto img {
-    transform: scale(1.04);
+    transform: scale(1.05);
   }
 
   .lugar__cuerpo {
-    padding: 1.75rem;
+    padding: 1.85rem;
   }
 
   .lugar__hora-tag {
@@ -218,30 +219,32 @@ import { withBase } from '../../utils/paths';
     gap: 0.4rem;
     margin-bottom: 0.6rem;
     font-family: var(--titulo);
-    font-size: 1.6rem;
+    font-size: 1.75rem;
     font-weight: 500;
     color: var(--dorado);
   }
 
   .lugar__titulo {
-    font-size: 1.6rem;
-    color: var(--crema);
+    font-size: clamp(1.65rem, 3.5vw, 1.95rem);
+    color: var(--dorado);
     margin-bottom: 0.4rem;
+    line-height: 1.2;
   }
 
   .lugar__nombre {
     font-weight: 600;
-    color: var(--crema);
-    margin-bottom: 0.25rem;
+    font-size: 1.15rem;
+    color: #FFF6D6;
+    margin-bottom: 0.35rem;
   }
 
   .lugar__dir {
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     color: var(--plata);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.85rem;
   }
 
   .lugar__pin-icon {
@@ -250,10 +253,10 @@ import { withBase } from '../../utils/paths';
   }
 
   .lugar__desc {
-    font-size: 0.94rem;
-    line-height: 1.6;
+    font-size: 0.98rem;
+    line-height: 1.68;
     color: var(--crema);
-    opacity: 0.88;
+    opacity: 0.94;
     margin: 0;
   }
 
@@ -301,13 +304,13 @@ import { withBase } from '../../utils/paths';
   }
 
   .programa__titulo {
-    font-size: clamp(1.8rem, 3.5vw, 2.2rem);
+    font-size: clamp(2rem, 4vw, 2.4rem);
     color: var(--dorado);
     margin: 0 0 0.35rem;
   }
 
   .programa__sub {
-    font-size: 0.95rem;
+    font-size: 0.98rem;
     color: var(--plata);
     margin: 0;
   }
@@ -322,18 +325,19 @@ import { withBase } from '../../utils/paths';
     display: grid;
     grid-template-columns: 8.5rem 1fr;
     gap: 1.5rem;
-    padding: 1.15rem 1.25rem;
-    background: rgba(7, 16, 32, 0.55);
+    padding: 1.25rem 1.45rem;
+    background: rgba(7, 16, 32, 0.65);
     border: 1px solid var(--linea-suave);
-    border-radius: var(--radio-sm);
+    border-radius: var(--radio-md);
     align-items: center;
-    transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .programa-item:hover {
-    transform: translateX(4px);
+    transform: translateX(6px);
     border-color: var(--dorado);
-    background: rgba(27, 42, 74, 0.6);
+    background: rgba(27, 42, 74, 0.7);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(212, 175, 55, 0.2);
   }
 
   .programa-hora-box {
@@ -345,18 +349,19 @@ import { withBase } from '../../utils/paths';
 
   .programa-hora {
     font-family: var(--titulo);
-    font-size: 1.35rem;
+    font-size: 1.45rem;
     font-weight: 600;
     color: var(--dorado);
     white-space: nowrap;
   }
 
   .programa-punto {
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: var(--dorado);
-    box-shadow: 0 0 8px var(--dorado);
+    box-shadow: 0 0 10px var(--dorado);
+    animation: brillar-estrella 2.5s infinite alternate;
   }
 
   .programa-info {
@@ -364,17 +369,18 @@ import { withBase } from '../../utils/paths';
   }
 
   .programa-evento {
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     font-weight: 600;
-    color: var(--crema);
+    color: #FFF6D6;
     margin-bottom: 0.25rem;
   }
 
   .programa-desc {
-    font-size: 0.88rem;
-    color: var(--plata);
+    font-size: 0.92rem;
+    color: var(--crema);
+    opacity: 0.9;
     margin: 0;
-    line-height: 1.5;
+    line-height: 1.58;
   }
 
   @media (max-width: 620px) {

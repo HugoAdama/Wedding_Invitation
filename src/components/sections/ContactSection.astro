@@ -55,6 +55,13 @@ import MailIcon from '../icons/MailIcon.astro';
     position: relative;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contacto-card:hover {
+    border-color: var(--dorado);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.55), 0 0 30px rgba(212, 175, 55, 0.2);
   }
 
   .contacto-card::before {
