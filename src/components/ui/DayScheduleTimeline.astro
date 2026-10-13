@@ -1,0 +1,159 @@
+---
+import { daySchedule } from '../../data/schedule';
+import ClockIcon from '../icons/ClockIcon.astro';
+---
+
+<div class="programa-bloque revelar">
+  <div class="programa-card">
+    <div class="programa-card__header">
+      <div class="programa-card__icono">
+        <ClockIcon size={22} class="text-[#D4AF37]" />
+      </div>
+      <h3 class="programa__titulo">
+        <span>Itinerario de la Noche</span>
+      </h3>
+      <p class="programa__sub">Cronograma concebido para disfrutar del crepúsculo y las estrellas de Arequipa</p>
+    </div>
+
+    <div class="programa-timeline">
+      {daySchedule.map((item) => (
+        <div class="programa-item">
+          <div class="programa-hora-box">
+            <span class="programa-hora">{item.time}</span>
+            <span class="programa-punto" aria-hidden="true"></span>
+          </div>
+          <div class="programa-info">
+            <h4 class="programa-evento">{item.title}</h4>
+            <p class="programa-desc">{item.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .programa-bloque {
+    margin-bottom: clamp(3.5rem, 6vw, 5rem);
+  }
+
+  .programa-card {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: clamp(2rem, 4vw, 3rem);
+    background: radial-gradient(circle at 50% 0%, rgba(74, 59, 107, 0.25) 0%, rgba(11, 29, 58, 0.85) 100%);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-lg);
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .programa-card__header {
+    text-align: center;
+    margin-bottom: 2.25rem;
+  }
+
+  .programa-card__icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radio-full);
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid var(--linea);
+    margin-bottom: 0.75rem;
+  }
+
+  .programa__titulo {
+    font-size: clamp(2rem, 4vw, 2.4rem);
+    color: var(--dorado);
+    margin: 0 0 0.35rem;
+  }
+
+  .programa__sub {
+    font-size: 0.98rem;
+    color: var(--plata);
+    margin: 0;
+  }
+
+  .programa-timeline {
+    position: relative;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .programa-item {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 1.5rem;
+    padding: 1.25rem 1.45rem;
+    background: rgba(7, 16, 32, 0.65);
+    border: 1px solid var(--linea-suave);
+    border-radius: var(--radio-md);
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .programa-item:hover {
+    transform: translateX(6px);
+    border-color: var(--dorado);
+    background: rgba(27, 42, 74, 0.7);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(212, 175, 55, 0.2);
+  }
+
+  .programa-hora-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .programa-hora {
+    font-family: var(--titulo);
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--dorado);
+    white-space: nowrap;
+  }
+
+  .programa-punto {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--dorado);
+    box-shadow: 0 0 10px var(--dorado);
+    animation: brillar-estrella 2.5s infinite alternate;
+  }
+
+  .programa-info {
+    margin: 0;
+  }
+
+  .programa-evento {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #FFF6D6;
+    margin-bottom: 0.25rem;
+  }
+
+  .programa-desc {
+    font-size: 0.92rem;
+    color: var(--crema);
+    opacity: 0.9;
+    margin: 0;
+    line-height: 1.58;
+  }
+
+  @media (max-width: 620px) {
+    .programa-item {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .programa-punto {
+      display: none;
+    }
+  }
+</style>

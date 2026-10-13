@@ -1,4 +1,5 @@
 ---
+import { arequipaGuideCategories, arequipaGuideBanner } from '../../data/arequipaGuide';
 import SparklesIcon from '../icons/SparklesIcon.astro';
 import MapPinIcon from '../icons/MapPinIcon.astro';
 import UtensilsIcon from '../icons/UtensilsIcon.astro';
@@ -22,89 +23,27 @@ import MountainIcon from '../icons/MountainIcon.astro';
 
     <!-- 3 Pilares de la Guía: Gastronomía, Rutas y Altitud/Bienestar -->
     <div class="guia-grid">
-      <!-- 1. Sabores de la Tierra -->
-      <article class="guia-card revelar">
-        <div class="guia-card__top">
-          <div class="guia-card__icono">
-            <UtensilsIcon size={22} class="text-[#D4AF37]" />
+      {arequipaGuideCategories.map((cat, idx) => (
+        <article class={`guia-card revelar ${idx > 0 ? `revelar--retraso-${idx}` : ''}`}>
+          <div class="guia-card__top">
+            <div class="guia-card__icono">
+              {cat.iconType === 'utensils' && <UtensilsIcon size={22} class="text-[#D4AF37]" />}
+              {cat.iconType === 'landmark' && <LandmarkIcon size={22} class="text-[#D4AF37]" />}
+              {cat.iconType === 'mountain' && <MountainIcon size={22} class="text-[#D4AF37]" />}
+            </div>
+            <span class="guia-card__tag">{cat.tag}</span>
           </div>
-          <span class="guia-card__tag">Tradición & Sabor</span>
-        </div>
-        <h3 class="guia-card__titulo">Gastronomía Arequipeña</h3>
-        <p class="guia-card__intro">
-          La cocina de Arequipa es Patrimonio Cultural. No te vayas sin visitar una picantería tradicional:
-        </p>
-        <ul class="guia-lista">
-          <li>
-            <strong>Rocoto Relleno &amp; Pastel de Papa:</strong> El emblema de la mesa mistiana, horneado con queso paria fundido.
-          </li>
-          <li>
-            <strong>Chupe de Camarones:</strong> Sinfonía de sabores del valle, caldo contundente y aromático.
-          </li>
-          <li>
-            <strong>Picanterías sugeridas:</strong> La Nueva Palomino (Yanahuara), La Benita (Characato) o Victoria Picantería (Centro).
-          </li>
-          <li>
-            <strong>Queso Helado artesanal:</strong> Postre tradicional a base de leche, canela y clavo en los portales de Yanahuara.
-          </li>
-        </ul>
-      </article>
-
-      <!-- 2. Rincones con Historia y Magia -->
-      <article class="guia-card revelar revelar--retraso-1">
-        <div class="guia-card__top">
-          <div class="guia-card__icono">
-            <LandmarkIcon size={22} class="text-[#D4AF37]" />
-          </div>
-          <span class="guia-card__tag">Paseos & Miradores</span>
-        </div>
-        <h3 class="guia-card__titulo">Rutas &amp; Arquitectura de Sillar</h3>
-        <p class="guia-card__intro">
-          Paseos imperdibles entre muros blancos tallados en roca volcánica y vistas a los tres volcanes tutelares:
-        </p>
-        <ul class="guia-lista">
-          <li>
-            <strong>Mirador de Yanahuara:</strong> Arquerías de sillar con versos grabados y la mejor postal frente al volcán Misti.
-          </li>
-          <li>
-            <strong>Monasterio de Santa Catalina:</strong> Una pequeña ciudadela conventual de patios terracota y azul cobalto única en el mundo.
-          </li>
-          <li>
-            <strong>Plaza de Armas &amp; Catedral:</strong> Una de las plazas más imponentes de Sudamérica con sus portales de granito y sillar.
-          </li>
-          <li>
-            <strong>Barrio de San Lázaro:</strong> El callejón más antiguo de la ciudad, empedrado y bañado de geranios.
-          </li>
-        </ul>
-      </article>
-
-      <!-- 3. Clima, Altura & Bienestar -->
-      <article class="guia-card revelar revelar--retraso-2">
-        <div class="guia-card__top">
-          <div class="guia-card__icono">
-            <MountainIcon size={22} class="text-[#D4AF37]" />
-          </div>
-          <span class="guia-card__tag">Altitud & Confort</span>
-        </div>
-        <h3 class="guia-card__titulo">Aclimatación &amp; Cuidados</h3>
-        <p class="guia-card__intro">
-          Arequipa se sitúa a 2,325 metros sobre el nivel del mar. Para sentirte con energía durante todo el fin de semana:
-        </p>
-        <ul class="guia-lista">
-          <li>
-            <strong>Llegada &amp; Descanso:</strong> Tómate las primeras horas para caminar despacio y permitir que el cuerpo se adapte al aire puro.
-          </li>
-          <li>
-            <strong>Infusiones de bienvenida:</strong> Un mate de muña o infusión de coca en tu hotel te sentará de maravilla.
-          </li>
-          <li>
-            <strong>Hidratación continua:</strong> El clima seco y soleado requiere beber abundante agua mineral y aplicar bloqueador solar de día.
-          </li>
-          <li>
-            <strong>El fresco nocturno:</strong> La noche en Yura refresca agradablemente (~10°C). Tendremos calefactores en la hacienda, pero sugerimos llevar abrigo elegante.
-          </li>
-        </ul>
-      </article>
+          <h3 class="guia-card__titulo">{cat.title}</h3>
+          <p class="guia-card__intro">{cat.intro}</p>
+          <ul class="guia-lista">
+            {cat.items.map((item) => (
+              <li>
+                <strong>{item.bold}:</strong> {item.text}
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
     </div>
 
     <!-- Banner complementario con enlace a mapas -->
@@ -114,17 +53,15 @@ import MountainIcon from '../icons/MountainIcon.astro';
           <MapPinIcon size={20} class="text-[#D4AF37]" />
         </div>
         <div>
-          <h4 class="guia-banner__titulo">¿Dudas sobre traslados o actividades en la ciudad?</h4>
-          <p class="guia-banner__desc">
-            Estaremos encantados de orientarte con contactos de choferes de confianza y reservas previas.
-          </p>
+          <h4 class="guia-banner__titulo">{arequipaGuideBanner.title}</h4>
+          <p class="guia-banner__desc">{arequipaGuideBanner.description}</p>
         </div>
       </div>
       <a
-        href="#contacto"
+        href={arequipaGuideBanner.buttonHref}
         class="boton boton--linea guia-banner__btn"
       >
-        <span>Contáctanos</span>
+        <span>{arequipaGuideBanner.buttonText}</span>
       </a>
     </div>
   </div>
