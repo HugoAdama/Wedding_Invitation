@@ -1,8 +1,8 @@
 ---
 import { recommendedHotels, hotelNotice } from '../../data/hotels';
 import BedIcon from '../icons/BedIcon.astro';
-import MapPinIcon from '../icons/MapPinIcon.astro';
 import SparklesIcon from '../icons/SparklesIcon.astro';
+import HotelCard from '../ui/HotelCard.astro';
 ---
 <section class="seccion seccion--profundo seccion-optimizada" id="hospedaje">
   <div class="interior">
@@ -21,36 +21,7 @@ import SparklesIcon from '../icons/SparklesIcon.astro';
     <!-- Grid de 3 Columnas de Hoteles -->
     <div class="hoteles-grid">
       {recommendedHotels.map((hotel, idx) => (
-        <article class={`hotel-card revelar ${idx > 0 ? `revelar--retraso-${Math.min(idx, 3)}` : ''}`}>
-          <div class="hotel__badge-distancia">
-            <MapPinIcon size={14} class="hotel__pin-icon" />
-            <span>{hotel.distance}</span>
-          </div>
-
-          <div class="hotel__contenido">
-            <h3 class="hotel__nombre">{hotel.name}</h3>
-
-            <div class="hotel__precio-bloque">
-              <span class="hotel__monto">{hotel.pricePerNight}</span>
-              <span class="hotel__periodo">por noche aprox.</span>
-            </div>
-
-            {hotel.notes && <p class="hotel__notas">{hotel.notes}</p>}
-          </div>
-
-          <div class="hotel__pie">
-            <a
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${hotel.name} Arequipa`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="hotel__map-link"
-              aria-label={`Ver ubicación de ${hotel.name} en Google Maps`}
-            >
-              <MapPinIcon size={15} />
-              <span>Ver en Google Maps</span>
-            </a>
-          </div>
-        </article>
+        <HotelCard hotel={hotel} idx={idx} />
       ))}
     </div>
 
@@ -102,113 +73,6 @@ import SparklesIcon from '../icons/SparklesIcon.astro';
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
     }
-  }
-
-  .hotel-card {
-    background: rgba(27, 42, 74, 0.45);
-    border: 1px solid var(--linea-suave);
-    border-radius: var(--radio-md);
-    padding: 1.75rem 1.5rem;
-    box-shadow: var(--sombra-suave);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-  }
-
-  .hotel-card:hover {
-    transform: translateY(-6px);
-    border-color: var(--dorado);
-    box-shadow: var(--sombra-hover);
-  }
-
-  .hotel__badge-distancia {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.3rem 0.75rem;
-    font-size: 0.78rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--dorado);
-    background: rgba(7, 16, 32, 0.75);
-    border: 1px solid var(--linea-suave);
-    border-radius: var(--radio-full);
-    margin-bottom: 1.25rem;
-    align-self: flex-start;
-  }
-
-  .hotel__pin-icon {
-    flex-shrink: 0;
-  }
-
-  .hotel__contenido {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-  }
-
-  .hotel__nombre {
-    font-family: var(--titulo);
-    font-size: clamp(1.65rem, 2.5vw, 1.95rem);
-    color: #FFF6D6;
-    margin: 0;
-    line-height: 1.2;
-  }
-
-  .hotel__precio-bloque {
-    padding: 0.75rem 0;
-    border-top: 1px solid var(--linea-suave);
-    border-bottom: 1px solid var(--linea-suave);
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-  }
-
-  .hotel__monto {
-    font-family: var(--titulo);
-    font-size: 2.25rem;
-    font-weight: 600;
-    color: var(--dorado);
-    line-height: 1;
-  }
-
-  .hotel__periodo {
-    font-size: 0.82rem;
-    color: var(--plata);
-  }
-
-  .hotel__notas {
-    font-size: 0.95rem;
-    color: #EDE5D8;
-    line-height: 1.6;
-    margin: 0;
-    flex: 1;
-  }
-
-  .hotel__pie {
-    margin-top: 1.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--linea-suave);
-  }
-
-  .hotel__map-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--crema);
-    text-decoration: none;
-    transition: color 0.2s ease, transform 0.2s ease;
-  }
-
-  .hotel__map-link:hover {
-    color: var(--dorado);
-    transform: translateX(3px);
   }
 
   /* Tarjeta de Aviso Inferior */

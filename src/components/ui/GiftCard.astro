@@ -1,0 +1,222 @@
+---
+import type { GiftOption } from '../../types/wedding';
+import GiftIcon from '../icons/GiftIcon.astro';
+import MailIcon from '../icons/MailIcon.astro';
+import BookOpenIcon from '../icons/BookOpenIcon.astro';
+import SparklesIcon from '../icons/SparklesIcon.astro';
+
+interface Props {
+  opcion: GiftOption;
+  idx: number;
+}
+
+const { opcion, idx } = Astro.props;
+---
+
+<article class={`regalo-card revelar ${idx % 2 === 1 ? 'revelar--retraso-1' : ''}`}>
+  <div class="regalo__top">
+    <div class="regalo__icono-box">
+      {idx === 0 && <MailIcon size={20} class="text-[#D4AF37]" />}
+      {idx === 1 && <SparklesIcon size={20} class="text-[#D4AF37]" />}
+      {idx === 2 && <GiftIcon size={20} class="text-[#D4AF37]" />}
+      {idx === 3 && <BookOpenIcon size={20} class="text-[#D4AF37]" />}
+    </div>
+    {opcion.badge && <span class="badge-tag">{opcion.badge}</span>}
+  </div>
+
+  <h3 class="regalo__titulo">{opcion.title}</h3>
+  <p class="regalo__desc">{opcion.description}</p>
+
+  {opcion.details && (
+    <div class="regalo__detalles">
+      {opcion.details.map(det => (
+        <div class="detalle-fila">
+          {det.label && <span class="detalle-label">{det.label}:</span>}
+          {det.isCode ? (
+            <div class="codigo-copiable-wrap">
+              <code class="detalle-code">{det.value}</code>
+              <button
+                type="button"
+                class="btn-copiar"
+                data-copiar={det.value}
+                aria-label={`Copiar ${det.label || 'cuenta'}`}
+                title="Copiar al portapapeles"
+              >
+                <span class="btn-copiar-txt">Copiar</span>
+              </button>
+            </div>
+          ) : (
+            <span class="detalle-val">{det.value}</span>
+          )}
+        </div>
+      ))}
+    </div>
+  )}
+
+  {idx === 0 && (
+    <div class="regalo__pie-nota">
+      <MailIcon size={16} class="text-[#D4AF37]" />
+      <span>Encontrarás el buzón nupcial junto al libro de firmas en la recepción.</span>
+    </div>
+  )}
+
+  {idx === 3 && (
+    <div class="regalo__pie-nota">
+      <BookOpenIcon size={16} class="text-[#D4AF37]" />
+      <span>Un rincón especial de nuestra casa llevará las lecturas de quienes más amamos.</span>
+    </div>
+  )}
+</article>
+
+<style>
+  .regalo-card {
+    background: rgba(11, 29, 58, 0.7);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-md);
+    padding: 2rem 2.25rem;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .regalo-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--dorado);
+    box-shadow: var(--sombra-hover);
+  }
+
+  .regalo__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .regalo__icono-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: rgba(7, 16, 32, 0.8);
+    border: 1px solid var(--linea-suave);
+    flex-shrink: 0;
+  }
+
+  .badge-tag {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid var(--linea-suave);
+    padding: 0.28rem 0.85rem;
+    border-radius: var(--radio-full);
+  }
+
+  .regalo__titulo {
+    font-family: var(--titulo);
+    font-size: clamp(1.65rem, 2.5vw, 1.95rem);
+    color: #FFF2A8;
+    margin: 0 0 0.6rem;
+    line-height: 1.2;
+  }
+
+  .regalo__desc {
+    font-size: 0.98rem;
+    line-height: 1.68;
+    color: var(--crema);
+    opacity: 0.94;
+    margin: 0 0 1.25rem;
+  }
+
+  .regalo__detalles {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--linea-suave);
+    font-size: 0.9rem;
+  }
+
+  .detalle-fila {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .detalle-label {
+    color: var(--plata);
+    font-size: 0.85rem;
+  }
+
+  .detalle-val {
+    color: var(--crema);
+    font-weight: 500;
+  }
+
+  .codigo-copiable-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+  }
+
+  .detalle-code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.88rem;
+    color: var(--dorado);
+    background: rgba(7, 16, 32, 0.85);
+    padding: 0.3rem 0.65rem;
+    border-radius: var(--radio-sm);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    user-select: all;
+  }
+
+  .btn-copiar {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--dorado);
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid var(--dorado);
+    border-radius: var(--radio-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-copiar:hover {
+    background: var(--dorado);
+    color: var(--noche);
+    transform: translateY(-1px);
+  }
+
+  .btn-copiar--copiado {
+    background: #2e7d32 !important;
+    border-color: #4caf50 !important;
+    color: #ffffff !important;
+  }
+
+  .regalo__pie-nota {
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--linea-suave);
+    font-size: 0.85rem;
+    color: var(--plata);
+    font-style: italic;
+    line-height: 1.45;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+</style>

@@ -1,0 +1,178 @@
+---
+import HeartIcon from '../icons/HeartIcon.astro';
+import StarIcon from '../icons/StarIcon.astro';
+---
+
+<div class="firmas-form-card revelar">
+  <div class="firmas-form__header">
+    <div class="firmas-form__icono">
+      <HeartIcon size={20} fill={true} class="text-[#D4AF37]" />
+    </div>
+    <h3 class="firmas-form__titulo">Dedica unas palabras</h3>
+    <p class="firmas-form__sub">Tu dedicatoria se sumará al firmamento digital de la boda.</p>
+  </div>
+
+  <form id="form-guestbook" class="firmas-form">
+    <div class="campo">
+      <label for="autor-deseo">Tu nombre o Familia</label>
+      <input
+        type="text"
+        id="autor-deseo"
+        name="autor"
+        required
+        maxlength="60"
+        placeholder="Ej. Familia Valdivia / Carlos y Andrea"
+        class="input-estelar"
+      />
+    </div>
+
+    <div class="campo">
+      <label for="texto-deseo">Tu mensaje para los novios</label>
+      <textarea
+        id="texto-deseo"
+        name="mensaje"
+        rows="4"
+        required
+        maxlength="400"
+        placeholder="Escribe aquí tu dedicatoria, consejo o buenos deseos..."
+        class="input-estelar textarea-estelar"
+      ></textarea>
+    </div>
+
+    <button type="submit" class="boton boton--lleno firmas-submit-btn" id="btn-enviar-deseo">
+      <StarIcon size={16} />
+      <span>Publicar mi dedicatoria</span>
+    </button>
+    
+    <div id="guestbook-feedback" class="firmas-feedback" hidden>
+      ¡Gracias por tus hermosas palabras! Tu mensaje ya brilla en el muro.
+    </div>
+  </form>
+</div>
+
+<style>
+  .firmas-form-card {
+    background: radial-gradient(circle at top right, rgba(74, 59, 107, 0.3) 0%, rgba(11, 29, 58, 0.85) 100%);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-lg);
+    padding: clamp(1.75rem, 3.5vw, 2.5rem);
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .firmas-form-card:hover {
+    border-color: rgba(212, 175, 55, 0.65);
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.2);
+  }
+
+  .firmas-form__header {
+    text-align: center;
+    margin-bottom: 1.75rem;
+  }
+
+  .firmas-form__icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: rgba(7, 16, 32, 0.7);
+    border: 1px solid var(--linea);
+    margin-bottom: 0.75rem;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+  }
+
+  .firmas-form__titulo {
+    font-family: var(--titulo);
+    font-size: clamp(1.65rem, 3vw, 2rem);
+    color: #FFF2A8;
+    margin: 0 0 0.35rem;
+  }
+
+  .firmas-form__sub {
+    font-size: 0.9rem;
+    color: var(--plata);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .firmas-form {
+    display: grid;
+    gap: 1.35rem;
+  }
+
+  .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    text-align: left;
+  }
+
+  .campo label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--crema);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .input-estelar {
+    width: 100%;
+    padding: 0.85rem 1.15rem;
+    background: rgba(7, 16, 32, 0.75);
+    border: 1px solid var(--linea-suave);
+    border-radius: var(--radio-sm);
+    color: #FFF6D6;
+    font-family: var(--cuerpo);
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+  }
+
+  .input-estelar:focus {
+    outline: none;
+    border-color: var(--dorado);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.35);
+    background: rgba(11, 29, 58, 0.85);
+  }
+
+  .input-estelar::placeholder {
+    color: var(--plata);
+    opacity: 0.55;
+  }
+
+  .textarea-estelar {
+    resize: vertical;
+    min-height: 5.5rem;
+    line-height: 1.6;
+  }
+
+  .firmas-submit-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .firmas-feedback {
+    background: rgba(45, 212, 191, 0.12);
+    border: 1px solid rgba(45, 212, 191, 0.4);
+    color: #5EEAD4;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radio-sm);
+    font-size: 0.88rem;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
