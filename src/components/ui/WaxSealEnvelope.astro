@@ -21,11 +21,7 @@ import SparklesIcon from '../icons/SparklesIcon.astro';
       <h1 class="sobre-nombres">Daniela &amp; Rodrigo</h1>
       <p class="sobre-sub">Boda bajo las estrellas · Arequipa 2027</p>
 
-      <!-- Dedicatoria personalizada si existe ?para= en la URL -->
-      <div class="sobre-invitado-box" id="sobre-invitado-box" hidden>
-        <span class="invitado-etiqueta">Especialmente para:</span>
-        <strong class="invitado-nombre" id="sobre-invitado-nombre"></strong>
-      </div>
+
 
       <!-- Sello de Cera Interactivo -->
       <div class="sello-contenedor">
@@ -167,32 +163,7 @@ import SparklesIcon from '../icons/SparklesIcon.astro';
     margin: 0 0 1.25rem;
   }
 
-  /* Dedicatoria personalizada */
-  .sobre-invitado-box {
-    background: rgba(11, 29, 58, 0.6);
-    border: 1px dashed rgba(212, 175, 55, 0.5);
-    border-radius: var(--radio-md);
-    padding: 0.75rem 1.25rem;
-    margin: 0 auto 1.5rem;
-    max-width: 22rem;
-    animation: fadeIn 0.4s ease;
-  }
 
-  .invitado-etiqueta {
-    display: block;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--plata);
-  }
-
-  .invitado-nombre {
-    display: block;
-    font-family: var(--titulo);
-    font-size: 1.35rem;
-    color: #FFF4D0;
-    margin-top: 0.15rem;
-  }
 
   /* Sello de Cera */
   .sello-contenedor {
@@ -317,22 +288,7 @@ import SparklesIcon from '../icons/SparklesIcon.astro';
     const overlay = document.getElementById('sobre-overlay');
     const btnAbrir = document.getElementById('btn-abrir-sobre');
     const canvas = document.getElementById('sobre-canvas-particulas') as HTMLCanvasElement | null;
-    const invitadoBox = document.getElementById('sobre-invitado-box');
-    const invitadoNombre = document.getElementById('sobre-invitado-nombre');
-
     if (!overlay || !btnAbrir) return;
-
-    // Detectar personalización por URL (?para=...)
-    try {
-      const urlParams = new URLSearchParams(window.location.search);
-      const para = urlParams.get('para');
-      if (para && invitadoBox && invitadoNombre) {
-        invitadoNombre.textContent = para;
-        invitadoBox.hidden = false;
-      }
-    } catch {
-      // Ignorar
-    }
 
     // Comprobar si ya fue abierto en esta sesión
     if (sessionStorage.getItem('sobre_abierto') === 'true') {

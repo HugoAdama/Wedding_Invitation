@@ -46,12 +46,7 @@ import { withBase } from '../../utils/paths';
     <p class="hero__fecha">{weddingData.dateFormatted}</p>
     <p class="hero__lugar">{weddingData.venueName} · {weddingData.city}</p>
 
-    <!-- Badge de Invitación Personalizada si viene en URL -->
-    <div class="hero__invitado-badge" id="hero-invitado-badge" hidden>
-      <SparklesIcon size={15} class="text-[#D4AF37]" />
-      <span>Especialmente para: <strong id="hero-invitado-nombre"></strong></span>
-      <span class="invitado-pases-chip" id="hero-invitado-pases" hidden></span>
-    </div>
+
 
     <!-- Cuenta regresiva estelar en portada -->
     <div class="hero__countdown" id="hero-countdown" role="timer" aria-label="Tiempo restante para la boda">
@@ -349,36 +344,7 @@ import { withBase } from '../../utils/paths';
     margin-top: -2px;
   }
 
-  /* Badge de Invitado Personalizado */
-  .hero__invitado-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.45rem 1.15rem;
-    background: radial-gradient(circle at center, rgba(74, 59, 107, 0.4) 0%, rgba(11, 29, 58, 0.75) 100%);
-    border: 1px solid var(--dorado);
-    border-radius: var(--radio-full);
-    color: var(--crema);
-    font-size: 0.88rem;
-    margin: 0.75rem auto 1rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(212, 175, 55, 0.25);
-    animation: aparecer 0.6s ease;
-  }
 
-  .hero__invitado-badge strong {
-    color: #FFF4D0;
-    font-weight: 600;
-  }
-
-  .invitado-pases-chip {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--noche);
-    background: var(--dorado);
-    padding: 0.15rem 0.5rem;
-    border-radius: var(--radio-full);
-    letter-spacing: 0.05em;
-  }
 
   @keyframes aparecer {
     from {
@@ -430,45 +396,8 @@ import { withBase } from '../../utils/paths';
     setInterval(actualizar, 1000);
   }
 
-  function initPersonalizacionInvitado() {
-    try {
-      const urlParams = new URLSearchParams(window.location.search);
-      const para = urlParams.get('para');
-      const pases = urlParams.get('pases');
-
-      const badge = document.getElementById('hero-invitado-badge');
-      const nombreEl = document.getElementById('hero-invitado-nombre');
-      const pasesEl = document.getElementById('hero-invitado-pases');
-
-      if (para && badge && nombreEl) {
-        nombreEl.textContent = para;
-        badge.hidden = false;
-
-        if (pases && pasesEl) {
-          const numPases = parseInt(pases, 10) || 1;
-          pasesEl.textContent = `${numPases} ${numPases === 1 ? 'pase' : 'pases'}`;
-          pasesEl.hidden = false;
-        }
-
-        // Autocompletar también en el formulario RSVP si existe
-        const inputNombre = document.getElementById('nombre') as HTMLInputElement | null;
-        const inputPersonas = document.getElementById('personas') as HTMLInputElement | null;
-
-        if (inputNombre && !inputNombre.value) {
-          inputNombre.value = para;
-        }
-        if (inputPersonas && pases) {
-          inputPersonas.value = pases;
-        }
-      }
-    } catch {
-      // Ignorar error de lectura de params
-    }
-  }
-
   function initHero() {
     initHeroCountdown();
-    initPersonalizacionInvitado();
   }
 
   if (document.readyState === 'loading') {

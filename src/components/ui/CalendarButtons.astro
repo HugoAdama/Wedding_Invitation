@@ -1,5 +1,5 @@
 ---
-// Componente de botones de calendario (Google Calendar y descarga de archivo .ics)
+// Componente de botón de agendamiento en Google Calendar
 interface Props {
   variant?: 'hero' | 'seccion';
 }
@@ -28,39 +28,24 @@ const googleCalendarUrl = "https://calendar.google.com/calendar/render?action=TE
       <line x1="3" y1="10" x2="21" y2="10"></line>
       <circle cx="12" cy="15" r="1.5" fill="currentColor"></circle>
     </svg>
-    <span>Google Calendar</span>
+    <span>Agregar a Google Calendar</span>
   </a>
-
-  <button
-    type="button"
-    class="btn-cal btn-cal--ics btn-descargar-ics"
-    aria-label="Descargar archivo de calendario para Apple Calendar o Outlook"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-      <polyline points="7 10 12 15 17 10"></polyline>
-      <line x1="12" y1="15" x2="12" y2="3"></line>
-    </svg>
-    <span>Apple / Outlook (.ics)</span>
-  </button>
 </div>
 
 <style>
   .calendario-acciones {
     display: inline-flex;
-    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 0.65rem;
     margin-top: 1rem;
   }
 
   .btn-cal {
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
-    padding: 0.45rem 0.95rem;
-    font-size: 0.8rem;
+    gap: 0.5rem;
+    padding: 0.55rem 1.25rem;
+    font-size: 0.84rem;
     font-weight: 500;
     font-family: var(--fuente-cuerpo);
     border-radius: 9999px;
@@ -78,54 +63,12 @@ const googleCalendarUrl = "https://calendar.google.com/calendar/render?action=TE
     color: #FFF2A8;
     border-color: #D4AF37;
     background: rgba(212, 175, 55, 0.15);
-    box-shadow: 0 0 14px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 0 16px rgba(212, 175, 55, 0.35);
     transform: translateY(-1px);
   }
 
   .calendario-acciones--hero .btn-cal {
-    font-size: 0.78rem;
-    padding: 0.4rem 0.85rem;
+    font-size: 0.82rem;
+    padding: 0.45rem 1.15rem;
   }
 </style>
-
-<script>
-  function initIcsDownload() {
-    const btns = document.querySelectorAll('.btn-descargar-ics');
-    btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const icsContent = [
-          'BEGIN:VCALENDAR',
-          'VERSION:2.0',
-          'PRODID:-//Daniela y Rodrigo//Boda Bajo las Estrellas//ES',
-          'CALSCALE:GREGORIAN',
-          'METHOD:PUBLISH',
-          'BEGIN:VEVENT',
-          'UID:boda-daniela-rodrigo-2027@daniyrodrigo.pe',
-          'DTSTAMP:20270612T173000Z',
-          'DTSTART:20270612T223000Z',
-          'DTEND:20270613T090000Z',
-          'SUMMARY:Boda Daniela & Rodrigo · Bajo las estrellas',
-          'DESCRIPTION:Ceremonia Civil & Simbólica (5:30 p. m.) y Recepción & Fiesta (7:30 p. m.) en Hacienda San José, Carretera Arequipa-Yura Km 8, Arequipa. ¡Te esperamos para celebrar bajo las estrellas!',
-          'LOCATION:Hacienda San José, Km 8, Carretera Arequipa–Yura, Arequipa, Perú',
-          'STATUS:CONFIRMED',
-          'END:VEVENT',
-          'END:VCALENDAR'
-        ].join('\r\n');
-
-        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.setAttribute('download', 'boda-daniela-y-rodrigo-2027.ics');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      });
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initIcsDownload);
-  } else {
-    initIcsDownload();
-  }
-</script>
