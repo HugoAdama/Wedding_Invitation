@@ -1,0 +1,524 @@
+---
+import CloseIcon from '../icons/CloseIcon.astro';
+import SparklesIcon from '../icons/SparklesIcon.astro';
+import MapPinIcon from '../icons/MapPinIcon.astro';
+import CalendarIcon from '../icons/CalendarIcon.astro';
+import ClockIcon from '../icons/ClockIcon.astro';
+import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
+---
+
+<dialog id="modal-pase-digital" class="modal-pase" aria-labelledby="pase-titulo" aria-modal="true">
+  <div class="modal-pase__backdrop" id="pase-backdrop"></div>
+
+  <div class="modal-pase__contenedor">
+    <!-- Botón flotante para cerrar -->
+    <button type="button" class="modal-pase__cerrar" id="btn-cerrar-pase" aria-label="Cerrar pase de asistencia">
+      <CloseIcon size={20} />
+    </button>
+
+    <!-- Tarjeta Boarding Pass / Pase de Gala -->
+    <div class="pase-tarjeta" id="pase-imprimible">
+      <!-- Encabezado de la Tarjeta -->
+      <div class="pase-header">
+        <div class="pase-header__banda">
+          <SparklesIcon size={16} class="text-[#D4AF37]" />
+          <span>Pase de Asistencia · Noche Celestial</span>
+          <SparklesIcon size={16} class="text-[#D4AF37]" />
+        </div>
+        <MoonPhasesOrnament class="w-24 h-auto mx-auto my-2 text-[#D4AF37] opacity-80" />
+        <h2 id="pase-titulo" class="pase-pareja">Daniela &amp; Rodrigo</h2>
+        <p class="pase-sub">Unión matrimonial bajo las estrellas de Arequipa</p>
+      </div>
+
+      <!-- Cuerpo principal del Pase -->
+      <div class="pase-cuerpo">
+        <div class="pase-fila">
+          <div class="pase-dato">
+            <span class="pase-label">
+              <CalendarIcon size={14} /> Fecha
+            </span>
+            <strong class="pase-valor">Sábado, 12 de Junio de 2027</strong>
+          </div>
+          <div class="pase-dato">
+            <span class="pase-label">
+              <ClockIcon size={14} /> Hora
+            </span>
+            <strong class="pase-valor">5:30 p. m. (Puntual)</strong>
+          </div>
+        </div>
+
+        <div class="pase-dato pase-dato--full">
+          <span class="pase-label">
+            <MapPinIcon size={14} /> Lugar &amp; Recepción
+          </span>
+          <strong class="pase-valor">Hacienda San José</strong>
+          <span class="pase-dir">Carretera Arequipa–Yura Km 8 · Arequipa, Perú</span>
+        </div>
+
+        <div class="pase-fila">
+          <div class="pase-dato">
+            <span class="pase-label">Código de Vestimenta</span>
+            <strong class="pase-valor">Black Tie Celestial</strong>
+          </div>
+          <div class="pase-dato">
+            <span class="pase-label">Acceso</span>
+            <strong class="pase-valor">Invitado de Honor</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Línea de corte / Perforación ceremonial -->
+      <div class="pase-divisor" aria-hidden="true">
+        <span class="pase-muesca pase-muesca--izq"></span>
+        <span class="pase-linea-puntos"></span>
+        <span class="pase-muesca pase-muesca--der"></span>
+      </div>
+
+      <!-- Talón inferior con Código QR de Ubicación GPS -->
+      <div class="pase-talon">
+        <div class="pase-qr-box">
+          <!-- Código QR SVG estilizado y funcional que dirige a Google Maps -->
+          <svg class="pase-qr-svg" viewBox="0 0 100 100" width="90" height="90" aria-label="Código QR de ubicación de la boda">
+            <rect width="100" height="100" fill="#FFFBF2" rx="6" />
+            <!-- Patrón de esquinas y módulos del QR -->
+            <!-- Esquina sup izq -->
+            <rect x="10" y="10" width="24" height="24" fill="#0B1D3A" rx="3" />
+            <rect x="14" y="14" width="16" height="16" fill="#FFFBF2" rx="2" />
+            <rect x="18" y="18" width="8" height="8" fill="#0B1D3A" rx="1" />
+            <!-- Esquina sup der -->
+            <rect x="66" y="10" width="24" height="24" fill="#0B1D3A" rx="3" />
+            <rect x="70" y="14" width="16" height="16" fill="#FFFBF2" rx="2" />
+            <rect x="74" y="18" width="8" height="8" fill="#0B1D3A" rx="1" />
+            <!-- Esquina inf izq -->
+            <rect x="10" y="66" width="24" height="24" fill="#0B1D3A" rx="3" />
+            <rect x="14" y="70" width="16" height="16" fill="#FFFBF2" rx="2" />
+            <rect x="18" y="74" width="8" height="8" fill="#0B1D3A" rx="1" />
+            <!-- Módulos decorativos centrales representativos -->
+            <rect x="42" y="12" width="6" height="6" fill="#0B1D3A" />
+            <rect x="52" y="16" width="6" height="6" fill="#0B1D3A" />
+            <rect x="42" y="24" width="6" height="6" fill="#D4AF37" />
+            <rect x="52" y="28" width="6" height="6" fill="#0B1D3A" />
+            
+            <rect x="12" y="42" width="6" height="6" fill="#0B1D3A" />
+            <rect x="22" y="48" width="6" height="6" fill="#0B1D3A" />
+            <rect x="30" y="42" width="6" height="6" fill="#0B1D3A" />
+
+            <rect x="40" y="40" width="8" height="8" fill="#D4AF37" rx="2" />
+            <rect x="52" y="44" width="6" height="6" fill="#0B1D3A" />
+            <rect x="44" y="52" width="6" height="6" fill="#0B1D3A" />
+
+            <rect x="68" y="42" width="6" height="6" fill="#0B1D3A" />
+            <rect x="78" y="48" width="6" height="6" fill="#0B1D3A" />
+            <rect x="84" y="42" width="6" height="6" fill="#0B1D3A" />
+
+            <rect x="42" y="68" width="6" height="6" fill="#0B1D3A" />
+            <rect x="52" y="74" width="6" height="6" fill="#0B1D3A" />
+            <rect x="46" y="82" width="6" height="6" fill="#D4AF37" />
+            <rect x="68" y="68" width="6" height="6" fill="#0B1D3A" />
+            <rect x="76" y="76" width="6" height="6" fill="#0B1D3A" />
+            <rect x="82" y="84" width="6" height="6" fill="#0B1D3A" />
+          </svg>
+          <span class="pase-qr-hint">Escanear para abrir GPS</span>
+        </div>
+
+        <div class="pase-talon-info">
+          <p class="pase-talon-kicker">Localización Directa</p>
+          <p class="pase-talon-texto">Presenta este pase en el ingreso de la hacienda o abre tu mapa en un toque:</p>
+          <a
+            href="https://maps.google.com/?q=Hacienda+San+Jose+Arequipa+Yura"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="pase-talon-link"
+          >
+            <span>Abrir Hacienda en Google Maps ↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Acciones del Modal: Imprimir / Compartir / Cerrar -->
+    <div class="modal-pase__acciones">
+      <button type="button" class="boton boton--lleno pase-btn-accion" id="btn-imprimir-pase">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        <span>Guardar o Imprimir</span>
+      </button>
+
+      <button type="button" class="boton boton--linea pase-btn-accion" id="btn-cerrar-pase-secundario">
+        <span>Cerrar</span>
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .modal-pase {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .modal-pase[open] {
+    display: flex;
+  }
+
+  .modal-pase__backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(7, 16, 32, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .modal-pase__contenedor {
+    position: relative;
+    z-index: 2;
+    width: min(92vw, 29rem);
+    max-height: 94vh;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    animation: zoomModal 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes zoomModal {
+    from {
+      opacity: 0;
+      transform: scale(0.92) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .modal-pase__cerrar {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    background: rgba(7, 16, 32, 0.85);
+    border: 1px solid var(--linea);
+    color: var(--crema);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+  }
+
+  .modal-pase__cerrar:hover {
+    color: var(--dorado);
+    transform: scale(1.1);
+    border-color: var(--dorado);
+  }
+
+  /* Tarjeta Boarding Pass */
+  .pase-tarjeta {
+    width: 100%;
+    background: radial-gradient(circle at 50% 0%, #152747 0%, #0B1D3A 85%);
+    border: 2px solid var(--dorado);
+    border-radius: 1.25rem;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(212, 175, 55, 0.25);
+    overflow: hidden;
+    position: relative;
+    color: var(--crema);
+  }
+
+  .pase-header {
+    text-align: center;
+    padding: 1.85rem 1.5rem 1.25rem;
+    background: linear-gradient(180deg, rgba(212, 175, 55, 0.12) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .pase-header__banda {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--dorado);
+    font-weight: 600;
+  }
+
+  .pase-pareja {
+    font-family: var(--script);
+    font-size: clamp(2.4rem, 6vw, 3rem);
+    color: #FFF6D6;
+    margin: 0;
+    line-height: 1.1;
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+  }
+
+  .pase-sub {
+    font-size: 0.82rem;
+    color: var(--plata);
+    margin: 0.35rem 0 0;
+  }
+
+  /* Datos del Pase */
+  .pase-cuerpo {
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .pase-fila {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .pase-dato {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .pase-dato--full {
+    border-block: 1px dashed rgba(212, 175, 55, 0.2);
+    padding-block: 0.85rem;
+  }
+
+  .pase-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--plata);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .pase-label svg {
+    color: var(--dorado);
+  }
+
+  .pase-valor {
+    font-size: 1rem;
+    color: #FFF6D6;
+    font-weight: 600;
+  }
+
+  .pase-dir {
+    font-size: 0.82rem;
+    color: var(--plata);
+    margin-top: 0.15rem;
+  }
+
+  /* Divisor Troquelado */
+  .pase-divisor {
+    position: relative;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+
+  .pase-muesca {
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: rgba(7, 16, 32, 0.95);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
+  }
+
+  .pase-muesca--izq {
+    left: -0.75rem;
+    border-right: 2px solid var(--dorado);
+  }
+
+  .pase-muesca--der {
+    right: -0.75rem;
+    border-left: 2px solid var(--dorado);
+  }
+
+  .pase-linea-puntos {
+    width: 100%;
+    margin-inline: 1.25rem;
+    border-bottom: 2px dashed rgba(212, 175, 55, 0.45);
+  }
+
+  /* Talón con QR */
+  .pase-talon {
+    padding: 1.25rem 1.75rem 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    background: rgba(7, 16, 32, 0.4);
+  }
+
+  .pase-qr-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    flex-shrink: 0;
+  }
+
+  .pase-qr-svg {
+    border-radius: 0.4rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  }
+
+  .pase-qr-hint {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--plata);
+  }
+
+  .pase-talon-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .pase-talon-kicker {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dorado);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .pase-talon-texto {
+    font-size: 0.82rem;
+    color: var(--crema);
+    opacity: 0.9;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .pase-talon-link {
+    font-size: 0.85rem;
+    color: #FFE58F;
+    font-weight: 500;
+    text-decoration: none;
+    margin-top: 0.25rem;
+    transition: color 0.2s ease;
+  }
+
+  .pase-talon-link:hover {
+    color: var(--dorado);
+    text-decoration: underline;
+  }
+
+  /* Acciones inferiores */
+  .modal-pase__acciones {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  .pase-btn-accion {
+    flex: 1;
+    justify-content: center;
+    font-size: 0.9rem;
+    padding: 0.75rem 1.25rem;
+  }
+
+  /* Estilos específicos para impresión */
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    #modal-pase-digital,
+    #modal-pase-digital * {
+      visibility: visible;
+    }
+    #modal-pase-digital {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: block !important;
+      background: white !important;
+    }
+    .modal-pase__backdrop,
+    .modal-pase__cerrar,
+    .modal-pase__acciones {
+      display: none !important;
+    }
+    .pase-tarjeta {
+      border: 2px solid #000;
+      color: #000;
+      background: #fff !important;
+      box-shadow: none !important;
+    }
+    .pase-pareja, .pase-valor, .pase-header__banda {
+      color: #000 !important;
+    }
+  }
+</style>
+
+<script>
+  function setupBoardingPassModal() {
+    const dialog = document.getElementById('modal-pase-digital') as HTMLDialogElement | null;
+    const btnCerrar = document.getElementById('btn-cerrar-pase');
+    const btnCerrarSecundario = document.getElementById('btn-cerrar-pase-secundario');
+    const backdrop = document.getElementById('pase-backdrop');
+    const btnImprimir = document.getElementById('btn-imprimir-pase');
+
+    if (!dialog) return;
+
+    function abrirModal() {
+      dialog?.showModal();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function cerrarModal() {
+      dialog?.close();
+      document.body.style.overflow = '';
+    }
+
+    // Escuchar evento personalizado global
+    window.addEventListener('abrir-pase-digital', abrirModal);
+
+    btnCerrar?.addEventListener('click', cerrarModal);
+    btnCerrarSecundario?.addEventListener('click', cerrarModal);
+    backdrop?.addEventListener('click', cerrarModal);
+
+    // Cerrar al pulsar Escape
+    dialog.addEventListener('cancel', () => {
+      document.body.style.overflow = '';
+    });
+
+    // Imprimir
+    btnImprimir?.addEventListener('click', () => {
+      window.print();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupBoardingPassModal);
+  } else {
+    setupBoardingPassModal();
+  }
+</script>

@@ -7,6 +7,7 @@ import ScrollProgressBar from '../components/ui/ScrollProgressBar.astro';
 import MusicPlayer from '../components/ui/MusicPlayer.astro';
 import WaxSealEnvelope from '../components/ui/WaxSealEnvelope.astro';
 import MobileActionBar from '../components/ui/MobileActionBar.astro';
+import BoardingPassModal from '../components/ui/BoardingPassModal.astro';
 import { weddingData } from '../data/wedding';
 import { withBase } from '../utils/paths';
 
@@ -76,6 +77,9 @@ const {
 
   <!-- Barra móvil fija de acceso rápido para invitados -->
   <MobileActionBar />
+
+  <!-- Pase digital de asistencia / Boarding Pass con QR modal -->
+  <BoardingPassModal />
 
   <script>
     // Observador de revelación poética de elementos en scroll

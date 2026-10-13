@@ -2,6 +2,7 @@
 import MapPinIcon from '../icons/MapPinIcon.astro';
 import HeartIcon from '../icons/HeartIcon.astro';
 import MailIcon from '../icons/MailIcon.astro';
+import TicketIcon from '../icons/TicketIcon.astro';
 ---
 
 <!-- Barra móvil fija de acceso rápido para invitados -->
@@ -20,6 +21,18 @@ import MailIcon from '../icons/MailIcon.astro';
       <span class="barra-btn__texto">Ubicación</span>
     </a>
 
+    <button
+      type="button"
+      id="btn-movil-pase"
+      class="barra-btn"
+      aria-label="Ver pase digital con código QR"
+    >
+      <div class="barra-btn__icono">
+        <TicketIcon size={18} />
+      </div>
+      <span class="barra-btn__texto">Pase QR</span>
+    </button>
+
     <a
       href="#confirmar"
       class="barra-btn barra-btn--destacado"
@@ -28,7 +41,7 @@ import MailIcon from '../icons/MailIcon.astro';
       <div class="barra-btn__icono">
         <HeartIcon size={18} />
       </div>
-      <span class="barra-btn__texto">Confirmar RSVP</span>
+      <span class="barra-btn__texto">Confirmar</span>
     </a>
 
     <button
@@ -133,11 +146,15 @@ import MailIcon from '../icons/MailIcon.astro';
 <script>
   function setupMobileActionBar() {
     const btnSobre = document.getElementById('btn-movil-reabrir-sobre');
-    if (!btnSobre) return;
+    const btnPase = document.getElementById('btn-movil-pase');
 
-    btnSobre.addEventListener('click', () => {
+    btnSobre?.addEventListener('click', () => {
       window.dispatchEvent(new CustomEvent('reabrir-sobre'));
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    btnPase?.addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('abrir-pase-digital'));
     });
   }
 

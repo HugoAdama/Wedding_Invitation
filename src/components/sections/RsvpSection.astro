@@ -1014,6 +1014,9 @@ import { withBase } from '../../utils/paths';
       }
 
       if (asiste) {
+        try {
+          if ('vibrate' in navigator) navigator.vibrate([40, 30, 60]);
+        } catch {}
         lanzarConfetiCelestial();
       }
 

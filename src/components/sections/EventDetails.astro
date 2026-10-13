@@ -5,6 +5,7 @@ import ClockIcon from '../icons/ClockIcon.astro';
 import MapPinIcon from '../icons/MapPinIcon.astro';
 import WhatsAppIcon from '../icons/WhatsAppIcon.astro';
 import SparklesIcon from '../icons/SparklesIcon.astro';
+import TicketIcon from '../icons/TicketIcon.astro';
 import CalendarButtons from '../ui/CalendarButtons.astro';
 import { withBase } from '../../utils/paths';
 ---
@@ -136,6 +137,16 @@ import { withBase } from '../../utils/paths';
             <WhatsAppIcon size={18} />
             <span>Coordenadas por WhatsApp</span>
           </a>
+
+          <button
+            type="button"
+            class="boton-gps boton-gps--pase"
+            id="btn-ver-pase-digital"
+            aria-label="Ver Pase Digital de Asistencia con código QR"
+          >
+            <TicketIcon size={18} />
+            <span>Pase Digital con QR</span>
+          </button>
         </div>
 
         <!-- Agendar al calendario -->
@@ -486,6 +497,20 @@ import { withBase } from '../../utils/paths';
     box-shadow: 0 4px 15px rgba(37, 211, 102, 0.25);
   }
 
+  .boton-gps--pase {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25) 0%, rgba(163, 92, 126, 0.25) 100%);
+    color: #FFF6D6;
+    border: 1px solid var(--dorado);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+  }
+
+  .boton-gps--pase:hover {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.4) 0%, rgba(163, 92, 126, 0.4) 100%);
+    border-color: #FFE58F;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+  }
+
   .seccion-cal-wrap {
     padding-top: 1.25rem;
     border-top: 1px solid var(--linea-suave);
@@ -497,3 +522,20 @@ import { withBase } from '../../utils/paths';
     margin-bottom: 0.4rem !important;
   }
 </style>
+
+<script>
+  function setupPaseTrigger() {
+    const btn = document.getElementById('btn-ver-pase-digital');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('abrir-pase-digital'));
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupPaseTrigger);
+  } else {
+    setupPaseTrigger();
+  }
+</script>
+

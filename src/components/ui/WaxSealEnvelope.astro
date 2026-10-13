@@ -366,6 +366,10 @@ import SparklesIcon from '../icons/SparklesIcon.astro';
     }
 
     btnAbrir.addEventListener('click', () => {
+      try {
+        if ('vibrate' in navigator) navigator.vibrate([35, 25, 45]);
+      } catch {}
+
       lanzarParticulas();
 
       // Iniciar la música de fondo desbloqueando el audio del navegador
