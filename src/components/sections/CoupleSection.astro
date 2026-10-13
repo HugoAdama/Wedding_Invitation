@@ -107,10 +107,13 @@ import { withBase } from '../../utils/paths';
 
     <!-- Vínculo compartido -->
     <div class="juntos-banner revelar">
-      <HeartIcon size={22} fill={true} class="juntos-banner__icon" />
+      <div class="juntos-banner__tag">
+        <HeartIcon size={16} fill={true} class="juntos-banner__icon" />
+        <span>Complicidad &amp; Armonía</span>
+      </div>
       <p>
-        Juntos tienen a <strong>Proust</strong>, su conejo consentido, y una melodía inolvidable:
-        <em>«La Vie en Rose»</em>, la cual ellos han bautizado con complicidad como <strong>«La vie en ciel»</strong>.
+        Juntos comparten sus días con <strong>Proust</strong>, su conejo consentido, y una melodía inolvidable:
+        <em>«La Vie en Rose»</em>, la cual ellos han bautizado con cariño como <strong>«La vie en ciel»</strong>.
       </p>
     </div>
   </div>
@@ -253,25 +256,50 @@ import { withBase } from '../../utils/paths';
 
   .juntos-banner {
     max-width: 44rem;
-    margin: 4.5rem auto 0;
-    padding: 1.75rem 2rem;
+    margin: 3.5rem auto 0;
+    padding: 1.75rem 2.25rem;
     text-align: center;
-    background: radial-gradient(circle, rgba(74, 59, 107, 0.3) 0%, rgba(27, 42, 74, 0.6) 100%);
+    background: radial-gradient(circle at top, rgba(74, 59, 107, 0.35) 0%, rgba(27, 42, 74, 0.65) 100%);
     border: 1px solid var(--linea);
     border-radius: var(--radio-md);
-    box-shadow: var(--sombra-suave);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 175, 55, 0.1);
+    position: relative;
+  }
+
+  .juntos-banner::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: calc(var(--radio-md) - 4px);
+    pointer-events: none;
+  }
+
+  .juntos-banner__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dorado);
+    background: rgba(7, 16, 32, 0.6);
+    padding: 0.25rem 0.85rem;
+    border-radius: var(--radio-full);
+    border: 1px solid var(--linea-suave);
+    margin-bottom: 0.85rem;
   }
 
   .juntos-banner__icon {
     color: var(--dorado);
-    margin: 0 auto 0.75rem;
   }
 
   .juntos-banner p {
     margin: 0;
     font-family: var(--titulo);
-    font-size: clamp(1.2rem, 3vw, 1.4rem);
+    font-size: clamp(1.15rem, 2.5vw, 1.35rem);
     color: var(--crema);
-    line-height: 1.5;
+    line-height: 1.55;
   }
 </style>

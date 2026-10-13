@@ -7,48 +7,68 @@ const { class: className = "w-44 h-auto mx-auto" } = Astro.props;
 ---
 <svg
   xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 200 24"
+  viewBox="0 0 208 28"
   class={`fases-lunares-svg ${className}`}
   fill="currentColor"
   aria-hidden="true"
+  style="overflow: visible;"
 >
-  <g fill="none" stroke="currentColor" stroke-width="1" class="fases-anillos">
-    <circle cx="12" cy="12" r="9" />
-    <circle cx="56" cy="12" r="9" />
-    <circle cx="100" cy="12" r="9" />
-    <circle cx="144" cy="12" r="9" />
-    <circle cx="188" cy="12" r="9" />
+  <defs>
+    <radialGradient id="halo-luna-llena" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFBEB" stop-opacity="0.9" />
+      <stop offset="45%" stop-color="#D4AF37" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <g fill="none" stroke="currentColor" stroke-width="1" class="fases-anillos" opacity="0.6">
+    <circle cx="14" cy="14" r="9" />
+    <circle cx="58" cy="14" r="9" />
+    <circle cx="102" cy="14" r="9" />
+    <circle cx="146" cy="14" r="9" />
+    <circle cx="190" cy="14" r="9" />
   </g>
   <g fill="currentColor">
-    <path d="M56 3 A9 9 0 0 1 56 21 A5 9 0 0 0 56 3Z" class="fase-iluminada" />
-    <path d="M100 3 A9 9 0 0 1 100 21Z" class="fase-iluminada" />
-    <path d="M144 3 A9 9 0 0 1 144 21 A5 9 0 0 1 144 3Z" class="fase-iluminada" />
-    <circle cx="188" cy="12" r="9" class="luna-llena-resplandor" />
+    <path d="M58 5 A9 9 0 0 1 58 23 A5 9 0 0 0 58 5Z" class="fase-iluminada" />
+    <path d="M102 5 A9 9 0 0 1 102 23Z" class="fase-iluminada" />
+    <path d="M146 5 A9 9 0 0 1 146 23 A5 9 0 0 1 146 5Z" class="fase-iluminada" />
+    <!-- Halo celestial radial sin recorte cuadrado -->
+    <circle cx="190" cy="14" r="14" fill="url(#halo-luna-llena)" class="luna-halo-suave" />
+    <circle cx="190" cy="14" r="9" class="luna-llena-disco" />
   </g>
 </svg>
 
 <style>
   .fases-lunares-svg {
-    filter: drop-shadow(0 0 3px rgba(212, 175, 55, 0.25));
-    transition: filter 0.3s ease;
+    display: block;
+    color: var(--dorado);
   }
 
-  .fases-lunares-svg:hover {
-    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.6));
+  .luna-halo-suave {
+    animation: pulso-halo 3.5s ease-in-out infinite alternate;
+    transform-origin: 190px 14px;
+    pointer-events: none;
   }
 
-  .luna-llena-resplandor {
-    animation: pulso-plenilunio 4s ease-in-out infinite alternate;
+  .luna-llena-disco {
+    color: #FDF0CD;
   }
 
-  @keyframes pulso-plenilunio {
-    0% { filter: drop-shadow(0 0 2px #D4AF37); opacity: 0.85; }
-    100% { filter: drop-shadow(0 0 8px #FFF4D0); opacity: 1; }
+  @keyframes pulso-halo {
+    0% {
+      opacity: 0.55;
+      transform: scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1.15);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .luna-llena-resplandor {
+    .luna-halo-suave {
       animation: none !important;
+      opacity: 0.7;
     }
   }
 </style>

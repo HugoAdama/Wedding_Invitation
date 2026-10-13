@@ -1,35 +1,117 @@
 ---
 import MoonPhasesOrnament from '../icons/MoonPhasesOrnament.astro';
 import ConstellationIcon from '../icons/ConstellationIcon.astro';
+import StarIcon from '../icons/StarIcon.astro';
 ---
 <section class="seccion seccion--profundo" id="mensaje">
   <div class="interior">
-    <div class="mensaje__adorno">
-      <MoonPhasesOrnament class="w-44 h-auto mx-auto mb-5 text-[#D4AF37]" />
-    </div>
+    <div class="mensaje-carta-card revelar">
+      <!-- Decoración superior: Fases lunares celestiales -->
+      <div class="mensaje__adorno">
+        <MoonPhasesOrnament class="w-44 h-auto mx-auto mb-4 text-[#D4AF37]" />
+      </div>
 
-    <div class="seccion-header revelar" style="margin-bottom: 0;">
-      <p class="kicker">Una noche para mirar el cielo</p>
-      <h2 class="titulo-seccion brillo-dorado">Nos casamos bajo las estrellas</h2>
-      <p class="descripcion-seccion">
-        Será al aire libre, en una hacienda de Arequipa, con la ciudad iluminada de fondo y el cielo estrellado como techo.
-        La magia de las constelaciones que nos acompañaron en cada paso ahora bendecirá nuestra unión. Queremos celebrarlo contigo.
-      </p>
+      <div class="mensaje__cuerpo">
+        <p class="kicker">Una noche para mirar el cielo</p>
+        <h2 class="titulo-seccion brillo-dorado">Nos casamos bajo las estrellas</h2>
 
-      <div class="mt-6 text-[#D4AF37] opacity-80">
-        <ConstellationIcon class="w-48 h-auto mx-auto mt-6" />
+        <p class="mensaje__texto">
+          Será al aire libre, en una hacienda de Arequipa, con la ciudad iluminada de fondo y el cielo estrellado como techo.
+          La magia de las constelaciones que nos acompañaron en cada paso ahora bendecirá nuestra unión. Queremos celebrarlo contigo.
+        </p>
+
+        <!-- Divisor estelar -->
+        <div class="mensaje__divisor">
+          <ConstellationIcon class="w-48 h-auto mx-auto text-[#D4AF37]" />
+        </div>
+
+        <!-- Firma manuscrita de los novios -->
+        <div class="mensaje__firmas">
+          <span class="firmas__dedicatoria">Con todo nuestro cariño,</span>
+          <span class="firmas__nombres">Daniela &amp; Rodrigo</span>
+          <span class="firmas__fecha">12 · Junio · 2027</span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  .mensaje__adorno {
+  .mensaje-carta-card {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 5vw, 4rem) clamp(1.75rem, 4vw, 3.5rem);
+    background: radial-gradient(circle at 50% 0%, rgba(74, 59, 107, 0.3) 0%, rgba(11, 29, 58, 0.85) 100%);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-lg);
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.55), 0 0 30px rgba(212, 175, 55, 0.12);
     text-align: center;
-    color: var(--dorado);
+    position: relative;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
-  .mt-6 {
-    margin-top: 1.5rem;
+  .mensaje-carta-card::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: calc(var(--radio-lg) - 6px);
+    pointer-events: none;
+  }
+
+  .mensaje__adorno {
+    margin-bottom: 1rem;
+  }
+
+  .mensaje__cuerpo {
+    max-width: 42rem;
+    margin: 0 auto;
+  }
+
+  .mensaje__texto {
+    font-family: var(--titulo);
+    font-size: clamp(1.15rem, 2.5vw, 1.35rem);
+    line-height: 1.75;
+    color: var(--crema);
+    opacity: 0.95;
+    margin: 1.25rem 0 2rem;
+  }
+
+  .mensaje__divisor {
+    opacity: 0.75;
+    margin: 1.5rem auto 2rem;
+  }
+
+  .mensaje__firmas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 1rem;
+  }
+
+  .firmas__dedicatoria {
+    font-family: var(--titulo);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--plata);
+  }
+
+  .firmas__nombres {
+    font-family: var(--script);
+    font-size: clamp(2.4rem, 5vw, 3.2rem);
+    color: var(--dorado);
+    line-height: 1.2;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.35);
+  }
+
+  .firmas__fecha {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--plata);
+    opacity: 0.85;
+    margin-top: 0.2rem;
   }
 </style>

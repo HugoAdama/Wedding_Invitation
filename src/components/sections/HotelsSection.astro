@@ -2,41 +2,68 @@
 import { recommendedHotels, hotelNotice } from '../../data/hotels';
 import BedIcon from '../icons/BedIcon.astro';
 import MapPinIcon from '../icons/MapPinIcon.astro';
+import SparklesIcon from '../icons/SparklesIcon.astro';
 ---
 <section class="seccion seccion--profundo seccion-optimizada" id="hospedaje">
   <div class="interior">
     <div class="seccion-header">
       <div class="hospedaje__badge">
-        <BedIcon size={20} class="text-[#D4AF37]" />
+        <BedIcon size={18} class="text-[#D4AF37]" />
         <span>Estadía en Arequipa</span>
       </div>
       <p class="kicker">Si vienes de fuera</p>
       <h2 class="titulo-seccion">Hospedaje sugerido</h2>
       <p class="descripcion-seccion">
-        Opciones seleccionadas con cercanía a la hacienda y acceso al centro histórico.
+        Opciones seleccionadas por cercanía a la hacienda y fácil acceso a los encantos de la Ciudad Blanca.
       </p>
     </div>
 
-    <div class="hoteles-lista">
+    <!-- Grid de 3 Columnas de Hoteles -->
+    <div class="hoteles-grid">
       {recommendedHotels.map((hotel, idx) => (
         <article class={`hotel-card revelar ${idx > 0 ? `revelar--retraso-${Math.min(idx, 3)}` : ''}`}>
-          <div class="hotel__info">
+          <div class="hotel__badge-distancia">
+            <MapPinIcon size={14} class="hotel__pin-icon" />
+            <span>{hotel.distance}</span>
+          </div>
+
+          <div class="hotel__contenido">
             <h3 class="hotel__nombre">{hotel.name}</h3>
-            <p class="hotel__distancia">
-              <MapPinIcon size={16} class="hotel__pin-icon" />
-              <span>{hotel.distance}</span>
-            </p>
+
+            <div class="hotel__precio-bloque">
+              <span class="hotel__monto">{hotel.pricePerNight}</span>
+              <span class="hotel__periodo">por noche aprox.</span>
+            </div>
+
             {hotel.notes && <p class="hotel__notas">{hotel.notes}</p>}
           </div>
-          <div class="hotel__precio-bloque">
-            <span class="hotel__monto">{hotel.pricePerNight}</span>
-            <span class="hotel__periodo">por noche aprox.</span>
+
+          <div class="hotel__pie">
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${hotel.name} Arequipa`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hotel__map-link"
+              aria-label={`Ver ubicación de ${hotel.name} en Google Maps`}
+            >
+              <MapPinIcon size={15} />
+              <span>Ver en Google Maps</span>
+            </a>
           </div>
         </article>
       ))}
     </div>
 
-    <p class="hospedaje__aviso revelar">{hotelNotice}</p>
+    <!-- Aviso de descuento y reservas -->
+    <div class="hospedaje__aviso-card revelar">
+      <div class="aviso-card__icono">
+        <SparklesIcon size={20} class="text-[#D4AF37]" />
+      </div>
+      <div class="aviso-card__texto">
+        <strong>Tarifas y reservas con anticipación</strong>
+        <p>{hotelNotice}</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -57,92 +84,176 @@ import MapPinIcon from '../icons/MapPinIcon.astro';
     margin-bottom: 0.9rem;
   }
 
-  .hoteles-lista {
-    max-width: 48rem;
-    margin: 0 auto;
+  /* Grid de 3 Columnas */
+  .hoteles-grid {
     display: grid;
-    gap: 1.5rem;
-    border-top: 1px solid var(--linea);
-    padding-top: 1.5rem;
+    gap: 1.75rem;
+    margin-bottom: 3rem;
+  }
+
+  @media (min-width: 680px) {
+    .hoteles-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 980px) {
+    .hoteles-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
   }
 
   .hotel-card {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1.25rem 2rem;
-    padding: 1.5rem 1.75rem;
-    background: rgba(11, 29, 58, 0.6);
+    background: rgba(27, 42, 74, 0.45);
     border: 1px solid var(--linea-suave);
     border-radius: var(--radio-md);
+    padding: 1.75rem 1.5rem;
     box-shadow: var(--sombra-suave);
-    transition: var(--transicion);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
   }
 
   .hotel-card:hover {
+    transform: translateY(-4px);
     border-color: var(--dorado);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45), 0 0 20px rgba(212, 175, 55, 0.15);
   }
 
-  .hotel__info {
-    flex: 1;
-    min-width: min(16rem, 100%);
-  }
-
-  .hotel__nombre {
-    font-size: 1.6rem;
-    color: var(--crema);
-    margin-bottom: 0.3rem;
-  }
-
-  .hotel__distancia {
-    display: flex;
+  .hotel__badge-distancia {
+    display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    font-size: 0.92rem;
+    gap: 0.35rem;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
     color: var(--dorado);
-    margin-bottom: 0.4rem;
+    background: rgba(7, 16, 32, 0.75);
+    border: 1px solid var(--linea-suave);
+    border-radius: var(--radio-full);
+    margin-bottom: 1.25rem;
+    align-self: flex-start;
   }
 
   .hotel__pin-icon {
     flex-shrink: 0;
   }
 
-  .hotel__notas {
-    font-size: 0.88rem;
-    color: var(--plata);
+  .hotel__contenido {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .hotel__nombre {
+    font-family: var(--titulo);
+    font-size: 1.6rem;
+    color: var(--crema);
     margin: 0;
-    line-height: 1.5;
+    line-height: 1.2;
   }
 
   .hotel__precio-bloque {
-    text-align: right;
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--linea-suave);
+    border-bottom: 1px solid var(--linea-suave);
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
   }
 
   .hotel__monto {
-    display: block;
     font-family: var(--titulo);
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 600;
-    line-height: 1;
     color: var(--dorado);
+    line-height: 1;
   }
 
   .hotel__periodo {
-    display: block;
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     color: var(--plata);
-    margin-top: 0.25rem;
   }
 
-  .hospedaje__aviso {
-    max-width: 44rem;
-    margin: 2rem auto 0;
-    text-align: center;
+  .hotel__notas {
     font-size: 0.9rem;
     color: var(--plata);
-    line-height: 1.6;
+    line-height: 1.55;
+    margin: 0;
+    flex: 1;
+  }
+
+  .hotel__pie {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--linea-suave);
+  }
+
+  .hotel__map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--crema);
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .hotel__map-link:hover {
+    color: var(--dorado);
+    transform: translateX(3px);
+  }
+
+  /* Tarjeta de Aviso Inferior */
+  .hospedaje__aviso-card {
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 1.35rem 1.75rem;
+    background: radial-gradient(circle at top left, rgba(74, 59, 107, 0.3) 0%, rgba(11, 29, 58, 0.6) 100%);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-md);
+    box-shadow: var(--sombra-suave);
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .aviso-card__icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: rgba(7, 16, 32, 0.7);
+    border: 1px solid var(--linea-suave);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .aviso-card__texto {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .aviso-card__texto strong {
+    font-size: 0.95rem;
+    color: var(--dorado);
+  }
+
+  .aviso-card__texto p {
+    font-size: 0.88rem;
+    color: var(--crema);
+    opacity: 0.9;
+    line-height: 1.55;
+    margin: 0;
   }
 </style>

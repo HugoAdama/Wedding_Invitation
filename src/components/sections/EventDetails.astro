@@ -53,25 +53,34 @@ import { withBase } from '../../utils/paths';
       ))}
     </div>
 
-    <!-- Programa hora por hora -->
+    <!-- Programa hora por hora: Itinerario de Gala -->
     <div class="programa-bloque revelar">
-      <h3 class="programa__titulo">
-        <SparklesIcon size={20} class="text-[#D4AF37]" />
-        <span>La noche, hora por hora</span>
-        <SparklesIcon size={20} class="text-[#D4AF37]" />
-      </h3>
-
-      <dl class="programa-lista">
-        {daySchedule.map(item => (
-          <div class="programa-item">
-            <dt class="programa-hora">{item.time}</dt>
-            <dd class="programa-info">
-              <h4 class="programa-evento">{item.title}</h4>
-              <p class="programa-desc">{item.description}</p>
-            </dd>
+      <div class="programa-card">
+        <div class="programa-card__header">
+          <div class="programa-card__icono">
+            <ClockIcon size={22} class="text-[#D4AF37]" />
           </div>
-        ))}
-      </dl>
+          <h3 class="programa__titulo">
+            <span>Itinerario de la Noche</span>
+          </h3>
+          <p class="programa__sub">Cronograma concebido para disfrutar del crepúsculo y las estrellas de Arequipa</p>
+        </div>
+
+        <div class="programa-timeline">
+          {daySchedule.map((item, index) => (
+            <div class="programa-item">
+              <div class="programa-hora-box">
+                <span class="programa-hora">{item.time}</span>
+                <span class="programa-punto" aria-hidden="true"></span>
+              </div>
+              <div class="programa-info">
+                <h4 class="programa-evento">{item.title}</h4>
+                <p class="programa-desc">{item.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
 
     <!-- Mapa interactivo -->
@@ -248,34 +257,90 @@ import { withBase } from '../../utils/paths';
     margin: 0;
   }
 
-  /* Programa */
+  /* Programa: Itinerario de Gala */
   .programa-bloque {
-    max-width: 44rem;
-    margin: 0 auto 4.5rem;
+    max-width: 50rem;
+    margin: 0 auto 5rem;
+  }
+
+  .programa-card {
+    background: radial-gradient(circle at top, rgba(74, 59, 107, 0.3) 0%, rgba(11, 29, 58, 0.8) 100%);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio-lg);
+    padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3.5vw, 2.75rem);
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.1);
+    position: relative;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .programa-card::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    border-radius: calc(var(--radio-lg) - 6px);
+    pointer-events: none;
+  }
+
+  .programa-card__header {
+    text-align: center;
+    margin-bottom: 2.25rem;
+  }
+
+  .programa-card__icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radio-full);
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid var(--linea);
+    margin-bottom: 0.75rem;
   }
 
   .programa__titulo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    text-align: center;
-    font-size: clamp(1.8rem, 4vw, 2.3rem);
-    color: var(--crema);
-    margin-bottom: 2rem;
+    font-size: clamp(1.8rem, 3.5vw, 2.2rem);
+    color: var(--dorado);
+    margin: 0 0 0.35rem;
   }
 
-  .programa-lista {
-    border-top: 1px solid var(--linea);
+  .programa__sub {
+    font-size: 0.95rem;
+    color: var(--plata);
+    margin: 0;
+  }
+
+  .programa-timeline {
+    position: relative;
+    display: grid;
+    gap: 1.5rem;
   }
 
   .programa-item {
     display: grid;
     grid-template-columns: 8.5rem 1fr;
-    gap: 1.25rem;
-    padding: 1.15rem 0;
-    border-bottom: 1px solid var(--linea-suave);
-    align-items: baseline;
+    gap: 1.5rem;
+    padding: 1.15rem 1.25rem;
+    background: rgba(7, 16, 32, 0.55);
+    border: 1px solid var(--linea-suave);
+    border-radius: var(--radio-sm);
+    align-items: center;
+    transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  }
+
+  .programa-item:hover {
+    transform: translateX(4px);
+    border-color: var(--dorado);
+    background: rgba(27, 42, 74, 0.6);
+  }
+
+  .programa-hora-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
   }
 
   .programa-hora {
@@ -283,6 +348,15 @@ import { withBase } from '../../utils/paths';
     font-size: 1.35rem;
     font-weight: 600;
     color: var(--dorado);
+    white-space: nowrap;
+  }
+
+  .programa-punto {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--dorado);
+    box-shadow: 0 0 8px var(--dorado);
   }
 
   .programa-info {
@@ -290,7 +364,6 @@ import { withBase } from '../../utils/paths';
   }
 
   .programa-evento {
-    font-family: var(--cuerpo);
     font-size: 1.05rem;
     font-weight: 600;
     color: var(--crema);
@@ -298,16 +371,20 @@ import { withBase } from '../../utils/paths';
   }
 
   .programa-desc {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: var(--plata);
     margin: 0;
     line-height: 1.5;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 620px) {
     .programa-item {
       grid-template-columns: 1fr;
-      gap: 0.35rem;
+      gap: 0.5rem;
+    }
+
+    .programa-punto {
+      display: none;
     }
   }
 

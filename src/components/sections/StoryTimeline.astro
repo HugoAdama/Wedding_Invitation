@@ -2,50 +2,87 @@
 import { storyMilestones } from '../../data/story';
 import BookOpenIcon from '../icons/BookOpenIcon.astro';
 import StarIcon from '../icons/StarIcon.astro';
+import SparklesIcon from '../icons/SparklesIcon.astro';
 import { withBase } from '../../utils/paths';
 ---
 <section class="seccion seccion--alterna" id="historia">
   <div class="interior">
     <div class="seccion-header">
       <div class="historia__badge">
-        <BookOpenIcon size={20} class="text-[#D4AF37]" />
+        <BookOpenIcon size={18} class="text-[#D4AF37]" />
         <span>Nuestra Travesía</span>
       </div>
       <p class="kicker">De la biblioteca a las estrellas</p>
       <h2 class="titulo-seccion">Nuestra historia</h2>
       <p class="descripcion-seccion">
-        Cada capítulo que nos trajo hasta esta noche bajo el cielo de Arequipa.
+        Cada capítulo que nos trajo hasta esta noche bajo el firmamento de Arequipa.
       </p>
     </div>
 
-    <div class="historia-timeline">
-      {storyMilestones.map((momento, idx) => (
-        <article class={`momento revelar ${idx % 2 === 1 ? 'momento--invertido' : ''}`}>
-          <div class="momento__foto-container">
-            <div class="momento__marco">
-              <img
-                src={withBase(momento.image)}
-                alt={momento.alt}
-                width="720"
-                height="900"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </div>
+    <!-- Contenedor de la línea de tiempo con eje estelar central -->
+    <div class="timeline-contenedor">
+      <!-- Eje vertical estelar (constelación) -->
+      <div class="timeline-eje" aria-hidden="true"></div>
 
-          <div class="momento__contenido">
-            <div class="momento__anio-wrapper">
-              <span class="momento__anio">{momento.year}</span>
-              <StarIcon size={18} class="momento__star" />
-            </div>
-            
-            <h3 class="momento__titulo">{momento.title}</h3>
-            {momento.subtitle && <p class="momento__subtitulo">{momento.subtitle}</p>}
-            <p class="momento__desc">{momento.description}</p>
-          </div>
-        </article>
-      ))}
+      <div class="timeline-hitos">
+        {storyMilestones.map((momento, idx) => {
+          const esInvertido = idx % 2 === 1;
+          const esFinal = idx === storyMilestones.length - 1;
+
+          return (
+            <article class={`timeline-hito revelar ${esInvertido ? 'timeline-hito--invertido' : ''} ${esFinal ? 'timeline-hito--final' : ''}`}>
+              <!-- Nodo central con estrella sobre el eje -->
+              <div class="timeline-nodo" aria-hidden="true">
+                <div class="nodo-aura"></div>
+                <div class="nodo-estrella">
+                  {esFinal ? (
+                    <SparklesIcon size={18} class="text-[#D4AF37]" />
+                  ) : (
+                    <StarIcon size={14} class="text-[#D4AF37]" />
+                  )}
+                </div>
+                <span class="nodo-anio-pill">{momento.year}</span>
+              </div>
+
+              <!-- Columna de Imagen -->
+              <div class="hito-col hito-col--foto">
+                <div class={`hito-marco ${esFinal ? 'hito-marco--dorado' : ''}`}>
+                  <img
+                    src={withBase(momento.image)}
+                    alt={momento.alt}
+                    width="720"
+                    height="900"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  {esFinal && (
+                    <div class="hito-marco__badge">
+                      <SparklesIcon size={14} class="text-[#D4AF37]" />
+                      <span>El Gran Día</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <!-- Columna de Narrativa -->
+              <div class="hito-col hito-col--texto">
+                <div class={`hito-tarjeta ${esFinal ? 'hito-tarjeta--final' : ''}`}>
+                  <div class="hito-encabezado">
+                    <span class="hito-anio">{momento.year}</span>
+                    <span class="hito-separador">·</span>
+                    {momento.subtitle && (
+                      <span class="hito-lugar">{momento.subtitle}</span>
+                    )}
+                  </div>
+
+                  <h3 class="hito-titulo">{momento.title}</h3>
+                  <p class="hito-descripcion">{momento.description}</p>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
     </div>
   </div>
 </section>
@@ -67,106 +104,271 @@ import { withBase } from '../../utils/paths';
     margin-bottom: 0.9rem;
   }
 
-  .historia-timeline {
-    display: grid;
-    gap: clamp(3.5rem, 8vw, 6rem);
+  /* Contenedor con Eje Central */
+  .timeline-contenedor {
+    position: relative;
+    max-width: 68rem;
+    margin: 2rem auto 0;
+    padding: 1rem 0;
   }
 
-  .momento {
+  /* Eje estelar vertical */
+  .timeline-eje {
+    position: absolute;
+    top: 2rem;
+    bottom: 3rem;
+    left: 1.5rem;
+    width: 2px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(212, 175, 55, 0.7) 10%,
+      rgba(212, 175, 55, 0.7) 90%,
+      transparent 100%
+    );
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  @media (min-width: 900px) {
+    .timeline-eje {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  .timeline-hitos {
     display: grid;
-    gap: 2rem;
+    gap: clamp(3.5rem, 6vw, 5.5rem);
+  }
+
+  /* Cada Hito */
+  .timeline-hito {
+    position: relative;
+    display: grid;
+    gap: 1.75rem;
     align-items: center;
+    padding-left: 3.5rem;
   }
 
-  @media (min-width: 820px) {
-    .momento {
+  @media (min-width: 900px) {
+    .timeline-hito {
       grid-template-columns: 1fr 1fr;
-      gap: 5rem;
+      gap: 4.5rem;
+      padding-left: 0;
     }
 
-    .momento--invertido .momento__foto-container {
+    .timeline-hito--invertido .hito-col--foto {
       order: 2;
     }
+
+    .timeline-hito--invertido .hito-col--texto {
+      order: 1;
+      text-align: right;
+    }
+
+    .timeline-hito--invertido .hito-encabezado {
+      justify-content: flex-end;
+    }
   }
 
-  .momento__foto-container {
+  /* Nodo Central sobre el Eje */
+  .timeline-nodo {
+    position: absolute;
+    left: 1.5rem;
+    top: 1.5rem;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    z-index: 2;
+  }
+
+  @media (min-width: 900px) {
+    .timeline-nodo {
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .nodo-aura {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, transparent 70%);
+    animation: pulso-nodo 3s infinite alternate;
+  }
+
+  @keyframes pulso-nodo {
+    0% {
+      transform: translate(-50%, -50%) scale(0.9);
+      opacity: 0.6;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1.4);
+      opacity: 1;
+    }
+  }
+
+  .nodo-estrella {
     position: relative;
-    max-width: 26rem;
-    margin-inline: auto;
-    width: 100%;
+    width: 1.85rem;
+    height: 1.85rem;
+    border-radius: 50%;
+    background: #0B1D3A;
+    border: 2px solid var(--dorado);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
   }
 
-  .momento__marco {
+  .nodo-anio-pill {
+    font-family: var(--titulo);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--dorado);
+    background: rgba(7, 16, 32, 0.9);
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--radio-full);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    white-space: nowrap;
+  }
+
+  /* Columna Foto */
+  .hito-col--foto {
+    width: 100%;
+    max-width: 25rem;
+    margin: 0 auto;
+  }
+
+  .hito-marco {
     position: relative;
     border-radius: var(--radio-md);
     overflow: hidden;
     border: 1px solid var(--linea);
-    box-shadow: var(--sombra-suave);
-    background: var(--profundo);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+    background: var(--noche);
+    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
   }
 
-  .momento__marco::before {
+  .hito-marco::before {
     content: "";
     position: absolute;
-    inset: 10px;
+    inset: 8px;
     border: 1px solid rgba(212, 175, 55, 0.25);
     border-radius: calc(var(--radio-md) - 4px);
     pointer-events: none;
     z-index: 2;
   }
 
-  .momento__marco img {
+  .hito-marco img {
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4 / 4.6;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    display: block;
+    transition: transform 0.6s ease;
   }
 
-  .momento:hover .momento__marco img {
-    transform: scale(1.03);
+  .timeline-hito:hover .hito-marco img {
+    transform: scale(1.04);
   }
 
-  .momento__contenido {
+  .hito-marco--dorado {
+    border: 1.5px solid var(--dorado);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.25);
+  }
+
+  .hito-marco__badge {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--noche);
+    background: linear-gradient(135deg, #FFF4D0 0%, #D4AF37 100%);
+    border-radius: var(--radio-full);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Columna Texto / Tarjeta */
+  .hito-col--texto {
+    width: 100%;
     max-width: 32rem;
   }
 
-  .momento__anio-wrapper {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-bottom: 0.35rem;
+  .hito-tarjeta {
+    background: rgba(27, 42, 74, 0.35);
+    border: 1px solid var(--linea-suave);
+    border-radius: var(--radio-md);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    box-shadow: var(--sombra-suave);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: border-color 0.3s ease, transform 0.3s ease;
   }
 
-  .momento__anio {
+  .timeline-hito:hover .hito-tarjeta {
+    border-color: var(--linea);
+    transform: translateY(-2px);
+  }
+
+  .hito-tarjeta--final {
+    background: radial-gradient(circle at top right, rgba(74, 59, 107, 0.4) 0%, rgba(27, 42, 74, 0.55) 100%);
+    border-color: var(--linea);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 175, 55, 0.15);
+  }
+
+  .hito-encabezado {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .hito-anio {
     font-family: var(--titulo);
-    font-size: clamp(3.2rem, 6vw, 4.2rem);
-    line-height: 1;
-    font-weight: 500;
+    font-size: 1.5rem;
+    font-weight: 600;
     color: var(--dorado);
-    text-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
   }
 
-  .momento__star {
-    color: var(--dorado);
-    opacity: 0.8;
+  .hito-separador {
+    color: var(--plata);
+    opacity: 0.6;
   }
 
-  .momento__titulo {
-    font-size: clamp(1.9rem, 4vw, 2.4rem);
-    color: var(--crema);
-    margin-bottom: 0.3rem;
-  }
-
-  .momento__subtitulo {
+  .hito-lugar {
     font-family: var(--titulo);
     font-style: italic;
-    font-size: 1.25rem;
+    font-size: 1.05rem;
     color: var(--plata);
-    margin-bottom: 1rem;
   }
 
-  .momento__desc {
-    font-size: 1rem;
+  .hito-titulo {
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    color: var(--crema);
+    margin-bottom: 0.75rem;
+    line-height: 1.25;
+  }
+
+  .hito-descripcion {
+    font-size: 0.95rem;
     line-height: 1.7;
     color: var(--crema);
     opacity: 0.92;
