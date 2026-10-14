@@ -4,19 +4,19 @@ Este directorio contiene la documentacion del sistema web de invitacion de boda,
 
 ## Indice de Documentos
 
-1. [Arquitectura del Proyecto](file:///e:/WEDDING_INVITATION/docs/ARCHITECTURE.md)
+1. [Arquitectura del Proyecto](./ARCHITECTURE.md)
    Explica la separacion de capas: datos, tipos, componentes, estilos y utilidades.
 
-2. [Catalogo de Componentes](file:///e:/WEDDING_INVITATION/docs/COMPONENTS.md)
+2. [Catalogo de Componentes](./COMPONENTS.md)
    Detalla los componentes de interfaz (UI), secciones principales e iconos vectoriales.
 
-3. [Guia de Estilos y CSS](file:///e:/WEDDING_INVITATION/docs/STYLE_GUIDE.md)
+3. [Guia de Estilos y CSS](./STYLE_GUIDE.md)
    Describe los tokens de diseno, la paleta cromatica, tipografias y la convencion de desacoplamiento de estilos.
 
-4. [Compilacion y Despliegue](file:///e:/WEDDING_INVITATION/docs/DEPLOYMENT.md)
+4. [Compilacion y Despliegue](./DEPLOYMENT.md)
    Instrucciones para ejecucion local, generacion del bundle estatico y publicacion en GitHub Pages.
 
-5. [Aprendizajes del Desarrollo](file:///e:/WEDDING_INVITATION/docs/APRENDIZAJES.md)
+5. [Aprendizajes del Desarrollo](./APRENDIZAJES.md)
    Detalla las lecciones aprendidas, patrones arquitectonicos, soluciones tecnicas y decisiones de ingenieria.
 
 ## Reglas Internas del Proyecto
