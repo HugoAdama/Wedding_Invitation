@@ -16,6 +16,9 @@ Este directorio contiene la documentacion del sistema web de invitacion de boda,
 4. [Compilacion y Despliegue](file:///e:/WEDDING_INVITATION/docs/DEPLOYMENT.md)
    Instrucciones para ejecucion local, generacion del bundle estatico y publicacion en GitHub Pages.
 
+5. [Aprendizajes del Desarrollo](file:///e:/WEDDING_INVITATION/docs/APRENDIZAJES.md)
+   Detalla las lecciones aprendidas, patrones arquitectonicos, soluciones tecnicas y decisiones de ingenieria.
+
 ## Reglas Internas del Proyecto
 
 - Iconografia: Uso exclusivo de iconos vectoriales SVG. No se utilizan emojis en el codigo ni en la documentacion.
